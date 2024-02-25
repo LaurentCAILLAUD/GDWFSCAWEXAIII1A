@@ -1,18 +1,4 @@
 @font-face {
-  font-family: "SFProDisplayThin";
-  src: url("../assets/fonts/SF-Pro-Display-Thin.otf");
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "SFProDisplayRegular";
-  src: url("../assets/fonts/SF-Pro-Display-Regular.otf");
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
   font-family: "SFProDisplayBold";
   src: url("../assets/fonts/SF-Pro-Display-Bold.otf");
   font-weight: normal;
@@ -51,13 +37,8 @@ body {
   text-align: end;
 }
 
-#navContent a:first-child img {
-  width: 40px;
-}
-
-#navContent a:last-child img {
+#navContent a img {
   width: 32px;
-  margin-left: 20px;
 }
 
 #mainContainer {
@@ -120,5 +101,17 @@ body {
 
 .menuActionButton p:last-child {
   background-color: #3c3c3b;
+}
+
+.menuActionButton p a {
+  text-decoration: none;
+  padding: 20px 0;
+}
+
+.menuActionButton p:first-child a {
+  color: #3c3c3b;
+}
+
+.menuActionButton p:last-child a {
   color: white;
 }

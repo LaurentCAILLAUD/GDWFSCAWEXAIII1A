@@ -18,7 +18,6 @@ require_once('../../controller/admin/homeController.php');
     <div id="mainWrapper">
         <!-- navContent block start -->
         <div id="navContent">
-            <a href="../../view/admin/loginView.php"><img src="../../assets//pictures//home.png" alt="icône accueil application"></a>
             <a href="../../controller/admin/logoutController.php"><img src="../../assets//pictures//logout.png" alt="Icone déconnexion"></a>
         </div>
         <!-- navContent block end -->
@@ -31,8 +30,8 @@ require_once('../../controller/admin/homeController.php');
                 <div class="menuActionContainer">
                     <p>Spécialité</p>
                     <div class="menuActionButton">
-                        <p><a href=""></a>Ajoutez</p>
-                        <p><a href=""></a>Listez</p>
+                        <p><a href="specialityFormView.php">Ajoutez</a></p>
+                        <p><a href="">Listez</a></p>
                     </div>
                 </div>
             </div>
@@ -43,8 +42,8 @@ require_once('../../controller/admin/homeController.php');
                 <div class="menuActionContainer">
                     <p>Type de mission</p>
                     <div class="menuActionButton">
-                        <p><a href=""></a>Ajoutez</p>
-                        <p><a href=""></a>Listez</p>
+                        <p><a href="">Ajoutez</a></p>
+                        <p><a href="">Listez</a></p>
                     </div>
                 </div>
             </div>
@@ -55,8 +54,8 @@ require_once('../../controller/admin/homeController.php');
                 <div class="menuActionContainer">
                     <p>Statut de mission</p>
                     <div class="menuActionButton">
-                        <p><a href=""></a>Ajoutez</p>
-                        <p><a href=""></a>Listez</p>
+                        <p><a href="">Ajoutez</a></p>
+                        <p><a href="">Listez</a></p>
                     </div>
                 </div>
             </div>
@@ -67,8 +66,8 @@ require_once('../../controller/admin/homeController.php');
                 <div class="menuActionContainer">
                     <p>Nationalité</p>
                     <div class="menuActionButton">
-                        <p><a href=""></a>Ajoutez</p>
-                        <p><a href=""></a>Listez</p>
+                        <p><a href="">Ajoutez</a></p>
+                        <p><a href="">Listez</a></p>
                     </div>
                 </div>
             </div>
@@ -79,8 +78,8 @@ require_once('../../controller/admin/homeController.php');
                 <div class="menuActionContainer">
                     <p>Mission</p>
                     <div class="menuActionButton">
-                        <p><a href=""></a>Ajoutez</p>
-                        <p><a href=""></a>Listez</p>
+                        <p><a href="">Ajoutez</a></p>
+                        <p><a href="">Listez</a></p>
                     </div>
                 </div>
             </div>
@@ -91,8 +90,8 @@ require_once('../../controller/admin/homeController.php');
                 <div class="menuActionContainer">
                     <p>Planque</p>
                     <div class="menuActionButton">
-                        <p><a href=""></a>Ajoutez</p>
-                        <p><a href=""></a>Listez</p>
+                        <p><a href="">Ajoutez</a></p>
+                        <p><a href="">Listez</a></p>
                     </div>
                 </div>
             </div>
@@ -103,8 +102,8 @@ require_once('../../controller/admin/homeController.php');
                 <div class="menuActionContainer">
                     <p>Contact</p>
                     <div class="menuActionButton">
-                        <p><a href=""></a>Ajoutez</p>
-                        <p><a href=""></a>Listez</p>
+                        <p><a href="">Ajoutez</a></p>
+                        <p><a href="">Listez</a></p>
                     </div>
                 </div>
             </div>
@@ -115,8 +114,8 @@ require_once('../../controller/admin/homeController.php');
                 <div class="menuActionContainer">
                     <p>Cible</p>
                     <div class="menuActionButton">
-                        <p><a href=""></a>Ajoutez</p>
-                        <p><a href=""></a>Listez</p>
+                        <p><a href="">Ajoutez</a></p>
+                        <p><a href="">Listez</a></p>
                     </div>
                 </div>
             </div>
@@ -127,8 +126,8 @@ require_once('../../controller/admin/homeController.php');
                 <div class="menuActionContainer">
                     <p>Agent</p>
                     <div class="menuActionButton">
-                        <p><a href=""></a>Ajoutez</p>
-                        <p><a href=""></a>Listez</p>
+                        <p><a href="">Ajoutez</a></p>
+                        <p><a href="">Listez</a></p>
                     </div>
                 </div>
             </div>
@@ -139,8 +138,8 @@ require_once('../../controller/admin/homeController.php');
                 <div class="menuActionContainer">
                     <p>Agent / Spécialté</p>
                     <div class="menuActionButton">
-                        <p><a href=""></a>Ajoutez</p>
-                        <p><a href=""></a>Listez</p>
+                        <p><a href="">Ajoutez</a></p>
+                        <p><a href="">Listez</a></p>
                     </div>
                 </div>
             </div>
@@ -151,8 +150,8 @@ require_once('../../controller/admin/homeController.php');
                 <div class="menuActionContainer">
                     <p>Rôle</p>
                     <div class="menuActionButton">
-                        <p><a href=""></a>Ajoutez</p>
-                        <p><a href=""></a>Listez</p>
+                        <p><a href="">Ajoutez</a></p>
+                        <p><a href="">Listez</a></p>
                     </div>
                 </div>
             </div>
@@ -163,8 +162,8 @@ require_once('../../controller/admin/homeController.php');
                 <div class="menuActionContainer">
                     <p>Utilisateur</p>
                     <div class="menuActionButton">
-                        <p><a href=""></a>Ajoutez</p>
-                        <p><a href=""></a>Listez</p>
+                        <p><a href="">Ajoutez</a></p>
+                        <p><a href="">Listez</a></p>
                     </div>
                 </div>
             </div>
