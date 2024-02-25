@@ -20,7 +20,7 @@ require_once('../../controller/admin/loginController.php')
     <div id="mainWrapper">
         <!-- navContent block start -->
         <div id="navContent">
-            <a href=""><img src="../../assets//pictures//home.png" alt="icône accueil application"></a>
+            <a href="../../index.php"><img src="../../assets/pictures//home.png" alt="icône accueil application"></a>
         </div>
         <!-- navContent block end -->
         <!-- header block start -->
