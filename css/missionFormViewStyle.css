@@ -65,11 +65,11 @@ body {
 }
 
 #mainContent {
-  margin-top: 231px;
+  margin-top: 66px;
 }
 
 #formMessage {
-  width: 600px;
+  width: 860px;
   margin: 0 auto;
   border-radius: 5px;
   background-color: #e3a6a6;
@@ -90,13 +90,17 @@ body {
   margin-bottom: 50px;
 }
 
-#specialityForm {
-  width: 600px;
+#missionForm {
+  width: 860px;
   margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
-#specialityForm input {
-  display: block;
+#missionForm input,
+#missionForm textarea,
+#missionForm select {
   border: none;
   padding: 13px 10px;
   font-family: SFProDisplayThin;
@@ -104,12 +108,53 @@ body {
   border-radius: 5px;
 }
 
-#specialityForm input:first-child {
-  width: 100%;
-  margin-bottom: 231px;
+#missionForm input:first-child,
+#missionForm input:nth-child(2),
+#missionForm input:nth-child(4) {
+  width: 400px;
+  margin-bottom: 20px;
 }
 
-#specialityForm input:last-child {
+.missionDateContent {
+  width: 420px;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.missionDateContent label {
+  font-size: 20px;
+  font-family: SFProDisplayBold;
+}
+
+#missionForm input[type="datetime-local"] {
+  width: 225px;
+  margin: inherit;
+  padding: 11px 10px;
+}
+
+#missionForm select:nth-child(7),
+#missionForm select:nth-child(8),
+#missionForm select:nth-child(9) {
+  width: 420px;
+  height: 50px;
+  margin-bottom: 20px;
+}
+
+#missionForm select:nth-child(8),
+#missionForm select:nth-child(9) {
+  margin-bottom: 66px;
+}
+
+#missionForm textarea {
+  width: 100%;
+  height: 74px;
+  margin-bottom: 20px;
+  resize: none;
+}
+
+#missionForm input[type="submit"] {
   width: 250px;
   background-color: #ffb527;
   font-family: SFProDisplayBold;

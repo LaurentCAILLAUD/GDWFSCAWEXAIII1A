@@ -8,7 +8,7 @@ class Mission
     private string $codeName;
     private string $country;
     private DateTime $missionStart;
-    private DateTime $missionEnd;
+    private Datetime $missionEnd;
     private string $specialityId;
     private string $missionTypeId;
     private string $missionStatusId;
@@ -54,7 +54,7 @@ class Mission
         return $this->country;
     }
 
-    public function getMissionStart(): DateTime
+    public function getMissionStart(): Datetime
     {
         return $this->missionStart;
     }
@@ -104,12 +104,12 @@ class Mission
         return $this->country = $country;
     }
 
-    public function setMissionStart(DateTime $missionStart): DateTime
+    public function setMissionStart(DateTime $missionStart): Datetime
     {
         return $this->missionStart = $missionStart;
     }
 
-    public function setMissionEnd(DateTime $missionEnd): DateTime
+    public function setMissionEnd(DateTime $missionEnd): Datetime
     {
         return $this->missionEnd = $missionEnd;
     }
