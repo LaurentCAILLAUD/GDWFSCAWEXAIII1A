@@ -46,4 +46,28 @@ class MissionRepository
             throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
         }
     }
+
+    // Fontion qui va me permettre de récupérer toutes les missions:
+    public function getAllMissions(): array
+    {
+        // Je créé une variable $allMissions qui sera un tableau vide pour le moment et qui sera mis à jour si des données sont retournées:
+        $missions = [];
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('SELECT id, title FROM mission');
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gére les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        } else {
+            // Si il n'y a pas d'erreur, je récupére les données:
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                // Si des données sont retournées alors je met à jour mon tableau:
+                $missions[$row['id']] = $row['title'];
+            }
+            // Je retourne mon tableau qu'il soit vide ou non:
+            return $missions;
+        }
+    }
 }

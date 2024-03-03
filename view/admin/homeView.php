@@ -90,7 +90,7 @@ require_once('../../controller/admin/homeController.php');
                 <div class="menuActionContainer">
                     <p>Planque</p>
                     <div class="menuActionButton">
-                        <p><a href="">Ajoutez</a></p>
+                        <p><a href="stashFormView.php">Ajoutez</a></p>
                         <p><a href="">Listez</a></p>
                     </div>
                 </div>
