@@ -2,8 +2,8 @@
 // J'appelle les classes dont je vais avoir besoin:
 require_once('../../model/NationalityRepository.php');
 require_once('../../model/MissionRepository.php');
-require_once('../../model/Target.php');
-require_once('../../model/TargetRepository.php');
+require_once('../../model/Agent.php');
+require_once('../../model/AgentRepository.php');
 // Pour des raisons de sécurité je souhaite vérifier si l'utilisateur qui souhaite afficher cette page est bien connecté. Pour cela je vais avoir besoin d'utiliser le système de session donc je commence par le démarrer:
 session_start();
 // Je vais maintenant vérifier que l'utilisateur souhaitant afficher cette page est bien autorisé à le faire. Si ce n'est pas le cas, je redirige ce dernier vers la page de connexion, sinon le script continue:
@@ -19,7 +19,7 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
         $db = new PDO($dsn, 'root', 'root');
         // Maintenant je peux instancier ma classe NationalityRepository:
         $nationalityRepository = new NationalityRepository($db);
-        // Et enfin je récupère les données à l'aide de la fonction getAllNationality. A savoir que cette fonction retourne assurément un tableau. Celui-ci peut contenir des données ou ne pas en contenir. Je décide de gérer ces deux états dans la vue de ce controller (targetFormView.php):
+        // Et enfin je récupère les données à l'aide de la fonction getAllNationality. A savoir que cette fonction retourne assurément un tableau. Celui-ci peut contenir des données ou ne pas en contenir. Je décide de gérer ces deux états dans la vue de ce controller (agentFormView.php):
         $allNationalitiesData = $nationalityRepository->getAllNationalities();
         // A ce stade, j'ai obtenu les données dont j'ai besoin pour alimenter mon champ de saisie de la nationalité. Il me faut maintenant faire la même chose pour la mission. J'utilise donc la classe MissionRepository:
         $missionRepository = new MissionRepository($db);
@@ -27,45 +27,45 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
         $allMissionsData = $missionRepository->getAllMissions();
         // J'ai maintenant toutes les données pour un affichage correct de mon formulaire. Il faut maintenant que je m'occupe de la soumission du formulaire.
         // A la validation du formulaire:
-        if (isset($_POST['targetFormSubmit'])) {
+        if (isset($_POST['agentFormSubmit'])) {
             // Première chose que je souhaite vérifier est que tous les champs de mon formulaire soient renseignés. Si ce n'est pas le cas, le script continue, sinon une exception est lancée:
             if (!empty($_POST['firstnameWritten']) && !empty($_POST['lastnameWritten']) && !empty($_POST['dateOfBirthSelected']) && !empty($_POST['nationalityIdSelected']) && !empty($_POST['missionIdSelected'])) {
                 // Afin que des utilisateurs malveillants n'introduisent pas du code dans les champs de saisie, je "transforme" les saisies de mon utilisateur en un code "sécurisé":
                 $firstnameWritten = htmlspecialchars($_POST['firstnameWritten']);
                 $lastnameWritten = htmlspecialchars($_POST['lastnameWritten']);
-                // Afin d'être sûr d'avoir toujours la prénom de notre cible avec le même format (Lettre capitale en début et le reste des caractères en minuscules), je décide de le formater:
+                // Afin d'être sûr d'avoir toujours la prénom de notre agent avec le même format (Lettre capitale en début et le reste des caractères en minuscules), je décide de le formater:
                 $firstnameWrittenFormated = ucfirst(strtolower($firstnameWritten));
-                // Afin d'être sûr d'avoir toujours le nom de notre cible avec le même format (Lettre capitale), je décide de le formater:
+                // Afin d'être sûr d'avoir toujours le nom de notre agent avec le même format (Lettre capitale), je décide de le formater:
                 $lastnameWrittenFormated = strtoupper($lastnameWritten);
                 // Il faut donc que j'instancie 1 objet Datetime avec en paramètre la date saisie par l'utilisateur:
                 $dateOfBirth = new \DateTime($_POST['dateOfBirthSelected']);
-                // A la création de notre base de données nous avons indiqué que les champs "lastname" et "firstname" de la table "target" étaient une chaine de caractères de maximum 100 caractères,. Il faut donc que je vérifie que les informations saisies par l'utilisateur ne fasse pas plus de 100 caractères pour ces deux champs. Si c'est le cas le script continue, sinon une exception est levée:
+                // A la création de notre base de données nous avons indiqué que les champs "lastname" et "firstname" de la table "agent" étaient une chaine de caractères de maximum 100 caractères,. Il faut donc que je vérifie que les informations saisies par l'utilisateur ne fasse pas plus de 100 caractères pour ces deux champs. Si c'est le cas le script continue, sinon une exception est levée:
                 if (strlen($firstnameWrittenFormated) <= 100 && strlen($lastnameWrittenFormated) <= 100) {
                     // Les saisies de notre utilisateur sont maintenant sécurisées et dans le bon format. Je vais pouvoir maintenant enregistrer celles-ci dans la base de données. 
-                    // Avant d'enregistrer la cible dans la base de données, celle-ci a besoin d'un id. Dans notre base de données, ce champ doit être une chaine de caractères de 36 caractères. En effet, la fonction UUID de mysql permet de créer cette chaîne. Sauf erreur de ma part, php (sans framework ou librairie) ne possède pas de fonction permettant de créer un UUID. Je vais donc utiliser la fonction uniqid de PHP afin de parer à ce petit souci:
+                    // Avant d'enregistrer l'agent dans la base de données, celle-ci a besoin d'un id. Dans notre base de données, ce champ doit être une chaine de caractères de 36 caractères. En effet, la fonction UUID de mysql permet de créer cette chaîne. Sauf erreur de ma part, php (sans framework ou librairie) ne possède pas de fonction permettant de créer un UUID. Je vais donc utiliser la fonction uniqid de PHP afin de parer à ce petit souci:
                     $prefix = uniqid();
                     $id = uniqid($prefix, true);
-                    // La cible que je suis en train de créé doit avoir un code identité (identity_code dans la table). J'ai décidé de ne pas faire saisir ce code à travers le formulaire mais plutôt de l'automatiser à travers de ce script. Ce code aura un format chaine de caractère + un nombre. Pour la chaine de caractère, étant donné que nous allons rentrer une cible je décide de l'appeller target:
-                    $identityCodePrefix = 'Target ';
+                    // L'agent que je suis en train de créé doit avoir un code identité (identity_code dans la table). J'ai décidé de ne pas faire saisir ce code à travers le formulaire mais plutôt de l'automatiser à travers de ce script. Ce code aura un format chaine de caractère + un nombre. Pour la chaine de caractère, étant donné que nous allons rentrer un agent je décide de l'appeller agent:
+                    $identityCodePrefix = 'Agent ';
                     // Pour le nombre, je décide d'utiliser la fonction rand() avec en paramètre un nombre entre 1 et 10000:
                     $identityCodeSuffix = rand(1, 10000);
                     // Je construis maintenant mon code d'identité:
                     $identityCode = $identityCodePrefix . $identityCodeSuffix;
-                    // Je peux instancier ma classe Target afin de créer un nouvel objet:
-                    $target = new Target($id, $firstnameWrittenFormated, $lastnameWrittenFormated, $dateOfBirth, $identityCode, $_POST['nationalityIdSelected'], $_POST['missionIdSelected']);
-                    // Afin d'enregistrer la cible dans la base de données je vais utiliser la classe TargetRepository que j'ai créé et plus particulièrement sa fonction addThisTarget():
-                    $targetRepository = new TargetRepository($db);
-                    $targetRepository->addThisTarget($target);
-                    // Si l'ajout dans la base de données, ne se fait pas, une erreur est levée (voir fonction addThisTarget). Au contraire si l'ajout se fait bien, je redirige l'utilisateur sur la page d'accueil de l'espace administration:
+                    // Je peux instancier ma classe Agent afin de créer un nouvel objet:
+                    $agent = new Agent($id, $firstnameWrittenFormated, $lastnameWrittenFormated, $dateOfBirth, $identityCode, $_POST['nationalityIdSelected'], $_POST['missionIdSelected']);
+                    // Afin d'enregistrer l'agent dans la base de données je vais utiliser la classe AgentRepository que j'ai créé et plus particulièrement sa fonction addThisAgent():
+                    $agentRepository = new AgentRepository($db);
+                    $agentRepository->addThisAgent($agent);
+                    // Si l'ajout dans la base de données, ne se fait pas, une erreur est levée (voir fonction addThisAgent). Au contraire si l'ajout se fait bien, je redirige l'utilisateur sur la page d'accueil de l'espace administration:
                     header('Location: homeView.php');
                 } else {
-                    throw new Exception('Le prénom et le nom de la cible ne doivent pas dépasser 100 caractères.');
+                    throw new Exception('Le prénom et le nom de l\'agent ne doivent pas dépasser 100 caractères.');
                 }
             } else {
                 throw new Exception('Veuillez remplir tous les champs du formulaire.');
             }
         }
     } catch (Exception $exception) {
-        $targetFormMessage = $exception->getMessage();
+        $agentFormMessage = $exception->getMessage();
     }
 }
