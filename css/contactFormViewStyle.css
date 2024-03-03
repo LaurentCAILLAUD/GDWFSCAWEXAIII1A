@@ -65,7 +65,7 @@ body {
 }
 
 #mainContent {
-  margin-top: 126px;
+  margin-top: 91px;
 }
 
 #formMessage {
@@ -90,13 +90,13 @@ body {
   margin-bottom: 50px;
 }
 
-#stashForm {
+#contactForm {
   width: 600px;
   margin: 0 auto;
 }
 
-#stashForm input,
-#stashForm select {
+#contactForm input,
+#contactForm select {
   border: none;
   padding: 13px 10px;
   font-family: SFProDisplayThin;
@@ -106,13 +106,39 @@ body {
   margin-bottom: 20px;
 }
 
-#stashForm select {
-  height: 50px;
+#dateOfBirthContainer {
   width: 620px;
-  margin-bottom: 126px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
 }
 
-#stashForm input[type="submit"] {
+#dateOfBirthContainer label {
+  font-family: SFProDisplayBold;
+  font-size: 20px;
+}
+
+#contactForm input[type="date"] {
+  width: 400px;
+  margin: inherit;
+  padding: 11px 10px;
+}
+
+#contactForm select {
+  height: 50px;
+  width: 620px;
+}
+
+#contactForm select:first-of-type {
+  margin-top: 20px;
+}
+
+#contactForm select:last-of-type {
+  margin-bottom: 91px;
+}
+
+#contactForm input[type="submit"] {
   width: 250px;
   background-color: #ffb527;
   font-family: SFProDisplayBold;

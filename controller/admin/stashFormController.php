@@ -37,7 +37,7 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
                     // Il faut maintenant que je fasse la même chose pour le champ du country mais avec une limite de 100 caractères:
                     if (strlen($countryWrittenFormated) <= 100) {
                         // Les saisies de notre utilisateur sont maintenant sécurisées et dans le bon format. Je vais pouvoir maintenant enregistrer celles-ci dans la base de données. 
-                        // Avant d'enregistrer la planque dans la base de données, celle-ci a besoin d'un code. Dans notre base de données, ce champ doit être un nombre entier de maximum 11 caractères. Il y a pleins de façon de faire pour générer ce code. Je choisi d'utiliser la fonction rand() de php en spécifiant en argument un nombre minimum de 1 caractère et un nombre max de 11 caractères:
+                        // Avant d'enregistrer la planque dans la base de données, celle-ci a besoin d'un code. Dans notre base de données, ce champ doit être un nombre entier de maximum 11 caractères. Il y a pleins de façon de faire pour générer ce code. Je choisi d'utiliser la fonction rand() de php:
                         $code = rand(1, 2147483647);
                         // J'ai maintenant toutes les informations nécessaires pour pouvoir créer une planque dans ma base de données. Je vais pour cela utiliser ma classe "Stash" afin de créer une instance de cette classe:
                         $stash = new Stash($code, $addressWritten, $countryWrittenFormated, $typeWrittenFormated, $_POST['missionIdSelected']);
