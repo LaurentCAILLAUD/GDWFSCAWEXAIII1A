@@ -37,4 +37,27 @@ class RoleRepository
             throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
         }
     }
+
+    // FOnction qui va me permettre de récupérer tous les rôles de la base de données:
+    public function getAllRoles(): array
+    {
+        // Je créé un tableau vide qui contiendra en fonction du résultat de ma requête des données ou pas:
+        $roles = [];
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('SELECT id, name FROM role');
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gère les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        } else {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                // Si des données sont retournées par ma requête, je mets à jour le tableau:
+                $roles[$row['id']] = $row['name'];
+            }
+            // Je retourne mon tableau avec des données dedans ou vide si pas de données retournées par ma requête:
+            return $roles;
+        }
+    }
 }

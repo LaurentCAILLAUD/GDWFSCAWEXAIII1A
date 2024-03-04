@@ -40,4 +40,30 @@ class AgentRepository
             throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
         }
     }
+
+    // Fonction qui va me permettre de récupérer tous les agents:
+    public function getAllAgents(): array
+    {
+        // Je créé un tableau vide qui recevra ou non des données:
+        $agents = [];
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('SELECT id, firstname, lastname FROM agent');
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gère les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        } else {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                // Si des données sont retournées:
+                // Je formate le nom de l'agent:
+                $agentName = $row['firstname'] . ' ' . $row['lastname'];
+                // Je met à jour mon tableau:
+                $agents[$row['id']] =  $agentName;
+            }
+            // Je retourne mon tableau vide si des données n'ont pas été retournées et dans le cas contraire mon tableau mis à jour:
+            return $agents;
+        }
+    }
 }

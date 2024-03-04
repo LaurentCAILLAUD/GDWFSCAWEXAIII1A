@@ -8,9 +8,10 @@ class User
     private string $email;
     private string $password;
     private DateTime $createdAt;
+    private string $roleId;
 
     // Fonction qui va me permettre de construire une instance de ma classe User:
-    public function __construct(string $id, string $firstname, string $lastname, string $email, string $password, DateTime $createdAt)
+    public function __construct(string $id, string $firstname, string $lastname, string $email, string $password, DateTime $createdAt, string $roleId)
     {
         $this->setId($id);
         $this->setFirstname($firstname);
@@ -18,6 +19,7 @@ class User
         $this->setEmail($email);
         $this->setPassword($password);
         $this->setCreatedAt($createdAt);
+        $this->setRoleId($roleId);
     }
 
     // Etant donné que j'ai choisi de mettre en privé les propriétés de ma classe, je dois faire les getters et les setters afin d'accéder et d'enregistrer les données:
@@ -51,6 +53,11 @@ class User
         return $this->createdAt;
     }
 
+    public function getRoleId(): string
+    {
+        return $this->roleId;
+    }
+
     public function setId(string $id): string
     {
         return $this->id = $id;
@@ -79,5 +86,10 @@ class User
     public function setCreatedAt(DateTime $createdAt): DateTime
     {
         return $this->createdAt = $createdAt;
+    }
+
+    public function setRoleId(string $roleId): string
+    {
+        return $this->roleId = $roleId;
     }
 }

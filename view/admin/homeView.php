@@ -138,7 +138,7 @@ require_once('../../controller/admin/homeController.php');
                 <div class="menuActionContainer">
                     <p>Agent / Spécialté</p>
                     <div class="menuActionButton">
-                        <p><a href="">Ajoutez</a></p>
+                        <p><a href="agentSpecialityFormView.php">Ajoutez</a></p>
                         <p><a href="">Listez</a></p>
                     </div>
                 </div>
@@ -162,7 +162,7 @@ require_once('../../controller/admin/homeController.php');
                 <div class="menuActionContainer">
                     <p>Utilisateur</p>
                     <div class="menuActionButton">
-                        <p><a href="">Ajoutez</a></p>
+                        <p><a href="userFormView.php">Ajoutez</a></p>
                         <p><a href="">Listez</a></p>
                     </div>
                 </div>
