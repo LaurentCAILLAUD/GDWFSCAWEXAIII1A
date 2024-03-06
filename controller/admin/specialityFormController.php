@@ -21,7 +21,7 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
                 //A la création de notre base de données nous avons indiqué que le champ "name" de la table "speciality" était une chaine de caractères de maximum 50 caractères. Il faut donc que je vérifie que la spécialité saisie par l'utilisateur ne fasse pas plus de 50 caractères. Si c'est le cas le script continue, sinon une exception est levée:
                 if (strlen($specialityWrittenFormated) <= 50) {
                     // La saisie de notre utilisateur est maintenant sécurisée et dans le bon format. Je vais pouvoir maintenant enregistrer celle-ci dans la base de données. 
-                    // Avant d'enregistrer la spécialité dans la base de données, celle-ci a besoin d'un id. Dans notre base de données, ce champ doit être une chaine de caractères de 36 caractères. En effet, la fonction UUID de mysql permet de créer cette chaîne. Sauf erreur de ma part, php (sans framework ou librairie) ne possède pas de fonction permettant de créer un UUID. Je vais donc utiliser la fonction uniqid de PHP afin de parer à ce petit souci:
+                    // Avant d'enregistrer la spécialité dans la base de données, celle-ci a besoin d'un id. Dsans notre base de données, ce champ doit être une chaine de caractères de 36 caractères. En effet, la fonction UUID de mysql permet de créer cette chaîne. Sauf erreur de ma part, php (sans framework ou librairie) ne possède pas de fonction permettant de créer un UUID. Je vais donc utiliser la fonction uniqid de PHP afin de parer à ce petit souci:
                     $prefix = uniqid();
                     $id = uniqid($prefix, true);
                     // Je peux instancier ma classe Spéciality afin de créer un nouvel objet:

@@ -50,4 +50,48 @@ class SpecialityRepository
             return $specialities;
         }
     }
+
+    // Fonction qui va nous permettre de récupérer une spécialité grâce à son id:
+    public function getSpecialityWithThisId(string $id): string
+    {
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('SELECT name FROM speciality WHERE id = :id');
+        // Je lie mes données:
+        $stmt->bindValue(':id', $id);
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gère les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        } else {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            // Si aucune donnée n'est retournée je lance une exception, sinon je retourne ma spécialité:
+            if (empty($row['name'])) {
+                throw new Exception('Aucune spécialité n\'a été récupérée.');
+            } else {
+                return $row['name'];
+            }
+        }
+    }
+
+    // Fonction qui va me permettre de mettre à jour une spécialité:
+    public function updateThisSpeciality(Speciality $speciality): void
+    {
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('UPDATE speciality SET name = :name WHERE id = :id');
+        // Je récupére les données dont j'ai besoin:
+        $name = $speciality->getName();
+        $id = $speciality->getId();
+        // Je lie mes données:
+        $stmt->bindValue(':name', $name);
+        $stmt->bindValue(':id', $id);
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gère les erreurs éventuelles:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        }
+    }
 }

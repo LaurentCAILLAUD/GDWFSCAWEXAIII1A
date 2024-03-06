@@ -31,7 +31,7 @@ require_once('../../controller/admin/homeController.php');
                     <p>Spécialité</p>
                     <div class="menuActionButton">
                         <p><a href="specialityFormView.php">Ajoutez</a></p>
-                        <p><a href="">Listez</a></p>
+                        <p><a href="specialityListView.php">Listez</a></p>
                     </div>
                 </div>
             </div>
