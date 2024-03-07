@@ -1,6 +1,6 @@
 <?php
-// J'appelle le controller qui géère la soumission de mon formulaire:
-require_once('../../controller/admin/specialityListViewController.php');
+// J'appelle le controller qui gère la soumission de mon formulaire:
+require_once('../../controller/admin/missionTypeListViewController.php');
 ?>
 
 <!DOCTYPE html>
@@ -9,10 +9,10 @@ require_once('../../controller/admin/specialityListViewController.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Espace administration - Liste des spécialtés</title>
-    <link rel="stylesheet" href="../../css/specialityListViewStyle.css">
+    <title>Espace administration - Liste des types de missions</title>
+    <link rel="stylesheet" href="../../css/missionTypeListViewStyle.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="../../js/specialityScript.js" defer></script>
+    <script src="../../js/missionTypeScript.js" defer></script>
 </head>
 
 <body>
@@ -25,23 +25,23 @@ require_once('../../controller/admin/specialityListViewController.php');
         <!-- navContent block end -->
         <!-- mainContainer block start -->
         <div id="mainContainer">
-            <h2>Liste des spécialités</h2>
+            <h2>Liste des types de missions</h2>
             <div id="messageContent">
-                <?php if (isset($specialityListViewMessage)) : ?>
-                    <p><?php echo $specialityListViewMessage; ?></p>
+                <?php if (isset($missionTypeListViewMessage)) : ?>
+                    <p><?php echo $missionTypeListViewMessage; ?></p>
                 <?php endif; ?>
             </div>
             <div id="mainContent">
-                <?php if (empty($allSpecialities)) : ?>
-                    <div id="emptySpecialityListContainer">
-                        <p>Vous n'avez aucune spécialités d'enregistrées.</p>
+                <?php if (empty($allMissionsType)) : ?>
+                    <div id="emptyMissionTypeListContainer">
+                        <p>Vous n'avez aucun types de missions d'enregistrés.</p>
                     </div>
                 <?php else : ?>
-                    <div id="specialityListContainer">
-                        <?php foreach ($allSpecialities as $specialityId => $specialityName) : ?>
-                            <div class="specialityItemContainer">
-                                <p><?php echo $specialityName; ?></p>
-                                <p><a href=<?php echo "specialityUpdateFormView.php?id=" . $specialityId ?>>Modifiez</a></p>
+                    <div id="missionTypeListContainer">
+                        <?php foreach ($allMissionsType as $missionTypeId => $missionTypeName) : ?>
+                            <div class="missionTypeItemContainer">
+                                <p><?php echo $missionTypeName; ?></p>
+                                <p><a href=<?php echo "missionTypeUpdateFormView.php?id=" . $missionTypeId ?>>Modifiez</a></p>
                                 <p><a href="">Supprimez</a></p>
                             </div>
                         <?php endforeach; ?>

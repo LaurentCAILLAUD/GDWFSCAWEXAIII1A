@@ -43,7 +43,7 @@ require_once('../../controller/admin/homeController.php');
                     <p>Type de mission</p>
                     <div class="menuActionButton">
                         <p><a href="missionTypeFormView.php">Ajoutez</a></p>
-                        <p><a href="">Listez</a></p>
+                        <p><a href="missionTypeListView.php">Listez</a></p>
                     </div>
                 </div>
             </div>

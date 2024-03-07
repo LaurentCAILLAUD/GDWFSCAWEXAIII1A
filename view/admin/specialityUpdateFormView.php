@@ -20,7 +20,7 @@ require_once('../../controller/admin/specialityUpdateFormController.php');
     <div id="mainWrapper">
         <!-- navContent block start -->
         <div id="navContent">
-            <a href="homeView.php"><img src="../../assets/pictures//home.png" alt="icône accueil application"></a>
+            <a href="homeView.php"><img src="../../assets/pictures/home.png" alt="icône accueil application"></a>
         </div>
         <!-- navContent block end -->
         <!-- mainContainer block start -->
