@@ -55,7 +55,7 @@ require_once('../../controller/admin/homeController.php');
                     <p>Statut de mission</p>
                     <div class="menuActionButton">
                         <p><a href="missionStatusFormView.php">Ajoutez</a></p>
-                        <p><a href="">Listez</a></p>
+                        <p><a href="missionStatusListView.php">Listez</a></p>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 <?php
-// J'appelle le controller qui gère la soumission de mon formulaire:
+// J'appelle le controller qui gère l'affichage des types de mission:
 require_once('../../controller/admin/missionTypeListViewController.php');
 ?>
 

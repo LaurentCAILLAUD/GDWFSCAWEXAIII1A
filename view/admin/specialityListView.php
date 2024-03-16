@@ -1,5 +1,5 @@
 <?php
-// J'appelle le controller qui géère la soumission de mon formulaire:
+// J'appelle le controller qui gère l'affichage des spécialités:
 require_once('../../controller/admin/specialityListViewController.php');
 ?>
 

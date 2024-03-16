@@ -45,4 +45,48 @@ class MissionStatusRepository
             return $missionStatus;
         }
     }
+
+    // Fonction qui va nous permettre de récupérer un statut de mission avec son id:
+    public function getThisStatusMissionWithThisId(string $id): string
+    {
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('SELECT name FROM mission_status WHERE id = :id');
+        // Je lie mes données:
+        $stmt->bindValue(':id', $id);
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gère les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        } else {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            // Si ma variable $row est vide, cela signifie que le statut de mission n'a pas été retournée, je lance donc une exception. Sinon je retourne le statut de mission:
+            if (empty($row['name'])) {
+                throw new Exception('Aucun statut de mission retourné.');
+            } else {
+                return $row['name'];
+            }
+        }
+    }
+
+    // Fonction qui va nous permettre de mettre à jour un statut de mission:
+    public function updateThisStatusMission(MissionStatus $missionStatus): void
+    {
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('UPDATE mission_status SET name = :name WHERE id = :id');
+        // Je récupére les données dont j'ai besoin:
+        $id = $missionStatus->getId();
+        $name = $missionStatus->getName();
+        // Je lie mes données:
+        $stmt->bindValue(':id', $id);
+        $stmt->bindValue(':name', $name);
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gère les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        }
+    }
 }
