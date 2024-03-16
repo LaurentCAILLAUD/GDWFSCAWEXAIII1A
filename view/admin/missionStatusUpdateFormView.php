@@ -37,7 +37,7 @@ require_once('../../controller/admin/missionStatusUpdateFormController.php');
                     <h2>Modifiez un statut de mission</h2>
                     <form action="" id="missionStatusForm" method="post">
                         <input type="text" name="missionStatusWritten" value="<?php echo $missionStatusRetrieved; ?>" placeholder="Entrez ici le statut de mission que vous souhaitez ajouter.">
-                        <input type="submit" value="Ajoutez" name="missionStatusUpdateFormSubmit">
+                        <input type="submit" value="Modifiez" name="missionStatusUpdateFormSubmit">
                     </form>
                 <?php endif; ?>
             </div>

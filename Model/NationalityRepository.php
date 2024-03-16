@@ -45,4 +45,48 @@ class NationalityRepository
             return $nationalities;
         }
     }
+
+    // Fonction qui va nous permettre de récupérer une nationalité avec son id:
+    public function getThisNationalityWithThisId(string $id): string
+    {
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('SELECT name FROM nationality WHERE id = :id');
+        // Je lie mes données:
+        $stmt->bindValue(':id', $id);
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gère les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        } else {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            // Si ma variable $row est vide, cela signifie que la nationalité n'a pas été retournée, je lance donc une exception. Sinon je retourne la nationalité:
+            if (empty($row['name'])) {
+                throw new Exception('Aucune nationalité retournée.');
+            } else {
+                return $row['name'];
+            }
+        }
+    }
+
+    // Fonction qui va nous permettre de mettre à jour une nationalité:
+    public function updateThisNationality(Nationality $nationality): void
+    {
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('UPDATE nationality SET name = :name WHERE id = :id');
+        // Je récupère les données dont je vais avoir besoin:
+        $id = $nationality->getId();
+        $name = $nationality->getName();
+        // Je lie mes données:
+        $stmt->bindValue(':id', $id);
+        $stmt->bindValue(':name', $name);
+        // J'excécute ma requête:
+        $stmt->execute();
+        // Je gère les erreurs éventuelles:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        }
+    }
 }

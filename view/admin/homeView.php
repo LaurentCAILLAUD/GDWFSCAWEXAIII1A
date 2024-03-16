@@ -67,7 +67,7 @@ require_once('../../controller/admin/homeController.php');
                     <p>Nationalité</p>
                     <div class="menuActionButton">
                         <p><a href="nationalityFormView.php">Ajoutez</a></p>
-                        <p><a href="">Listez</a></p>
+                        <p><a href="nationalityListView.php">Listez</a></p>
                     </div>
                 </div>
             </div>
