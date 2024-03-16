@@ -45,4 +45,47 @@ class MissionTypeRepository
             return $missionType;
         }
     }
+
+    // Fonction qui va nous permettre de récupérer un type de mission avec son id:
+    public function getMissionTypeWithThisId(string $id): string
+    {
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('SELECT name FROM mission_type WHERE id = :id');
+        // Je lie mes données:
+        $stmt->bindValue(':id', $id);
+        // J'execute ma requête:
+        $stmt->execute();
+        // Je gère les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        } else {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (empty($row['name'])) {
+                throw new Exception('Aucun type de mission retourné.');
+            } else {
+                return $row['name'];
+            }
+        }
+    }
+
+    // Fonction qui va nous permettre de mettre à jour un type de mission:
+    public function updateThisMissionType(MissionType $missionType): void
+    {
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('UPDATE mission_type SET name = :name WHERE id = :id');
+        // Je récupére les données dont j'ai besion:
+        $id = $missionType->getId();
+        $name = $missionType->getName();
+        // Je lie mes données:
+        $stmt->bindValue(':id', $id);
+        $stmt->bindValue(':name', $name);
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gère les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        }
+    }
 }
