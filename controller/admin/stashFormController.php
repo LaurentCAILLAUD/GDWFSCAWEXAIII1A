@@ -18,8 +18,8 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
         $db = new PDO($dsn, 'root', 'root');
         // Maintenant je peux instancier ma classe SpecialityRepository:
         $missionRepository = new MissionRepository($db);
-        // Et enfin je récupère les données à l'aide de la fonction getAllMissions. A savoir que cette fonction retourne assurément un tableau. Celui-ci peut contenir des données ou ne pas en contenir. Je décide de gérer ces deux états dans la vue de ce controller (missionFormView.php):
-        $allMissionsData = $missionRepository->getAllMissions();
+        // Et enfin je récupère les données à l'aide de la fonction getAllTitlesMissions. A savoir que cette fonction retourne assurément un tableau. Celui-ci peut contenir des données ou ne pas en contenir. Je décide de gérer ces deux états dans la vue de ce controller (stashFormView.php):
+        $allMissionsData = $missionRepository->getAllTitlesMissions();
         // J'ai maintenant toutes les données pour un affichage correct de mon formulaire. Il faut maintenant que je m'occupe de la soumission du formulaire.
         // A la validation du formulaire:
         if (isset($_POST['stashFormSubmit'])) {

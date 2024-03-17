@@ -24,7 +24,7 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
         // A ce stade, j'ai obtenu les données dont j'ai besoin pour alimenter mon champ de saisie de la nationalité. Il me faut maintenant faire la même chose pour la mission. J'utilise donc la classe MissionRepository:
         $missionRepository = new MissionRepository($db);
         // Comme pour les nationalités, cette fonction retourne un tableau. Celui-ci peut être vide ou avec des données. Je décide de gérer ces deux états dans la vue de mon controller:
-        $allMissionsData = $missionRepository->getAllMissions();
+        $allMissionsData = $missionRepository->getAllTitlesMissions();
         // J'ai maintenant toutes les données pour un affichage correct de mon formulaire. Il faut maintenant que je m'occupe de la soumission du formulaire.
         // A la validation du formulaire:
         if (isset($_POST['agentFormSubmit'])) {

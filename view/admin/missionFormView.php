@@ -31,7 +31,7 @@ require_once('../../controller/admin/missionFormController.php');
                         <p><?php echo $missionFormMessage; ?></p>
                     <?php endif; ?>
                 </div>
-                <h2>Ajoutez un statut de mission</h2>
+                <h2>Ajoutez une mission</h2>
                 <form action="" method="post" id="missionForm">
                     <input type="text" name="titleWritten" placeholder="Entrez ici le titre de votre mission">
                     <input type="text" name="codeNameWritten" placeholder="Entre ici le code de votre mission">

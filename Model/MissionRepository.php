@@ -47,11 +47,11 @@ class MissionRepository
         }
     }
 
-    // Fontion qui va me permettre de récupérer toutes les missions:
-    public function getAllMissions(): array
+    // Fontion qui va me permettre de récupérer tous les titres des missions:
+    public function getAllTitlesMissions(): array
     {
-        // Je créé une variable $allMissions qui sera un tableau vide pour le moment et qui sera mis à jour si des données sont retournées:
-        $missions = [];
+        // Je créé une variable $allMissionsTitles qui sera un tableau vide pour le moment et qui sera mis à jour si des données sont retournées:
+        $missionsTitles = [];
         // Je prépare ma requête:
         $stmt = $this->db->prepare('SELECT id, title FROM mission');
         // J'exécute ma requête:
@@ -64,10 +64,78 @@ class MissionRepository
             // Si il n'y a pas d'erreur, je récupére les données:
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 // Si des données sont retournées alors je met à jour mon tableau:
-                $missions[$row['id']] = $row['title'];
+                $missionsTitles[$row['id']] = $row['title'];
             }
             // Je retourne mon tableau qu'il soit vide ou non:
-            return $missions;
+            return $missionsTitles;
+        }
+    }
+
+    // Fonction qui va nous permettre de récupérer les données d'une mission:
+    public function getAllMissionDatasWithThisId(string $id): array
+    {
+        // Je créé une variable $missionDatas qui sera un tableau vide pour le moment et qui sera mis à jour si des données sont retournées:
+        $missionDatas = [];
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('SELECT title, description, code_name, country, mission_start, mission_end, speciality.name AS specialityName, mission_type.name AS missionTypeName, mission_status.name AS missionStatusName FROM mission INNER JOIN speciality ON mission.speciality_id = speciality.id  INNER JOIN mission_type ON mission.mission_type_id = mission_type.id INNER JOIN mission_status ON mission.mission_status_id = mission_status.id WHERE mission.id = :id');
+        // Je lie mes données:
+        $stmt->bindValue(':id', $id);
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gère les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        } else {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $missionDatas['title'] = $row['title'];
+                $missionDatas['description'] = $row['description'];
+                $missionDatas['codeName'] = $row['code_name'];
+                $missionDatas['country'] = $row['country'];
+                $missionDatas['missionStart'] = $row['mission_start'];
+                $missionDatas['missionEnd'] = $row['mission_end'];
+                $missionDatas['specialityName'] = $row['specialityName'];
+                $missionDatas['missionTypeName'] = $row['missionTypeName'];
+                $missionDatas['missionStatusName'] = $row['missionStatusName'];
+            }
+            // Je retourne mon tableau qu'il soit vide ou non:
+            return $missionDatas;
+        }
+    }
+
+    // Fonction qui va nous permettre de mettre les données d'une mission à jour:
+    public function updateThisMission(Mission $mission): void
+    {
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('UPDATE mission SET title = :title, description = :description, code_name = :codeName, country = :country, mission_start = :missionStart, mission_end = :missionEnd, speciality_id = :specialityId, mission_type_id = :missionTypeId, mission_status_id = :missionStatusId WHERE id = :id');
+        // Je récupère les données dont j'ai besoin:
+        $id = $mission->getId();
+        $title = $mission->getTite();
+        $description = $mission->getDescription();
+        $codeName = $mission->getCodeName();
+        $country = $mission->getCountry();
+        $missionStart = $mission->getMissionStart()->format('Y-m-d H:i:s');
+        $missionEnd = $mission->getMissionEnd()->format('Y-m-d H:i:s');
+        $specialityId = $mission->getSpecialityId();
+        $missionTypeId = $mission->getMissionTypeId();
+        $missionStatusId = $mission->getMissionStatusId();
+        // Je lie mes données:
+        $stmt->bindValue(':id', $id);
+        $stmt->bindValue(':title', $title);
+        $stmt->bindValue(':description', $description);
+        $stmt->bindValue(':codeName', $codeName);
+        $stmt->bindValue(':country', $country);
+        $stmt->bindValue(':missionStart', $missionStart);
+        $stmt->bindValue(':missionEnd', $missionEnd);
+        $stmt->bindValue(':specialityId', $specialityId);
+        $stmt->bindValue(':missionTypeId', $missionTypeId);
+        $stmt->bindValue(':missionStatusId', $missionStatusId);
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gère les erreurs éventuelles:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
         }
     }
 }
