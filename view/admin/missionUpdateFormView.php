@@ -31,7 +31,7 @@ require_once('../../controller/admin/missionUpdateFormController.php');
                         <p><?php echo $missionUpdateFormMessage; ?></p>
                     <?php endif; ?>
                 </div>
-                <!-- Si une erreur dans la récupération de la mission est arrivée nous aurons l'affichage de celle-ci dans l'endroit prévu. Cette erreur fera alors que notre variable contenant notre nationalité ($missionDatasRetrieved) sera vide. Il est alors inutile d'afficher le formulaire de modification. Je décide donc pour cela de vérifier si cette variable est vide ou pas. -->
+                <!-- Si une erreur dans la récupération de la mission est arrivée nous aurons l'affichage de celle-ci dans l'endroit prévu. Cette erreur fera alors que notre variable contenant les données de notre mission ($missionDatasRetrieved) sera vide. Il est alors inutile d'afficher le formulaire de modification. Je décide donc pour cela de vérifier si cette variable est vide ou pas. -->
                 <?php if (!empty($missionDatasRetrieved)) : ?>
                     <h2>Modifiez une mission</h2>
                     <form action="" method="post" id="missionForm">
