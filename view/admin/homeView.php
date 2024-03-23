@@ -103,7 +103,7 @@ require_once('../../controller/admin/homeController.php');
                     <p>Contact</p>
                     <div class="menuActionButton">
                         <p><a href="contactFormView.php">Ajoutez</a></p>
-                        <p><a href="">Listez</a></p>
+                        <p><a href="contactListView.php">Listez</a></p>
                     </div>
                 </div>
             </div>
