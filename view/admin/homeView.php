@@ -115,7 +115,7 @@ require_once('../../controller/admin/homeController.php');
                     <p>Cible</p>
                     <div class="menuActionButton">
                         <p><a href="targetFormView.php">Ajoutez</a></p>
-                        <p><a href="">Listez</a></p>
+                        <p><a href="targetListView.php">Listez</a></p>
                     </div>
                 </div>
             </div>

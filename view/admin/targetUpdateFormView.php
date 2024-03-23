@@ -1,6 +1,6 @@
 <?php
 // J'appelle le controller qui géère la soumission de mon formulaire:
-require_once('../../controller/admin/contactUpdateFormController.php');
+require_once('../../controller/admin/targetUpdateFormController.php');
 ?>
 
 <!DOCTYPE html>
@@ -9,10 +9,10 @@ require_once('../../controller/admin/contactUpdateFormController.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Espace administration - Modifiez un contact</title>
-    <link rel="stylesheet" href="../../css/contactFormViewStyle.css">
+    <title>Espace administration - Modifiez une cible</title>
+    <link rel="stylesheet" href="../../css/targetFormViewStyle.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="../../js/contactScript.js" defer></script>
+    <script src="../../js/targetScript.js" defer></script>
 </head>
 
 <body>
@@ -25,31 +25,31 @@ require_once('../../controller/admin/contactUpdateFormController.php');
         <!-- navContent block end -->
         <!-- mainContainer block start -->
         <div id="mainContainer">
-            <p>A l'aide du formulaire ci-dessous modifiez les données d'un contact dans votre base de données.</p>
+            <p>A l'aide du formulaire ci-dessous modifiez les données d'une cible dans votre base de données.</p>
             <div id="mainContent">
                 <div id="formMessage">
-                    <?php if (isset($contactUpdateFormMessage)) : ?>
-                        <p><?php echo $contactUpdateFormMessage; ?></p>
+                    <?php if (isset($targetUpdateFormMessage)) : ?>
+                        <p><?php echo $targetUpdateFormMessage; ?></p>
                     <?php endif; ?>
                 </div>
-                <!-- Si une erreur dans la récupération du contact est arrivée nous aurons l'affichage de celle-ci dans l'endroit prévu. Cette erreur fera alors que notre variable contenant les données de notre contact ($contactDatasRetrieved) sera vide. Il est alors inutile d'afficher le formulaire de modification. Je décide donc pour cela de vérifier si cette variable est vide ou pas. -->
-                <?php if (!empty($contactDatasRetrieved)) : ?>
-                    <h2>Modifiez un contact</h2>
-                    <form action="" id="contactForm" method="post">
-                        <input type="text" name="firstnameWritten" value="<?php echo $contactDatasRetrieved['firstname']; ?>" placeholder="Entrez ici le prénom de votre contact.">
-                        <input type="text" name="lastnameWritten" value="<?php echo $contactDatasRetrieved['lastname']; ?>" placeholder="Entrez ici le nom de votre contact.">
+                <!-- Si une erreur dans la récupération de la cible est arrivée nous aurons l'affichage de celle-ci dans l'endroit prévu. Cette erreur fera alors que notre variable contenant les données de notre cible ($targetDatasRetrieved) sera vide. Il est alors inutile d'afficher le formulaire de modification. Je décide donc pour cela de vérifier si cette variable est vide ou pas. -->
+                <?php if (!empty($targetDatasRetrieved)) : ?>
+                    <h2>Modifiez une cible</h2>
+                    <form action="" id="targetForm" method="post">
+                        <input type="text" name="firstnameWritten" value="<?php echo $targetDatasRetrieved['firstname']; ?>" placeholder="Entrez ici le prénom de votre cible.">
+                        <input type="text" name="lastnameWritten" value="<?php echo $targetDatasRetrieved['lastname']; ?>" placeholder="Entrez ici le nom de votre cible.">
                         <div id="dateOfBirthContainer">
                             <label>Date de naissance:</label>
-                            <input type="date" value="<?php echo $contactDatasRetrieved['dateOfBirth']; ?>" name="dateOfBirthSelected">
+                            <input type="date" value="<?php echo $targetDatasRetrieved['dateOfBirth']; ?>" name="dateOfBirthSelected">
                         </div>
                         <select name="nationalityIdSelected">
                             <?php if (empty($allNationalitiesData)) : ?>
-                                <option value="">Veuillez sélectioner la nationalité de votre contact</option>
+                                <option value="">Veuillez sélectioner la nationalité de votre cible</option>
                                 <option value="">Aucune nationalité à afficher</option>
                             <?php else : ?>
                                 <?php foreach ($allNationalitiesData as $nationalityId => $nationalityName) : ?>
-                                    <!-- Etant donné que nous sommes dans un formulaire de modification, je décide de sélectionner directement la nationalité choisie à la création du contact: -->
-                                    <?php if ($nationalityName == $contactDatasRetrieved['nationality']) : ?>
+                                    <!-- Etant donné que nous sommes dans un formulaire de modification, je décide de sélectionner directement la nationalité choisie à la création de la cible: -->
+                                    <?php if ($nationalityName == $targetDatasRetrieved['nationality']) : ?>
                                         <option value="<?php echo $nationalityId; ?>" selected><?php echo $nationalityName; ?></option>
                                     <?php else : ?>
                                         <option value="<?php echo $nationalityId; ?>"><?php echo $nationalityName; ?></option>
@@ -63,8 +63,8 @@ require_once('../../controller/admin/contactUpdateFormController.php');
                                 <option value="">Aucune mission à afficher</option>
                             <?php else : ?>
                                 <?php foreach ($allMissionsData as $missionId => $missionTitle) : ?>
-                                    <!-- Etant donné que nous sommes dans un formulaire de modification, je décide de sélectionner directement la mission choisie à la création du contact: -->
-                                    <?php if ($missionTitle == $contactDatasRetrieved['missionTitle']) : ?>
+                                    <!-- Etant donné que nous sommes dans un formulaire de modification, je décide de sélectionner directement la nationalité choisie à la création de la cible: -->
+                                    <?php if ($missionTitle == $targetDatasRetrieved['missionTitle']) : ?>
                                         <option value="<?php echo $missionId; ?>" selected><?php echo $missionTitle; ?></option>
                                     <?php else : ?>
                                         <option value="<?php echo $missionId; ?>"><?php echo $missionTitle; ?></option>
@@ -72,7 +72,7 @@ require_once('../../controller/admin/contactUpdateFormController.php');
                                 <?php endforeach; ?>
                             <?php endif; ?>
                         </select>
-                        <input type="submit" value="Modifiez" name="contactUpdateFormSubmit">
+                        <input type="submit" value="Modifiez" name="targetUpdateFormSubmit">
                     </form>
                 <?php endif; ?>
             </div>
