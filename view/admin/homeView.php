@@ -127,7 +127,7 @@ require_once('../../controller/admin/homeController.php');
                     <p>Agent</p>
                     <div class="menuActionButton">
                         <p><a href="agentFormView.php">Ajoutez</a></p>
-                        <p><a href="">Listez</a></p>
+                        <p><a href="agentListView.php">Listez</a></p>
                     </div>
                 </div>
             </div>
