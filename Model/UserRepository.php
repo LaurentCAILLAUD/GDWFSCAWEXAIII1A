@@ -88,4 +88,87 @@ class UserRepository
             throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
         }
     }
+
+    // Fonction qui va me permettre de récupérer tous les utilisateurs:
+    public function getAllUsers(): array
+    {
+        // Je crée une variable qui est un tableau vide:
+        $allUsers = [];
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('SELECT id, firstname, lastname FROM user');
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gère les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        } else {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                // Je mer à jour mon tableau avec les données retournées:
+                $allUsers[$row['id']] = $row['firstname'] . ' ' . $row['lastname'];
+            }
+            // Je retourne mon tableau qu'il soit vide ou non:
+            return $allUsers;
+        }
+    }
+
+    // Fonction qui va me permettre de récupérer les données d'un utilisateur grâce à son id:
+    public function getUserDatasWithThisId(string $id): array
+    {
+        // Je crée une variable qui est un tableau vide:
+        $allUserDatas = [];
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('SELECT firstname, lastname, email, password, created_at, name FROM user INNER JOIN role ON user.role_id = role.id WHERE user.id = :id');
+        // Je lie mes données:
+        $stmt->bindValue(':id', $id);
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gère les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        } else {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                // Je met à jour mon tableau avec les données retournées:
+                $allUserDatas['firstname'] = $row['firstname'];
+                $allUserDatas['lastname'] = $row['lastname'];
+                $allUserDatas['email'] = $row['email'];
+                $allUserDatas['password'] = $row['password'];
+                $allUserDatas['createdAt'] = $row['created_at'];
+                $allUserDatas['roleName'] = $row['name'];
+            }
+            // Je retourne mon tableau qu'il soit vide ou non:
+            return $allUserDatas;
+        }
+    }
+
+    // Fonction qui va me permettre de mettre à jour les données d'un agent:
+    public function updateThisUser(User $user): void
+    {
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('UPDATE user SET firstname = :firstname, lastname = :lastname, email = :email, password = :password, created_at = :createdAt , role_id = :roleId WHERE id = :id');
+        // Je récupére les données dont j'ai besoin:
+        $id = $user->getId();
+        $firstname = $user->getFirstname();
+        $lastname = $user->getLastname();
+        $email = $user->getEmail();
+        $password = $user->getPassword();
+        $createdAt = $user->getCreatedAt()->format('Y-m-d');
+        $roleId = $user->getRoleId();
+        // Je lie mes données:
+        $stmt->bindValue(':id', $id);
+        $stmt->bindValue(':firstname', $firstname);
+        $stmt->bindValue(':lastname', $lastname);
+        $stmt->bindValue(':email', $email);
+        $stmt->bindValue(':password', $password);
+        $stmt->bindValue(':createdAt', $createdAt);
+        $stmt->bindValue(':roleId', $roleId);
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gère les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        }
+    }
 }

@@ -32,7 +32,7 @@ require_once('../../controller/admin/agentUpdateFormController.php');
                         <p><?php echo $agentUpdateFormMessage; ?></p>
                     <?php endif; ?>
                 </div>
-                <!-- Si une erreur dans la récupération de la cible est arrivée nous aurons l'affichage de celle-ci dans l'endroit prévu. Cette erreur fera alors que notre variable contenant les données de notre cible ($targetDatasRetrieved) sera vide. Il est alors inutile d'afficher le formulaire de modification. Je décide donc pour cela de vérifier si cette variable est vide ou pas. -->
+                <!-- Si une erreur dans la récupération de la cible est arrivée nous aurons l'affichage de celle-ci dans l'endroit prévu. Cette erreur fera alors que notre variable contenant les données de notre cible ($agentDatasRetrieved) sera vide. Il est alors inutile d'afficher le formulaire de modification. Je décide donc pour cela de vérifier si cette variable est vide ou pas. -->
                 <?php if (!empty($agentDatasRetrieved)) : ?>
                     <h2>Modifiez un agent</h2>
                     <form action="" id="agentForm" method="post">
