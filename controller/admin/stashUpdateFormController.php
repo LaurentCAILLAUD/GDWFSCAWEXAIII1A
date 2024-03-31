@@ -18,7 +18,7 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
         $db = new PDO($dsn, 'root', 'root');
         // Maintenant je peux instancier ma classe SpecialityRepository:
         $missionRepository = new MissionRepository($db);
-        // Et enfin je récupère les données à l'aide de la fonction getAllTitlesMissions. A savoir que cette fonction retourne assurément un tableau. Celui-ci peut contenir des données ou ne pas en contenir. Je décide de gérer ces deux états dans la vue de ce controller (stashFormView.php):
+        // Et enfin je récupère les données à l'aide de la fonction getAllTitlesMissions. A savoir que cette fonction retourne assurément un tableau. Celui-ci peut contenir des données ou ne pas en contenir. Je décide de gérer ces deux états dans la vue de ce controller (stashUpdateFormView.php):
         $allMissionsData = $missionRepository->getAllTitlesMissions();
         // Afin d'afficher les données de la planque que l'administrateur souhaite modifier dans les différents champs du formulaire, il faut que j'aille récupérer l'ensemble des données d'une planque dans la base de données. Pour cela je crée un nouvel objet de ma classe StashRepository:
         $stashRepository = new StashRepository($db);

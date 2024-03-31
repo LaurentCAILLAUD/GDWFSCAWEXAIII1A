@@ -20,7 +20,7 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
         $db = new PDO($dsn, 'root', 'root');
         // Maintenant je peux instancier ma classe SpecialityRepository:
         $specialityRepository = new SpecialityRepository($db);
-        // Et enfin je récupère les données à l'aide de la fonction getAllSpecialities. A savoir que cette fonction retourne assurément un tableau. Celui-ci peut contenir des données ou ne pas en contenir. Je décide de gérer ces deux états dans la vue de ce controller (missionFormView.php):
+        // Et enfin je récupère les données à l'aide de la fonction getAllSpecialities. A savoir que cette fonction retourne assurément un tableau. Celui-ci peut contenir des données ou ne pas en contenir. Je décide de gérer ces deux états dans la vue de ce controller (missionUpdateFormView.php):
         $allSpecialitiesData = $specialityRepository->getAllSpecialities();
         // A ce stade, j'ai obtenu les données dont j'ai besoin pour alimenter mon champ de saisie de la spécialité. Il me faut maintenant faire la même chose pour le type de mission. J'utilise donc la classe MissionTypeRepository:
         $missionTypeRepository = new MissionTypeRepository($db);

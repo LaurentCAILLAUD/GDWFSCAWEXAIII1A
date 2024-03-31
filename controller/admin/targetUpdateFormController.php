@@ -19,7 +19,7 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
         $db = new PDO($dsn, 'root', 'root');
         // Maintenant je peux instancier ma classe NationalityRepository:
         $nationalityRepository = new NationalityRepository($db);
-        // Et enfin je récupère les données à l'aide de la fonction getAllNationality. A savoir que cette fonction retourne assurément un tableau. Celui-ci peut contenir des données ou ne pas en contenir. Je décide de gérer ces deux états dans la vue de ce controller (targetFormView.php):
+        // Et enfin je récupère les données à l'aide de la fonction getAllNationality. A savoir que cette fonction retourne assurément un tableau. Celui-ci peut contenir des données ou ne pas en contenir. Je décide de gérer ces deux états dans la vue de ce controller (targetUpdateFormView.php):
         $allNationalitiesData = $nationalityRepository->getAllNationalities();
         // A ce stade, j'ai obtenu les données dont j'ai besoin pour alimenter mon champ de saisie de la nationalité. Il me faut maintenant faire la même chose pour la mission. J'utilise donc la classe MissionRepository:
         $missionRepository = new MissionRepository($db);
