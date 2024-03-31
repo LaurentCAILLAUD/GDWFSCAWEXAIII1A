@@ -151,7 +151,7 @@ require_once('../../controller/admin/homeController.php');
                     <p>Rôle</p>
                     <div class="menuActionButton">
                         <p><a href="roleFormView.php">Ajoutez</a></p>
-                        <p><a href="">Listez</a></p>
+                        <p><a href="roleListView.php">Listez</a></p>
                     </div>
                 </div>
             </div>
