@@ -42,7 +42,7 @@ require_once('../../controller/admin/specialityListViewController.php');
                             <div class="specialityItemContainer">
                                 <p><?php echo $specialityName; ?></p>
                                 <p><a href=<?php echo "specialityUpdateFormView.php?id=" . $specialityId ?>>Modifiez</a></p>
-                                <p><a href="">Supprimez</a></p>
+                                <p><a href="<?php echo "specialityDeleteView.php?id=" . $specialityId ?>">Supprimez</a></p>
                             </div>
                         <?php endforeach; ?>
                     </div>
