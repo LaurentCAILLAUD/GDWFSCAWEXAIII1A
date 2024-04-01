@@ -40,7 +40,7 @@ require_once('../../controller/admin/missionStatusListViewController.php');
                             <div class="missionStatusItemContainer">
                                 <p><?php echo $missionStatusName; ?></p>
                                 <p><a href=<?php echo "missionStatusUpdateFormView.php?id=" . $missionStatusId ?>>Modifiez</a></p>
-                                <p><a href="">Supprimez</a></p>
+                                <p><a href=<?php echo "missionStatusDeleteView.php?id=" . $missionStatusId ?>>Supprimez</a></p>
                             </div>
                         <?php endforeach; ?>
                     </div>
