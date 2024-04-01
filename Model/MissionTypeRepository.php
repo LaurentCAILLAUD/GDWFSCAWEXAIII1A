@@ -88,4 +88,20 @@ class MissionTypeRepository
             throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
         }
     }
+
+    // Fonction qui va me permettre de supprimer un type de mission grâce à son id:
+    public function deleteThisMissionTypeWithThisId(string $id): void
+    {
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('DELETE FROM mission_type WHERE id = :id');
+        // Je lie mes données:
+        $stmt->bindValue(':id', $id);
+        // J'exécute la requête:
+        $stmt->execute();
+        // Je gère les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue dans la suppression. ' . $errorInRequest[2]);
+        }
+    }
 }

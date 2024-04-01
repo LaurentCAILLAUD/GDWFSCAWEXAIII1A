@@ -3,3 +3,7 @@ if ($("#formMessage p").text().length != 0) {
   $("#formMessage").css("margin-bottom", "142px");
   $("#missionTypeForm input:first-child").css("margin-bottom", "142px");
 }
+
+if ($("#messageContent p").text().length != 0) {
+  $("#mainContent").css("height", "561px");
+}
