@@ -40,7 +40,7 @@ require_once('../../controller/admin/agentListViewController.php');
                             <div class="agentItemContainer">
                                 <p><?php echo $agentName; ?></p>
                                 <p><a href=<?php echo "agentUpdateFormView.php?id=" . $agentId ?>>Modifiez</a></p>
-                                <p><a href="">Supprimez</a></p>
+                                <p><a href=<?php echo "agentDeleteView.php?id=" . $agentId ?>>Supprimez</a></p>
                             </div>
                         <?php endforeach; ?>
                     </div>
