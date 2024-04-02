@@ -40,7 +40,7 @@ require_once('../../controller/admin/nationalityListViewController.php');
                             <div class="nationalityItemContainer">
                                 <p><?php echo $nationalityName; ?></p>
                                 <p><a href=<?php echo "nationalityUpdateFormView.php?id=" . $nationalityId ?>>Modifiez</a></p>
-                                <p><a href="">Supprimez</a></p>
+                                <p><a href=<?php echo "nationalityDeleteView.php?id=" . $nationalityId ?>>Supprimez</a></p>
                             </div>
                         <?php endforeach; ?>
                     </div>
