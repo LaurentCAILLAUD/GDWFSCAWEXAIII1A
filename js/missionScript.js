@@ -5,3 +5,7 @@ if ($("#formMessage p").text().length != 0) {
   $("#missionForm select:nth-child(8)").css("margin-bottom", "35px");
   $("#missionForm select:nth-child(9)").css("margin-bottom", "35px");
 }
+
+if ($("#messageContent p").text().length != 0) {
+  $("#mainContent").css("height", "561px");
+}
