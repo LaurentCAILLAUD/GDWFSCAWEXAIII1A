@@ -40,7 +40,7 @@ require_once('../../controller/admin/stashListViewController.php');
                             <div class="stashItemContainer">
                                 <p><?php echo $stashCode; ?></p>
                                 <p><a href=<?php echo "stashUpdateFormView.php?id=" . $stashCode ?>>Modifiez</a></p>
-                                <p><a href="">Supprimez</a></p>
+                                <p><a href=<?php echo "stashDeleteView.php?id=" . $stashCode ?>>Supprimez</a></p>
                             </div>
                         <?php endforeach; ?>
                     </div>

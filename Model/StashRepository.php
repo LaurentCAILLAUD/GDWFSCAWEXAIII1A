@@ -112,4 +112,20 @@ class StashRepository
             throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
         }
     }
+
+    // Fonction qui va me permettre de supprimer une planque grâce à son id:
+    public function deleteThisStashWithThisCode(string $code): void
+    {
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('DELETE FROM stash WHERE code = :code');
+        // Je lie mes données:
+        $stmt->bindValue(':code', $code);
+        // J'exécute la requête:
+        $stmt->execute();
+        // Je gère les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue dans la suppression. ' . $errorInRequest[2]);
+        }
+    }
 }
