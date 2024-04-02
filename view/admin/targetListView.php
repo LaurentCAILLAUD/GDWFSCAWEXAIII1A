@@ -40,7 +40,7 @@ require_once('../../controller/admin/targetListViewController.php');
                             <div class="targetItemContainer">
                                 <p><?php echo $targetName; ?></p>
                                 <p><a href=<?php echo "targetUpdateFormView.php?id=" . $targetId ?>>Modifiez</a></p>
-                                <p><a href="">Supprimez</a></p>
+                                <p><a href=<?php echo "targetDeleteView.php?id=" . $targetId ?>>Supprimez</a></p>
                             </div>
                         <?php endforeach; ?>
                     </div>

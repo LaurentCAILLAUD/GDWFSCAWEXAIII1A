@@ -119,4 +119,20 @@ class TargetRepository
             throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
         }
     }
+
+    // Fonction qui va me permettre de supprimer une cible grâce à son id:
+    public function deleteThisTargetWithThisId(string $id): void
+    {
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('DELETE FROM target WHERE id = :id');
+        // Je lie mes données:
+        $stmt->bindValue(':id', $id);
+        // J'exécute la requête:
+        $stmt->execute();
+        // Je gère les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue dans la suppression. ' . $errorInRequest[2]);
+        }
+    }
 }
