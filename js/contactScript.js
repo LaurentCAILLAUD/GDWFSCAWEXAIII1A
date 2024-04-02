@@ -4,3 +4,7 @@ if ($("#formMessage p").text().length != 0) {
   $("#mainContent h2").css("margin-bottom", "44px");
   $("#contactForm select:last-of-type").css("margin-bottom", "44px");
 }
+
+if ($("#messageContent p").text().length != 0) {
+  $("#mainContent").css("height", "561px");
+}

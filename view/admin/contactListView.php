@@ -41,7 +41,7 @@ require_once('../../controller/admin/contactListViewController.php');
                             <div class="contactItemContainer">
                                 <p><?php echo $contactName; ?></p>
                                 <p><a href=<?php echo "contactUpdateFormView.php?id=" . $contactId ?>>Modifiez</a></p>
-                                <p><a href="">Supprimez</a></p>
+                                <p><a href=<?php echo "contactDeleteView.php?id=" . $contactId ?>>Supprimez</a></p>
                             </div>
                         <?php endforeach; ?>
                     </div>
