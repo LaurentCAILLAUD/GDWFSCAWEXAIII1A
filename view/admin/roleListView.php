@@ -41,7 +41,7 @@ require_once('../../controller/admin/roleListViewController.php');
                             <div class="roleItemContainer">
                                 <p><?php echo $roleName; ?></p>
                                 <p><a href=<?php echo "roleUpdateFormView.php?id=" . $roleId ?>>Modifiez</a></p>
-                                <p><a href="">Supprimez</a></p>
+                                <p><a href=<?php echo "roleDeleteView.php?id=" . $roleId ?>>Supprimez</a></p>
                             </div>
                         <?php endforeach; ?>
                     </div>
