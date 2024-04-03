@@ -40,7 +40,7 @@ require_once('../../controller/admin/userListViewController.php');
                             <div class="userItemContainer">
                                 <p><?php echo $userName; ?></p>
                                 <p><a href=<?php echo "userUpdateFormView.php?id=" . $userId ?>>Modifiez</a></p>
-                                <p><a href="">Supprimez</a></p>
+                                <p><a href=<?php echo "userDeleteView.php?id=" . $userId ?>>Supprimez</a></p>
                             </div>
                         <?php endforeach; ?>
                     </div>

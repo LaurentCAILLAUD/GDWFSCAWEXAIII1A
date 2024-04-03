@@ -4,3 +4,7 @@ if ($("#formMessage p").text().length != 0) {
   $("#mainContent h2").css("margin-bottom", "40px");
   $("#userForm select").css("margin", "20px 0px 51px 0px");
 }
+
+if ($("#messageContent p").text().length != 0) {
+  $("#mainContent").css("height", "561px");
+}
