@@ -42,7 +42,6 @@ require_once('../../controller/admin/agentSpecialityListViewController.php');
                                     <div class="agentSpecialityItemContainer">
                                         <p><?php echo $agentName . ' -> ' . $specialityName; ?></p>
                                         <p><a href=<?php echo "agentSpecialityUpdateFormView.php?agId=" . $agentId . "&spId=" . $specialityId ?>>Modifiez</a></p>
-                                        <p><a href="">Supprimez</a></p>
                                     </div>
                                 <?php endforeach; ?>
                             <?php endforeach; ?>

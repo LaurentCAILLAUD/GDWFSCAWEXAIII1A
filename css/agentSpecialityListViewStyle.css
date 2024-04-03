@@ -109,11 +109,10 @@ body {
   font-family: SFProDisplayThin;
   background-color: white;
   border-radius: 5px;
-  width: 950px;
+  width: 1145px;
 }
 
-.agentSpecialityItemContainer p:nth-of-type(2) a,
-.agentSpecialityItemContainer p:nth-of-type(3) a {
+.agentSpecialityItemContainer p:nth-of-type(2) a {
   display: block;
   padding: 13px 10px;
   font-family: SFProDisplayBold;
@@ -126,11 +125,6 @@ body {
 .agentSpecialityItemContainer p:nth-of-type(2) a {
   background-color: #ffb527;
   color: #3c3c3b;
-}
-
-.agentSpecialityItemContainer p:nth-of-type(3) a {
-  background-color: #3c3c3b;
-  color: white;
 }
 
 .agentSpecialityItemContainer p {
