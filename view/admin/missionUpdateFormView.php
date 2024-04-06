@@ -46,8 +46,8 @@ require_once('../../controller/admin/missionUpdateFormController.php');
                             <?php else : ?>
                                 <?php foreach ($allCountriesData as $countryId => $countryData) : ?>
                                     <!-- Etant donné que nous sommes dans un formulaire de modification, je décide de sélectionner directement le pays choisi à la création de la mission: -->
-                                    <?php if ($countryData['name'] == $missionDatasRetrieved['countryName']) : ?>
-                                        <option value="<?php echo $countryId; ?>" selected><?php echo $countryData['name']; ?></option>
+                                    <?php if ($countryData['country'] == $missionDatasRetrieved['countryName']) : ?>
+                                        <option value="<?php echo $countryId; ?>" selected><?php echo $countryData['country']; ?></option>
                                     <?php else : ?>
                                         <option value="<?php echo $countryId; ?>"><?php echo $countryData['country']; ?></option>
                                     <?php endif; ?>

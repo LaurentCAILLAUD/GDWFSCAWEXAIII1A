@@ -14,16 +14,16 @@ class MissionRepository
     public function addThisMission(Mission $mission): void
     {
         // Je prépare ma requête:
-        $stmt = $this->db->prepare('INSERT INTO mission (id, title, description, code_name, country, mission_start, mission_end, speciality_id, mission_type_id, mission_status_id) VALUES (:id, :title, :description, :codeName, :country, :missionStart, :missionEnd, :specialityId, :missionTypeId, :missionStatusId)');
+        $stmt = $this->db->prepare('INSERT INTO mission (id, title, description, code_name, mission_start, mission_end, nationality_country_id, speciality_id, mission_type_id, mission_status_id) VALUES (:id, :title, :description, :codeName, :missionStart, :missionEnd, :nationalityCountryId, :specialityId, :missionTypeId, :missionStatusId)');
         // Je récupére les informations dont je vais avoir besoin:
         $id = $mission->getId();
         $title = $mission->getTite();
         $description = $mission->getDescription();
         $codeName = $mission->getCodeName();
-        $country = $mission->getCountry();
         // mysql a besoin de recevoir une string pour les deux champs que j'ai paramétré en DATETIME. J'utilise donc la fonction "format" de la classe Datetime afin de parser mon objet Datetime en string:
         $missionStart = $mission->getMissionStart()->format('Y-m-d H:i:s');
         $missionEnd = $mission->getMissionEnd()->format('Y-m-d H:i:s');
+        $nationalityCountryId = $mission->getNationalityCountryId();
         $specialityId = $mission->getSpecialityId();
         $missionTypeId = $mission->getMissionTypeId();
         $missionStatusId = $mission->getMissionStatusId();
@@ -32,9 +32,9 @@ class MissionRepository
         $stmt->bindValue(':title', $title);
         $stmt->bindValue(':description', $description);
         $stmt->bindValue(':codeName', $codeName);
-        $stmt->bindValue(':country', $country);
         $stmt->bindValue(':missionStart', $missionStart);
         $stmt->bindValue(':missionEnd', $missionEnd);
+        $stmt->bindValue(':nationalityCountryId', $nationalityCountryId);
         $stmt->bindValue(':specialityId', $specialityId);
         $stmt->bindValue(':missionTypeId', $missionTypeId);
         $stmt->bindValue(':missionStatusId', $missionStatusId);
@@ -77,7 +77,7 @@ class MissionRepository
         // Je créé une variable $missionDatas qui sera un tableau vide pour le moment et qui sera mis à jour si des données sont retournées:
         $missionDatas = [];
         // Je prépare ma requête:
-        $stmt = $this->db->prepare('SELECT title, description, code_name, country, mission_start, mission_end, speciality.name AS specialityName, mission_type.name AS missionTypeName, mission_status.name AS missionStatusName FROM mission INNER JOIN speciality ON mission.speciality_id = speciality.id  INNER JOIN mission_type ON mission.mission_type_id = mission_type.id INNER JOIN mission_status ON mission.mission_status_id = mission_status.id WHERE mission.id = :id');
+        $stmt = $this->db->prepare('SELECT title, description, code_name, mission_start, mission_end, nationality_country.country AS countryName, speciality.name AS specialityName, mission_type.name AS missionTypeName, mission_status.name AS missionStatusName FROM mission INNER JOIN nationality_country ON mission.nationality_country_id = nationality_country.id INNER JOIN speciality ON mission.speciality_id = speciality.id  INNER JOIN mission_type ON mission.mission_type_id = mission_type.id INNER JOIN mission_status ON mission.mission_status_id = mission_status.id WHERE mission.id = :id');
         // Je lie mes données:
         $stmt->bindValue(':id', $id);
         // J'exécute ma requête:
@@ -91,9 +91,9 @@ class MissionRepository
                 $missionDatas['title'] = $row['title'];
                 $missionDatas['description'] = $row['description'];
                 $missionDatas['codeName'] = $row['code_name'];
-                $missionDatas['country'] = $row['country'];
                 $missionDatas['missionStart'] = $row['mission_start'];
                 $missionDatas['missionEnd'] = $row['mission_end'];
+                $missionDatas['countryName'] = $row['countryName'];
                 $missionDatas['specialityName'] = $row['specialityName'];
                 $missionDatas['missionTypeName'] = $row['missionTypeName'];
                 $missionDatas['missionStatusName'] = $row['missionStatusName'];
@@ -107,15 +107,15 @@ class MissionRepository
     public function updateThisMission(Mission $mission): void
     {
         // Je prépare ma requête:
-        $stmt = $this->db->prepare('UPDATE mission SET title = :title, description = :description, code_name = :codeName, country = :country, mission_start = :missionStart, mission_end = :missionEnd, speciality_id = :specialityId, mission_type_id = :missionTypeId, mission_status_id = :missionStatusId WHERE id = :id');
+        $stmt = $this->db->prepare('UPDATE mission SET title = :title, description = :description, code_name = :codeName, mission_start = :missionStart, mission_end = :missionEnd, nationality_country_id = :nationalityCountryId, speciality_id = :specialityId, mission_type_id = :missionTypeId, mission_status_id = :missionStatusId WHERE id = :id');
         // Je récupère les données dont j'ai besoin:
         $id = $mission->getId();
         $title = $mission->getTite();
         $description = $mission->getDescription();
         $codeName = $mission->getCodeName();
-        $country = $mission->getCountry();
         $missionStart = $mission->getMissionStart()->format('Y-m-d H:i:s');
         $missionEnd = $mission->getMissionEnd()->format('Y-m-d H:i:s');
+        $nationalityCountryId = $mission->getNationalityCountryId();
         $specialityId = $mission->getSpecialityId();
         $missionTypeId = $mission->getMissionTypeId();
         $missionStatusId = $mission->getMissionStatusId();
@@ -124,9 +124,9 @@ class MissionRepository
         $stmt->bindValue(':title', $title);
         $stmt->bindValue(':description', $description);
         $stmt->bindValue(':codeName', $codeName);
-        $stmt->bindValue(':country', $country);
         $stmt->bindValue(':missionStart', $missionStart);
         $stmt->bindValue(':missionEnd', $missionEnd);
+        $stmt->bindValue(':nationalityCountryId', $nationalityCountryId);
         $stmt->bindValue(':specialityId', $specialityId);
         $stmt->bindValue(':missionTypeId', $missionTypeId);
         $stmt->bindValue(':missionStatusId', $missionStatusId);

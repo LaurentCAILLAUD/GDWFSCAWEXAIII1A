@@ -6,23 +6,23 @@ class Mission
     private string $title;
     private string $description;
     private string $codeName;
-    private string $country;
     private DateTime $missionStart;
     private Datetime $missionEnd;
+    private string $nationalityCountryId;
     private string $specialityId;
     private string $missionTypeId;
     private string $missionStatusId;
 
     // Fonction qui va me permettre de construire une instance de ma classe Mission:
-    public function __construct(string $id, string $title, string $description, string $codeName, string $country, DateTime $missionStart, DateTime $missionEnd, string $specialityId, string $missionTypeId, string $missionStatusId)
+    public function __construct(string $id, string $title, string $description, string $codeName, DateTime $missionStart, DateTime $missionEnd, string $nationalityCountryId, string $specialityId, string $missionTypeId, string $missionStatusId)
     {
         $this->setId($id);
         $this->setTitle($title);
         $this->setDescription($description);
         $this->setCodeName($codeName);
-        $this->setcountry($country);
         $this->setMissionStart($missionStart);
         $this->setMissionEnd($missionEnd);
+        $this->setNationalityCountryId($nationalityCountryId);
         $this->setspecialityId($specialityId);
         $this->setMissionTypeId($missionTypeId);
         $this->setMissionStatusId($missionStatusId);
@@ -49,11 +49,6 @@ class Mission
         return $this->codeName;
     }
 
-    public function getCountry(): string
-    {
-        return $this->country;
-    }
-
     public function getMissionStart(): Datetime
     {
         return $this->missionStart;
@@ -62,6 +57,11 @@ class Mission
     public function getMissionEnd(): DateTime
     {
         return $this->missionEnd;
+    }
+
+    public function getNationalityCountryId(): string
+    {
+        return $this->nationalityCountryId;
     }
 
     public function getSpecialityId(): string
@@ -99,11 +99,6 @@ class Mission
         return $this->codeName = $codeName;
     }
 
-    public function setCountry(string $country): string
-    {
-        return $this->country = $country;
-    }
-
     public function setMissionStart(DateTime $missionStart): Datetime
     {
         return $this->missionStart = $missionStart;
@@ -112,6 +107,11 @@ class Mission
     public function setMissionEnd(DateTime $missionEnd): Datetime
     {
         return $this->missionEnd = $missionEnd;
+    }
+
+    public function setNationalityCountryId(string $nationalityCountryId): string
+    {
+        return $this->nationalityCountryId = $nationalityCountryId;
     }
 
     public function setSpecialityId(string $specialityId): string

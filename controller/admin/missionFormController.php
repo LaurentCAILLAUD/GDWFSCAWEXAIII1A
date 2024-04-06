@@ -1,6 +1,6 @@
 <?php
 // J'appelle les classes dont je vais avoir besoin:
-require_once('../../Model/NationalityCountryRepository.php');
+require_once('../../model/NationalityCountryRepository.php');
 require_once('../../model/SpecialityRepository.php');
 require_once('../../model/MissionTypeRepository.php');
 require_once('../../model/MissionStatusRepository.php');
@@ -39,7 +39,7 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
         // A la validation du formulaire:
         if (isset($_POST['missionFormSubmit'])) {
             // Première chose que je souhaite vérifier est que tous les champs de mon formulaire soient renseignés. Si ce n'est pas le cas, le script continue, sinon une exeption est lancée:
-            if (!empty($_POST['titleWritten']) && !empty($_POST['codeNameWritten']) && !empty($_POST['descriptionWritten']) && !empty($_POST['countryIdSeleted']) && !empty($_POST['missionStartSelected']) && !empty($_POST['missionEndSelected']) && !empty($_POST['specialityIdSelected']) && !empty($_POST['missionTypeIdSelected']) && !empty($_POST['missionStatusIdSelected'])) {
+            if (!empty($_POST['titleWritten']) && !empty($_POST['codeNameWritten']) && !empty($_POST['descriptionWritten']) && !empty($_POST['countryIdSelected']) && !empty($_POST['missionStartSelected']) && !empty($_POST['missionEndSelected']) && !empty($_POST['specialityIdSelected']) && !empty($_POST['missionTypeIdSelected']) && !empty($_POST['missionStatusIdSelected'])) {
                 // Afin que des utilisateurs malveillants n'introduisent pas du code dans les champs de saisie, je "transforme" les saisies de mon utilisateur en un code "sécurisé":
                 $titleWritten = htmlspecialchars($_POST['titleWritten']);
                 $codeNameWritten = htmlspecialchars($_POST['codeNameWritten']);
@@ -58,7 +58,7 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
                     $prefix = uniqid();
                     $id = uniqid($prefix, true);
                     // Je peux instancier ma classe Mission afin de créer un nouvel objet:
-                    $mission = new Mission($id, $titleWrittenFormated, $descriptionWrittenFormated, $codeNameWrittenFormated, $_POST['countryIdSelected'], $missionStart, $missionEnd, $_POST['specialityIdSelected'], $_POST['missionTypeIdSelected'], $_POST['missionStatusIdSelected']);
+                    $mission = new Mission($id, $titleWrittenFormated, $descriptionWrittenFormated, $codeNameWrittenFormated, $missionStart, $missionEnd, $_POST['countryIdSelected'], $_POST['specialityIdSelected'], $_POST['missionTypeIdSelected'], $_POST['missionStatusIdSelected']);
                     // Afin d'enregistrer la mission dans la base de données je vais utiliser la classe MissionRepository que j'ai créé et plus particulièrement sa fonction addThisMission:
                     $missionRepository = new MissionRepository($db);
                     $missionRepository->addThisMission($mission);

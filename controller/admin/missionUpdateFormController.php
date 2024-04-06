@@ -1,5 +1,6 @@
 <?php
 // J'appelle les classes dont je vais avoir besoin:
+require_once('../../Model/NationalityCountryRepository.php');
 require_once('../../model/SpecialityRepository.php');
 require_once('../../model/MissionTypeRepository.php');
 require_once('../../model/MissionStatusRepository.php');
@@ -58,7 +59,7 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
                 if (strlen($titleWrittenFormated) <= 100 && strlen($codeNameWrittenFormated) <= 100) {
                     // Les saisies de notre utilisateur sont maintenant sécurisées et dans le bon format. Je vais pouvoir maintenant enregistrer celles-ci dans la base de données. 
                     // Je peux instancier ma classe Mission afin de créer un nouvel objet:
-                    $mission = new Mission($_GET['id'], $titleWrittenFormated, $descriptionWrittenFormated, $codeNameWrittenFormated, $_POST['countryIdSelected'], $missionStart, $missionEnd, $_POST['specialityIdSelected'], $_POST['missionTypeIdSelected'], $_POST['missionStatusIdSelected']);
+                    $mission = new Mission($_GET['id'], $titleWrittenFormated, $descriptionWrittenFormated, $codeNameWrittenFormated, $missionStart, $missionEnd, $_POST['countryIdSelected'], $_POST['specialityIdSelected'], $_POST['missionTypeIdSelected'], $_POST['missionStatusIdSelected']);
                     // Et enfin grâce à la fonction updateThisMission() de ma classe MissionRepository je met à jour la mission:
                     $missionRepository->updateThisMission($mission);
                     // Si une erreur se déroule dans la mise à jour de la mission une erreur est levée. Si au contraire cette mise à jour se passe bien je dirige l'administrateur vers la page qui liste les missions et où il verra que la modification s'est bien faite:
