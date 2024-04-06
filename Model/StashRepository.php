@@ -14,19 +14,19 @@ class StashRepository
     public function addThisStash(Stash $stash): void
     {
         // Je prépare ma requête:
-        $stmt = $this->db->prepare('INSERT INTO stash (code, address, country, type, mission_id) VALUES (:code, :address, :country, :type, :missionId)');
+        $stmt = $this->db->prepare('INSERT INTO stash (code, address, type, mission_id, nationality_country_id) VALUES (:code, :address, :type, :missionId, :nationalityCountryId)');
         // Je récupére les données dont j'ai besoin:
         $code = $stash->getCode();
         $address = $stash->getAddress();
-        $country = $stash->getCountry();
         $type = $stash->getType();
         $missionId = $stash->getMissionId();
+        $nationalityCountryId = $stash->getNationalityCountryId();
         // Je peux maintenant lier mes données:
         $stmt->bindValue(':code', $code);
         $stmt->bindValue(':address', $address);
-        $stmt->bindValue(':country', $country);
         $stmt->bindValue(':type', $type);
         $stmt->bindValue(':missionId', $missionId);
+        $stmt->bindValue(':nationalityCountryId', $nationalityCountryId);
         // J'exécute ma requête:
         $stmt->execute();
         // Je gère les éventuelles erreurs:
@@ -66,7 +66,7 @@ class StashRepository
         // Je créé une variable $stashDatas qui sera un tableau vide pour le moment et qui sera mis à jour si des données sont retournées:
         $stashDatas = [];
         // Je prépare ma requête:
-        $stmt = $this->db->prepare('SELECT address, stash.country, type, mission.title AS missionTitle FROM stash INNER JOIN mission ON stash.mission_id = mission.id WHERE code = :code');
+        $stmt = $this->db->prepare('SELECT address, type, mission.title AS missionTitle, nationality_country.country AS countryName FROM stash INNER JOIN mission ON stash.mission_id = mission.id INNER JOIN nationality_country ON stash.nationality_country_id = nationality_country.id WHERE code = :code');
         // Je lie mes données:
         $stmt->bindValue(':code', $code);
         // J'exécute ma requête:
@@ -78,9 +78,9 @@ class StashRepository
         } else {
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $stashDatas['address'] = $row['address'];
-                $stashDatas['country'] = $row['country'];
                 $stashDatas['type'] = $row['type'];
                 $stashDatas['missionTitle'] = $row['missionTitle'];
+                $stashDatas['countryName'] = $row['countryName'];
             }
             // Je retourne mon tableau qu'il soit vide ou non:
             return $stashDatas;
@@ -91,19 +91,19 @@ class StashRepository
     public function updateThisStash(Stash $stash): void
     {
         // Je prépare ma requête:
-        $stmt = $this->db->prepare('UPDATE stash SET address = :address, country = :country, type = :type, mission_id = :missionId WHERE code = :code');
+        $stmt = $this->db->prepare('UPDATE stash SET address = :address, type = :type, mission_id = :missionId, nationality_country_id = :nationalityCountryId WHERE code = :code');
         // Je récupère les données dont j'ai besoin:
         $code = $stash->getCode();
         $address = $stash->getAddress();
-        $country = $stash->getCountry();
         $type = $stash->getType();
         $missionId = $stash->getMissionId();
+        $nationalityCountryId = $stash->getNationalityCountryId();
         // Je lie mes données:
         $stmt->bindValue(':code', $code);
         $stmt->bindValue(':address', $address);
-        $stmt->bindValue(':country', $country);
         $stmt->bindValue(':type', $type);
         $stmt->bindValue(':missionId', $missionId);
+        $stmt->bindValue(':nationalityCountryId', $nationalityCountryId);
         // J'exécute ma requête:
         $stmt->execute();
         // Je gère les erreurs éventuelles:

@@ -37,8 +37,22 @@ require_once('../../controller/admin/stashUpdateFormController.php');
                     <h2>Modifiez une planque</h2>
                     <form action="" id="stashForm" method="post">
                         <input type="text" name="addressWritten" value="<?php echo $stashDatasRetrieved['address']; ?>" placeholder="Entrez ici l'adresse complète de votre planque.">
-                        <input type="text" name="countryWritten" value="<?php echo $stashDatasRetrieved['country']; ?>" placeholder="Entrez ici le pays de votre planque.">
                         <input type="text" name="typeWritten" value="<?php echo $stashDatasRetrieved['type']; ?>" placeholder="Entrez ici le type de votre planque.">
+                        <select name="countryIdSelected">
+                            <?php if (empty($allCountriesData)) : ?>
+                                <option value="">Veuillez sélectioner le pays de votre planque</option>
+                                <option value="">Aucun pays à afficher</option>
+                            <?php else : ?>
+                                <?php foreach ($allCountriesData as $countryId => $countryData) : ?>
+                                    <!-- Etant donné que nous sommes dans un formulaire de modification, je décide de sélectionner directement le pays choisi à la création de la planque: -->
+                                    <?php if ($countryData['country'] == $stashDatasRetrieved['countryName']) : ?>
+                                        <option value="<?php echo $countryId; ?>" selected><?php echo $countryData['country']; ?></option>
+                                    <?php else : ?>
+                                        <option value="<?php echo $countryId; ?>"><?php echo $countryData['country']; ?></option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </select>
                         <select name="missionIdSelected">
                             <?php if (empty($allMissionsData)) : ?>
                                 <option value="">Veuillez sélectioner la mission souhaitée</option>

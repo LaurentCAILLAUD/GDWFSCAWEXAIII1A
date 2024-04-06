@@ -1,5 +1,6 @@
 <?php
 // J'appelle les classes dont je vais avoir besoin:
+require_once('../../Model/NationalityCountryRepository.php');
 require_once('../../model/MissionRepository.php');
 require_once('../../model/Stash.php');
 require_once('../../model/StashRepository.php');
@@ -11,12 +12,16 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
 } else {
     // Afin de gérer les erreurs éventuelles de mon script, je décide de mettre ce dernier dans un bloc try...catch:
     try {
-        // Dans le formulaire affiché par la vue de ce contrôleur, j'ai un champ qui est une liste déroulante. Cette liste déroulante affiche la liste des missions pour lequel je souhaite affecter la planque. Ces informations sont disponibles dans la base de données. Je vais donc aller chercher ces informations à l'aide de la classe "MissionRepository".
+        // Dans le formulaire affiché par la vue de ce contrôleur, j'ai deux champs qui sont des  listes déroulantes. Ces listes déroulantes affichent respectivement la liste des pays et la liste des missions. Ces informations sont disponibles dans la base de données.
         // Pour cela je vais avoir besoin de me connecter à ma base de données avec PDO et donc dans un premier je dois créer mon DSN:
         $dsn = 'mysql:host=localhost;dbname=GDWFSCAWEXAIII1A';
         //Je me connecte à la base de données:
         $db = new PDO($dsn, 'root', 'root');
-        // Maintenant je peux instancier ma classe SpecialityRepository:
+        // Je commence par instancier ma classe NationalityCountryRepository:
+        $nationalityCountryRepository = new NationalityCountryRepository($db);
+        // Et j'utilise la fonction getAllNationalitiesCountries() pour récupérer la liste des pays:
+        $allCountriesData = $nationalityCountryRepository->getAllNationalitiesCountries();
+        // Maintenant je peux instancier ma classe MissionRepository:
         $missionRepository = new MissionRepository($db);
         // Et enfin je récupère les données à l'aide de la fonction getAllTitlesMissions. A savoir que cette fonction retourne assurément un tableau. Celui-ci peut contenir des données ou ne pas en contenir. Je décide de gérer ces deux états dans la vue de ce controller (stashUpdateFormView.php):
         $allMissionsData = $missionRepository->getAllTitlesMissions();
@@ -28,27 +33,21 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
         // A la validation du formulaire:
         if (isset($_POST['stashUpdateFormSubmit'])) {
             // Etant donné que les champs de saisie à l'affichage de notre page seront pré-rempli par les valeurs récupérées, normalement il y a peu de risque qu'à la validation ce dernier soit vide. Cependant l'administrateur peut par erreur supprimer une des données d'un champ. Je décide donc dans un premier temps de vérifier que les champs ne sont pas vides. Si c'est le cas une exception est levée:
-            if (!empty($_POST['addressWritten']) && !empty($_POST['countryWritten']) && !empty($_POST['typeWritten']) && !empty($_POST['missionIdSelected'])) {
+            if (!empty($_POST['addressWritten']) && !empty($_POST['typeWritten']) && !empty($_POST['missionIdSelected']) && !empty($_POST['countryIdSelected'])) {
                 // Afin que des utilisateurs malveillants n'introduisent pas du code dans les champs de saisie, je "transforme" les saisies de mon utilisateur en un code "sécurisé":
                 $addressWritten = htmlspecialchars($_POST['addressWritten']);
                 $countryWritten = htmlspecialchars($_POST['countryWritten']);
                 $typeWritten = htmlspecialchars($_POST['typeWritten']);
                 // Afin d'être sûr d'avoir toujours nos champs de saisie écrits avec le même format (Lettre capitale en début et le reste des caractères en minuscules), je décide de les formater. Cependant, je décide de ne pas formater mon champ address afin de garder le 'format' de la ville etc etc...
-                $countryWrittenFormated = ucfirst(strtolower($countryWritten));
                 $typeWrittenFormated = ucfirst(strtolower($typeWritten));
                 // A la création de notre base de données nous avons indiqué que les champs "address" et "type" de la table "stash" étaient une chaine de caractères de maximum 255 caractères,. Il faut donc que je vérifie que les informations saisies par l'utilisateur ne fasse pas plus de 255 caractères pour ces deux champs. Si c'est le cas le script continue, sinon une exception est levée:
                 if (strlen($addressWritten) <= 100 && strlen($typeWrittenFormated) <= 255) {
-                    // Il faut maintenant que je fasse la même chose pour le champ du country mais avec une limite de 100 caractères:
-                    if (strlen($countryWrittenFormated) <= 100) {
-                        // J'ai maintenant toutes les informations nécessaires pour pouvoir mettre à jour la planque dans ma base de données. Je vais pour cela utiliser ma classe "Stash" afin de créer une instance de cette classe:
-                        $stash = new Stash($_GET['id'], $addressWritten, $countryWrittenFormated, $typeWrittenFormated, $_POST['missionIdSelected']);
-                        // Je peux maintenant utiliser la fonction updateThisStash de ma classe StashRepository afin de mettre à jour les données dans ma base de données:
-                        $stashRepository->updateThisStash($stash);
-                        // Si une erreur se déroule dans la mise à jour de la planque une erreur est levée. Si au contraire cette mise à jour se passe bien je dirige l'administrateur vers la page qui liste les planques et où il verra que la modification s'est bien faite:
-                        header('Location: stashListView.php');
-                    } else {
-                        throw new Exception('Le pays de votre mission ne doit pas dépasser 100 caractères.');
-                    }
+                    // J'ai maintenant toutes les informations nécessaires pour pouvoir mettre à jour la planque dans ma base de données. Je vais pour cela utiliser ma classe "Stash" afin de créer une instance de cette classe:
+                    $stash = new Stash($_GET['id'], $addressWritten, $typeWrittenFormated, $_POST['missionIdSelected'], $_POST['countryIdSelected']);
+                    // Je peux maintenant utiliser la fonction updateThisStash de ma classe StashRepository afin de mettre à jour les données dans ma base de données:
+                    $stashRepository->updateThisStash($stash);
+                    // Si une erreur se déroule dans la mise à jour de la planque une erreur est levée. Si au contraire cette mise à jour se passe bien je dirige l'administrateur vers la page qui liste les planques et où il verra que la modification s'est bien faite:
+                    header('Location: stashListView.php');
                 } else {
                     throw new Exception('L\'adresse de votre planque et son type ne doivent pas dépasser 255 caractères.');
                 }

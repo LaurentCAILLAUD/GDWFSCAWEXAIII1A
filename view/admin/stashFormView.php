@@ -35,8 +35,18 @@ require_once('../../controller/admin/stashFormController.php');
                 <h2>Ajoutez une planque</h2>
                 <form action="" id="stashForm" method="post">
                     <input type="text" name="addressWritten" placeholder="Entrez ici l'adresse complète de votre planque.">
-                    <input type="text" name="countryWritten" placeholder="Entrez ici le pays de votre planque.">
                     <input type="text" name="typeWritten" placeholder="Entrez ici le type de votre planque.">
+                    <select name="countryIdSelected">
+                        <?php if (empty($allCountriesData)) : ?>
+                            <option value="">Veuillez sélectioner le pays de la planque</option>
+                            <option value="">Aucun pays à afficher</option>
+                        <?php else : ?>
+                            <option value="">Veuillez sélectionner le pays de la planque</option>
+                            <?php foreach ($allCountriesData as $countryId => $countryData) : ?>
+                                <option value="<?php echo $countryId; ?>"><?php echo $countryData['country']; ?></option>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </select>
                     <select name="missionIdSelected">
                         <?php if (empty($allMissionsData)) : ?>
                             <option value="">Veuillez sélectioner la mission souhaitée</option>

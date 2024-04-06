@@ -4,18 +4,18 @@ class Stash
 {
     private int $code;
     private string $address;
-    private string $country;
     private string $type;
     private string $missionId;
+    private string $nationalityCountryId;
 
-     // Fonction qui va me permettre de construire une instance de ma classe Stash:
-    public function __construct(int $code, string $address, string $country, string $type, string $missionId)
+    // Fonction qui va me permettre de construire une instance de ma classe Stash:
+    public function __construct(int $code, string $address, string $type, string $missionId, string $nationalityCountryId)
     {
         $this->setCode($code);
         $this->setAddress($address);
-        $this->setCountry($country);
         $this->setType($type);
         $this->setMissionId($missionId);
+        $this->setNationalityCountryId($nationalityCountryId);
     }
 
     public function getCode(): int
@@ -28,11 +28,6 @@ class Stash
         return $this->address;
     }
 
-    public function getCountry(): string
-    {
-        return $this->country;
-    }
-
     public function getType(): string
     {
         return $this->type;
@@ -41,6 +36,11 @@ class Stash
     public function getMissionId(): string
     {
         return $this->missionId;
+    }
+
+    public function getNationalityCountryId(): string
+    {
+        return $this->nationalityCountryId;
     }
 
     public function setCode(int $code): int
@@ -53,11 +53,6 @@ class Stash
         return $this->address = $address;
     }
 
-    public function setCountry(string $country): string
-    {
-        return $this->country = $country;
-    }
-
     public function setType(string $type): string
     {
         return $this->type = $type;
@@ -66,5 +61,10 @@ class Stash
     public function setMissionId(string $missionId): string
     {
         return $this->missionId = $missionId;
+    }
+
+    public function setNationalityCountryId(string $nationalityCountryId): string
+    {
+        return $this->nationalityCountryId = $nationalityCountryId;
     }
 }
