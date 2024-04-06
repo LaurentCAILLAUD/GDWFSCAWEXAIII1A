@@ -24,29 +24,6 @@ class NationalityCountryRepository
         }
     }
 
-    // Fonction qui va me permettre de récupérer toutes les nationalités:
-    public function getAllNationalities(): array
-    {
-        // Je créé un tableau vide qui contiendra ou pas des nationalités:
-        $nationalities = [];
-        // Je prépare ma requête:
-        $stmt = $this->db->prepare('SELECT id, name FROM nationality_country');
-        // J'exécute ma requête:
-        $stmt->execute();
-        // Je gère les erreurs éventuelles:
-        $errorInRequest = $stmt->errorInfo();
-        if ($errorInRequest[0] != 0) {
-            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
-        } else {
-            // Si il n'y a pas d'erreur le met à jour mon tableau:
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $nationalities[$row['id']] = $row['name'];
-            }
-            // Je retourne mon tableau vide si il n'y a pas de nationalités ou avec des données si des nationalités ont été retournées:
-            return $nationalities;
-        }
-    }
-
     // Fonction qui va nous permettre de récupérer toutes les nationalités avec les pays correspondants:
     public function getAllNationalitiesCountries(): array
     {

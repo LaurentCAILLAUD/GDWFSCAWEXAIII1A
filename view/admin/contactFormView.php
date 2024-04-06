@@ -46,8 +46,8 @@ require_once('../../controller/admin/contactFormController.php');
                             <option value="">Aucune nationalité à afficher</option>
                         <?php else : ?>
                             <option value="">Veuillez sélectionner la nationalité de votre contact</option>
-                            <?php foreach ($allNationalitiesData as $nationalityId => $nationalityName) : ?>
-                                <option value="<?php echo $nationalityId; ?>"><?php echo $nationalityName; ?></option>
+                            <?php foreach ($allNationalitiesData as $nationalityId => $nationalityData) : ?>
+                                <option value="<?php echo $nationalityId; ?>"><?php echo $nationalityData['name']; ?></option>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </select>

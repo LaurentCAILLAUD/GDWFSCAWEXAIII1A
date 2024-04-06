@@ -1,6 +1,6 @@
 <?php
 // J'appelle les classes dont je vais avoir besoin:
-require_once('../../model/NationalityRepository.php');
+require_once('../../model/NationalityCountryRepository.php');
 require_once('../../model/MissionRepository.php');
 require_once('../../model/Contact.php');
 require_once('../../model/ContactRepository.php');
@@ -18,9 +18,9 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
         //Je me connecte à la base de données:
         $db = new PDO($dsn, 'root', 'root');
         // Maintenant je peux instancier ma classe NationalityRepository:
-        $nationalityRepository = new NationalityRepository($db);
-        // Et enfin je récupère les données à l'aide de la fonction getAllNationality. A savoir que cette fonction retourne assurément un tableau. Celui-ci peut contenir des données ou ne pas en contenir. Je décide de gérer ces deux états dans la vue de ce controller (ContactFormView.php):
-        $allNationalitiesData = $nationalityRepository->getAllNationalities();
+        $nationalityCountryRepository = new NationalityCountryRepository($db);
+        // Et enfin je récupère les données à l'aide de la fonction getAllNationalitiesCountries. A savoir que cette fonction retourne assurément un tableau. Celui-ci peut contenir des données ou ne pas en contenir. Je décide de gérer ces deux états dans la vue de ce controller (ContactFormView.php):
+        $allNationalitiesData = $nationalityCountryRepository->getAllNationalitiesCountries();
         // A ce stade, j'ai obtenu les données dont j'ai besoin pour alimenter mon champ de saisie de la nationalité. Il me faut maintenant faire la même chose pour la mission. J'utilise donc la classe MissionRepository:
         $missionRepository = new MissionRepository($db);
         // Comme pour les nationalités, cette fonction retourne un tableau. Celui-ci peut être vide ou avec des données. Je décide de gérer ces deux états dans la vue de mon controller:

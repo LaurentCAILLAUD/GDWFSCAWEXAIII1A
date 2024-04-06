@@ -7,18 +7,18 @@ class Person
     private string $lastname;
     private DateTime $dateOfBirth;
     private string $identityCode;
-    private string $nationalityCodeId;
+    private string $nationalityCountryId;
     private string $missionId;
 
     // Fonction qui va me permettre de construire une instance de ma classe Person:
-    public function __construct(string $id, string $firstname, string $lastname, DateTime $dateOfBirth, string $identityCode, string $nationalityCodeId, string $missionId)
+    public function __construct(string $id, string $firstname, string $lastname, DateTime $dateOfBirth, string $identityCode, string $nationalityCountryId, string $missionId)
     {
         $this->setId($id);
         $this->setFirstname($firstname);
         $this->setLastname($lastname);
         $this->setDateOfBirth($dateOfBirth);
         $this->setIdentityCode($identityCode);
-        $this->setNationalityCodeId($nationalityCodeId);
+        $this->setNationalityCountryId($nationalityCountryId);
         $this->setMissionId($missionId);
     }
 
@@ -48,9 +48,9 @@ class Person
         return $this->identityCode;
     }
 
-    public function getNationalityCodeId(): string
+    public function getNationalityCountryId(): string
     {
-        return $this->nationalityCodeId;
+        return $this->nationalityCountryId;
     }
 
     public function getMissionId(): string
@@ -83,9 +83,9 @@ class Person
         return $this->identityCode = ($identityCode);
     }
 
-    public function setNationalityCodeId(string $nationalityCodeId): string
+    public function setNationalityCountryId(string $nationalityCountryId): string
     {
-        return $this->nationalityCodeId = ($nationalityCodeId);
+        return $this->nationalityCountryId = ($nationalityCountryId);
     }
 
     public function setMissionId(string $missionId): string
