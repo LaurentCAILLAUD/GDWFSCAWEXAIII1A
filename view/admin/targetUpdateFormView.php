@@ -47,12 +47,12 @@ require_once('../../controller/admin/targetUpdateFormController.php');
                                 <option value="">Veuillez sélectioner la nationalité de votre cible</option>
                                 <option value="">Aucune nationalité à afficher</option>
                             <?php else : ?>
-                                <?php foreach ($allNationalitiesData as $nationalityId => $nationalityName) : ?>
+                                <?php foreach ($allNationalitiesData as $nationalityId => $nationalityData) : ?>
                                     <!-- Etant donné que nous sommes dans un formulaire de modification, je décide de sélectionner directement la nationalité choisie à la création de la cible: -->
-                                    <?php if ($nationalityName == $targetDatasRetrieved['nationality']) : ?>
-                                        <option value="<?php echo $nationalityId; ?>" selected><?php echo $nationalityName; ?></option>
+                                    <?php if ($nationalityData['name'] == $targetDatasRetrieved['nationality']) : ?>
+                                        <option value="<?php echo $nationalityId; ?>" selected><?php echo $nationalityData['name']; ?></option>
                                     <?php else : ?>
-                                        <option value="<?php echo $nationalityId; ?>"><?php echo $nationalityName; ?></option>
+                                        <option value="<?php echo $nationalityId; ?>"><?php echo $nationalityData['name']; ?></option>
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                             <?php endif; ?>

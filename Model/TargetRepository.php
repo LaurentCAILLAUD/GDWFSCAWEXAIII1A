@@ -14,7 +14,7 @@ class TargetRepository
     public function addThisTarget(Target $target): void
     {
         // Je prépare ma requête:
-        $stmt = $this->db->prepare('INSERT INTO target (id, firstname, lastname, date_of_birth, identity_code, nationality_id, mission_id) VALUES (:id, :firstname, :lastname, :dateOfBirth, :identityCode, :nationalityId, :missionId)');
+        $stmt = $this->db->prepare('INSERT INTO target (id, firstname, lastname, date_of_birth, identity_code, nationality_country_id, mission_id) VALUES (:id, :firstname, :lastname, :dateOfBirth, :identityCode, :nationalityCountryId, :missionId)');
         // Je récupére les données dont j'ai besoin:
         $id = $target->getId();
         $firstname = $target->getFirstname();
@@ -22,7 +22,7 @@ class TargetRepository
         // mysql a besoin de recevoir une string pour le champ que j'ai paramétré en DATE. J'utilise donc la fonction "format" de la classe Datetime afin de parser mon objet Datetime en string:
         $dateOfBirth = $target->getDateOfBirth()->format('Y-m-d');
         $identityCode = $target->getIdentityCode();
-        $nationalityId = $target->getNationalityCodeId();
+        $nationalityCountryId = $target->getNationalityCountryId();
         $missionId = $target->getMissionId();
         // Je lie mes données:
         $stmt->bindValue(':id', $id);
@@ -30,7 +30,7 @@ class TargetRepository
         $stmt->bindValue(':lastname', $lastname);
         $stmt->bindValue(':identityCode', $identityCode);
         $stmt->bindValue(':dateOfBirth', $dateOfBirth);
-        $stmt->bindValue(':nationalityId', $nationalityId);
+        $stmt->bindValue(':nationalityCountryId', $nationalityCountryId);
         $stmt->bindValue(':missionId', $missionId);
         // J'exécute ma requête:
         $stmt->execute();
@@ -70,7 +70,7 @@ class TargetRepository
         // Je crée un tableau vide qui contiendra ou pas les données d'une cible:
         $allTargetDatas = [];
         // Je prépare ma requête:
-        $stmt = $this->db->prepare('SELECT firstname, lastname, date_of_birth, identity_code, nationality.name AS nationality, mission.title AS missionTitle FROM target INNER JOIN nationality ON target.nationality_id = nationality.id INNER JOIN mission ON target.mission_id = mission.id WHERE target.id = :id');
+        $stmt = $this->db->prepare('SELECT firstname, lastname, date_of_birth, identity_code, nationality_country.name AS nationality, mission.title AS missionTitle FROM target INNER JOIN nationality_country ON target.nationality_country_id = nationality_country.id INNER JOIN mission ON target.mission_id = mission.id WHERE target.id = :id');
         // Je lie mes données:
         $stmt->bindValue(':id', $id);
         // J'exécute ma requête:
@@ -96,20 +96,20 @@ class TargetRepository
     public function updateThisTarget(Target $target): void
     {
         // Je prépare ma requête:
-        $stmt = $this->db->prepare('UPDATE target SET firstname = :firstname, lastname = :lastname, date_of_birth = :dateOfBirth, nationality_id = :nationalityId, mission_id = :missionId WHERE id = :id');
+        $stmt = $this->db->prepare('UPDATE target SET firstname = :firstname, lastname = :lastname, date_of_birth = :dateOfBirth, nationality_country_id = :nationalityCountryId, mission_id = :missionId WHERE id = :id');
         // Je récupère les données dont j'ai besoin:
         $id = $target->getId();
         $firstname = $target->getFirstname();
         $lastname = $target->getLastname();
         $dateOfBirth = $target->getDateOfBirth()->format('Y-m-d');
-        $nationalityId = $target->getNationalityCodeId();
+        $nationalityCountryId = $target->getNationalityCountryId();
         $missionId = $target->getMissionId();
         // Je lie mes données:
         $stmt->bindValue(':id', $id);
         $stmt->bindValue(':firstname', $firstname);
         $stmt->bindValue(':lastname', $lastname);
         $stmt->bindValue(':dateOfBirth', $dateOfBirth);
-        $stmt->bindValue(':nationalityId', $nationalityId);
+        $stmt->bindValue(':nationalityCountryId', $nationalityCountryId);
         $stmt->bindValue(':missionId', $missionId);
         // J'exécute ma requête:
         $stmt->execute();
