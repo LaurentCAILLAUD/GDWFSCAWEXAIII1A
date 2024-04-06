@@ -36,7 +36,18 @@ require_once('../../controller/admin/missionFormController.php');
                     <input type="text" name="titleWritten" placeholder="Entrez ici le titre de votre mission">
                     <input type="text" name="codeNameWritten" placeholder="Entre ici le code de votre mission">
                     <textarea name="descriptionWritten" placeholder="Ecrivez ici la description de votre mission"></textarea>
-                    <input type="text" name="countryWritten" Placeholder="Entrez ici le pays de votre mission">
+                    <select name="countryIdSelected">
+                        <!-- Si le tableau $allCountriesData est vide alors je décide d'afficher un message disant qu'aucun pays n'est disponible, sinon j'affiche les différentes pays: -->
+                        <?php if (empty($allCountriesData)) : ?>
+                            <option value="">Veuillez sélectionner le pays de la mission</option>
+                            <option value="">Aucun pays disponible</option>
+                        <?php else : ?>
+                            <option value="">Veuillez sélectionner le pays de la mission</option>
+                            <?php foreach ($allCountriesData as $countryId => $countryData) : ?>
+                                <option value="<?php echo $countryId; ?>"><?php echo $countryData['country']; ?></option>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </select>
                     <div class="missionDateContent">
                         <label>Début de mission:</label>
                         <input type="datetime-local" name="missionStartSelected">

@@ -38,7 +38,22 @@ require_once('../../controller/admin/missionUpdateFormController.php');
                         <input type="text" name="titleWritten" value="<?php echo $missionDatasRetrieved['title']; ?>" placeholder="Entrez ici le titre de votre mission">
                         <input type="text" name="codeNameWritten" value="<?php echo $missionDatasRetrieved['codeName']; ?>" placeholder="Entre ici le code de votre mission">
                         <textarea name="descriptionWritten" placeholder="Ecrivez ici la description de votre mission"><?php echo $missionDatasRetrieved['description']; ?></textarea>
-                        <input type="text" name="countryWritten" value="<?php echo $missionDatasRetrieved['country']; ?>" Placeholder="Entrez ici le pays de votre mission">
+                        <select name="countryIdSelected">
+                            <!-- Si le tableau $allCountriesData est vide alors je décide d'afficher un message disant qu'aucun pays n'est disponible, sinon j'affiche les différentes pays: -->
+                            <?php if (empty($allCountriesData)) : ?>
+                                <option value="">Veuillez sélectionner le pays de la mission</option>
+                                <option value="">Aucun pays disponible</option>
+                            <?php else : ?>
+                                <?php foreach ($allCountriesData as $countryId => $countryData) : ?>
+                                    <!-- Etant donné que nous sommes dans un formulaire de modification, je décide de sélectionner directement le pays choisi à la création de la mission: -->
+                                    <?php if ($countryData['name'] == $missionDatasRetrieved['countryName']) : ?>
+                                        <option value="<?php echo $countryId; ?>" selected><?php echo $countryData['name']; ?></option>
+                                    <?php else : ?>
+                                        <option value="<?php echo $countryId; ?>"><?php echo $countryData['country']; ?></option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </select>
                         <div class="missionDateContent">
                             <label>Début de mission:</label>
                             <input type="datetime-local" name="missionStartSelected" value="<?php echo $missionDatasRetrieved['missionStart']; ?>">

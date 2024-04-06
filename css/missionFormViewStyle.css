@@ -109,8 +109,7 @@ body {
 }
 
 #missionForm input:first-child,
-#missionForm input:nth-child(2),
-#missionForm input:nth-child(4) {
+#missionForm input:nth-child(2) {
   width: 400px;
   margin-bottom: 20px;
 }
@@ -134,6 +133,7 @@ body {
   padding: 11px 10px;
 }
 
+#missionForm select:nth-child(4),
 #missionForm select:nth-child(7),
 #missionForm select:nth-child(8),
 #missionForm select:nth-child(9) {
