@@ -1,6 +1,6 @@
 <?php
-// J'appelle le controller qui gère l'affichage des nationalitées:
-require_once('../../controller/admin/nationalityListViewController.php');
+// J'appelle le controller qui gère l'affichage des nationalités:
+require_once('../../controller/admin/nationalityCountryListViewController.php');
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +10,7 @@ require_once('../../controller/admin/nationalityListViewController.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Espace administration - Liste des nationalités</title>
-    <link rel="stylesheet" href="../../css/nationalityListViewStyle.css">
+    <link rel="stylesheet" href="../../css/nationalityCountryListViewStyle.css">
 </head>
 
 <body>
@@ -25,8 +25,8 @@ require_once('../../controller/admin/nationalityListViewController.php');
         <div id="mainContainer">
             <h2>Liste des nationalités</h2>
             <div id="messageContent">
-                <?php if (isset($nationalityListViewMessage)) : ?>
-                    <p><?php echo $nationalityListViewMessage; ?></p>
+                <?php if (isset($nationalityCountryListViewMessage)) : ?>
+                    <p><?php echo $nationalityCountryListViewMessage; ?></p>
                 <?php endif; ?>
             </div>
             <div id="mainContent">
@@ -39,8 +39,8 @@ require_once('../../controller/admin/nationalityListViewController.php');
                         <?php foreach ($allNationalities as $nationalityId => $nationalityName) : ?>
                             <div class="nationalityItemContainer">
                                 <p><?php echo $nationalityName; ?></p>
-                                <p><a href=<?php echo "nationalityUpdateFormView.php?id=" . $nationalityId ?>>Modifiez</a></p>
-                                <p><a href=<?php echo "nationalityDeleteView.php?id=" . $nationalityId ?>>Supprimez</a></p>
+                                <p><a href=<?php echo "nationalityCountryUpdateFormView.php?id=" . $nationalityId ?>>Modifiez</a></p>
+                                <p><a href=<?php echo "nationalityCountryDeleteView.php?id=" . $nationalityId ?>>Supprimez</a></p>
                             </div>
                         <?php endforeach; ?>
                     </div>

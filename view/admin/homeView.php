@@ -66,8 +66,8 @@ require_once('../../controller/admin/homeController.php');
                 <div class="menuActionContainer">
                     <p>Nationalité</p>
                     <div class="menuActionButton">
-                        <p><a href="nationalityFormView.php">Ajoutez</a></p>
-                        <p><a href="nationalityListView.php">Listez</a></p>
+                        <p><a href="nationalityCountryFormView.php">Ajoutez</a></p>
+                        <p><a href="nationalityCountryListView.php">Listez</a></p>
                     </div>
                 </div>
             </div>
