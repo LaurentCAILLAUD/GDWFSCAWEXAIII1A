@@ -69,8 +69,7 @@ body {
 }
 
 #formMessage {
-  width: 800px;
-  margin: 0 auto;
+  margin: 0 20px;
   border-radius: 5px;
   background-color: #e3a6a6;
 }

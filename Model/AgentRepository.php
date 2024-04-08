@@ -14,7 +14,7 @@ class AgentRepository
     public function addThisAgent(Agent $agent): void
     {
         // Je prépare ma requête:
-        $stmt = $this->db->prepare('INSERT INTO agent (id, firstname, lastname, date_of_birth, identity_code, nationality_id, mission_id) VALUES (:id, :firstname, :lastname, :dateOfBirth, :identityCode, :nationalityId, :missionId)');
+        $stmt = $this->db->prepare('INSERT INTO agent (id, firstname, lastname, date_of_birth, identity_code, nationality_country_id, mission_id) VALUES (:id, :firstname, :lastname, :dateOfBirth, :identityCode, :nationalityCountryId, :missionId)');
         // Je récupére les données dont j'ai besoin:
         $id = $agent->getId();
         $firstname = $agent->getFirstname();
@@ -22,7 +22,7 @@ class AgentRepository
         // mysql a besoin de recevoir une string pour le champ que j'ai paramétré en DATE. J'utilise donc la fonction "format" de la classe Datetime afin de parser mon objet Datetime en string:
         $dateOfBirth = $agent->getDateOfBirth()->format('Y-m-d');
         $identityCode = $agent->getIdentityCode();
-        $nationalityId = $agent->getNationalityCodeId();
+        $nationalityCountryId = $agent->getNationalityCountryId();
         $missionId = $agent->getMissionId();
         // Je lie mes données:
         $stmt->bindValue(':id', $id);
@@ -30,7 +30,7 @@ class AgentRepository
         $stmt->bindValue(':lastname', $lastname);
         $stmt->bindValue(':identityCode', $identityCode);
         $stmt->bindValue(':dateOfBirth', $dateOfBirth);
-        $stmt->bindValue(':nationalityId', $nationalityId);
+        $stmt->bindValue(':nationalityCountryId', $nationalityCountryId);
         $stmt->bindValue(':missionId', $missionId);
         // J'exécute ma requête:
         $stmt->execute();
@@ -70,7 +70,7 @@ class AgentRepository
         // Je crée un tableau vide qui contiendra ou pas les données d'une cible:
         $allAgentDatas = [];
         // Je prépare ma requête:
-        $stmt = $this->db->prepare('SELECT firstname, lastname, date_of_birth, identity_code, nationality.name AS nationality, mission.title AS missionTitle FROM agent INNER JOIN nationality ON agent.nationality_id = nationality.id INNER JOIN mission ON agent.mission_id = mission.id WHERE agent.id = :id');
+        $stmt = $this->db->prepare('SELECT firstname, lastname, date_of_birth, identity_code, nationality_country.name AS nationality, mission.title AS missionTitle FROM agent INNER JOIN nationality_country ON agent.nationality_country_id = nationality_country.id INNER JOIN mission ON agent.mission_id = mission.id WHERE agent.id = :id');
         // Je lie mes données:
         $stmt->bindValue(':id', $id);
         // J'exécute ma requête:
@@ -96,20 +96,20 @@ class AgentRepository
     public function updateThisAgent(Agent $agent): void
     {
         // Je prépare ma requête:
-        $stmt = $this->db->prepare('UPDATE agent SET firstname = :firstname, lastname = :lastname, date_of_birth = :dateOfBirth, nationality_id = :nationalityId, mission_id = :missionId WHERE id = :id');
+        $stmt = $this->db->prepare('UPDATE agent SET firstname = :firstname, lastname = :lastname, date_of_birth = :dateOfBirth, nationality_country_id = :nationalityCountryId, mission_id = :missionId WHERE id = :id');
         // Je récupère les données dont j'ai besoin:
         $id = $agent->getId();
         $firstname = $agent->getFirstname();
         $lastname = $agent->getLastname();
         $dateOfBirth = $agent->getDateOfBirth()->format('Y-m-d');
-        $nationalityId = $agent->getNationalityCodeId();
+        $nationalityCountryId = $agent->getNationalityCountryId();
         $missionId = $agent->getMissionId();
         // Je lie mes données:
         $stmt->bindValue(':id', $id);
         $stmt->bindValue(':firstname', $firstname);
         $stmt->bindValue(':lastname', $lastname);
         $stmt->bindValue(':dateOfBirth', $dateOfBirth);
-        $stmt->bindValue(':nationalityId', $nationalityId);
+        $stmt->bindValue(':nationalityCountryId', $nationalityCountryId);
         $stmt->bindValue(':missionId', $missionId);
         // J'exécute ma requête:
         $stmt->execute();
@@ -133,6 +133,30 @@ class AgentRepository
         $errorInRequest = $stmt->errorInfo();
         if ($errorInRequest[0] != 0) {
             throw new Exception('Une erreur est survenue dans la suppression. ' . $errorInRequest[2]);
+        }
+    }
+
+    // Fonction qui va me permettre de compter les agents ayant une nationalité et une mission donnée:
+    public function countAgentWithThisNationalityAndThisMission(string $nationalityId, string $missionId): bool
+    {
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('SELECT count(id) AS numberOfAgents FROM agent where nationality_country_id = :nationalityId AND mission_id = :missionId');
+        // Je lie mes données:
+        $stmt->bindValue(':nationalityId', $nationalityId);
+        $stmt->bindValue(':missionId', $missionId);
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gère les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        } else {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($row['numberOfAgents'] == 0) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 }

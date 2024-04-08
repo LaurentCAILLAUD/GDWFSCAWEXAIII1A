@@ -1,9 +1,10 @@
 <?php
 // J'appelle les classes dont je vais avoir besoin:
-require_once('../../model/NationalityRepository.php');
+require_once('../../model/NationalityCountryRepository.php');
 require_once('../../model/MissionRepository.php');
 require_once('../../model/Agent.php');
 require_once('../../model/AgentRepository.php');
+require_once('../../model/TargetRepository.php');
 // Pour des raisons de sécurité je souhaite vérifier si l'utilisateur qui souhaite afficher cette page est bien connecté. Pour cela je vais avoir besoin d'utiliser le système de session donc je commence par le démarrer:
 session_start();
 // Je vais maintenant vérifier que l'utilisateur souhaitant afficher cette page est bien autorisé à le faire. Si ce n'est pas le cas, je redirige ce dernier vers la page de connexion, sinon le script continue:
@@ -17,10 +18,10 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
         $dsn = 'mysql:host=localhost;dbname=GDWFSCAWEXAIII1A';
         //Je me connecte à la base de données:
         $db = new PDO($dsn, 'root', 'root');
-        // Maintenant je peux instancier ma classe NationalityRepository:
-        $nationalityRepository = new NationalityRepository($db);
+        // Maintenant je peux instancier ma classe NationalityCountryRepository:
+        $nationalityCountryRepository = new NationalityCountryRepository($db);
         // Et enfin je récupère les données à l'aide de la fonction getAllNationality. A savoir que cette fonction retourne assurément un tableau. Celui-ci peut contenir des données ou ne pas en contenir. Je décide de gérer ces deux états dans la vue de ce controller (agentFormView.php):
-        $allNationalitiesData = $nationalityRepository->getAllNationalities();
+        $allNationalitiesData = $nationalityCountryRepository->getAllNationalitiesCountries();
         // A ce stade, j'ai obtenu les données dont j'ai besoin pour alimenter mon champ de saisie de la nationalité. Il me faut maintenant faire la même chose pour la mission. J'utilise donc la classe MissionRepository:
         $missionRepository = new MissionRepository($db);
         // Comme pour les nationalités, cette fonction retourne un tableau. Celui-ci peut être vide ou avec des données. Je décide de gérer ces deux états dans la vue de mon controller:
@@ -41,8 +42,12 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
                 $dateOfBirth = new \DateTime($_POST['dateOfBirthSelected']);
                 // A la création de notre base de données nous avons indiqué que les champs "lastname" et "firstname" de la table "agent" étaient une chaine de caractères de maximum 100 caractères,. Il faut donc que je vérifie que les informations saisies par l'utilisateur ne fasse pas plus de 100 caractères pour ces deux champs. Si c'est le cas le script continue, sinon une exception est levée:
                 if (strlen($firstnameWrittenFormated) <= 100 && strlen($lastnameWrittenFormated) <= 100) {
-                    // Les saisies de notre utilisateur sont maintenant sécurisées et dans le bon format. Je vais pouvoir maintenant enregistrer celles-ci dans la base de données. 
-                    // Avant d'enregistrer l'agent dans la base de données, celle-ci a besoin d'un id. Dans notre base de données, ce champ doit être une chaine de caractères de 36 caractères. En effet, la fonction UUID de mysql permet de créer cette chaîne. Sauf erreur de ma part, php (sans framework ou librairie) ne possède pas de fonction permettant de créer un UUID. Je vais donc utiliser la fonction uniqid de PHP afin de parer à ce petit souci:
+                    // Les saisies de notre utilisateur sont maintenant sécurisées et dans le bon format. Dans l'énoncé du devoir il m'est demandé que ma cible ne peut pas avoir la même nationalité que le ou les agents affectés sur la mission. Cela veut donc dire que mon agent ne peut pas avoir la même nationalité que les cibles visées sur cette mission. Il faut que je vérifie maintenant que la saisie de mon administrateur respecte bien cette règle métier. Je vais faire cela en instanciant ma classe TargetRepository et en utilisant sa fonction countTargetWithNationalityAndWithThisNationalityAndThisMission():
+                    $targetRepository = new TargetRepository($db);
+                    if ($targetRepository->countTargetWithThisNationalityAndThisMission($_POST['nationalityIdSelected'], $_POST['missionIdSelected']) == false) {
+                        throw new Exception('Impossible d\'affecter cet agent sur cette mission car une ou des cibles visées par cette mission possèdent la même nationalité..');
+                    }
+                    // Ceci fait et avant d'enregistrer l'agent dans la base de données, celui-ci a besoin d'un id. Dans notre base de données, ce champ doit être une chaine de caractères de 36 caractères. En effet, la fonction UUID de mysql permet de créer cette chaîne. Sauf erreur de ma part, php (sans framework ou librairie) ne possède pas de fonction permettant de créer un UUID. Je vais donc utiliser la fonction uniqid de PHP afin de parer à ce petit souci:
                     $prefix = uniqid();
                     $id = uniqid($prefix, true);
                     // L'agent que je suis en train de créé doit avoir un code identité (identity_code dans la table). J'ai décidé de ne pas faire saisir ce code à travers le formulaire mais plutôt de l'automatiser à travers de ce script. Ce code aura un format chaine de caractère + un nombre. Pour la chaine de caractère, étant donné que nous allons rentrer un agent je décide de l'appeller agent:

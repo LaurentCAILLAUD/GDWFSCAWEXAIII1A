@@ -4,6 +4,7 @@ require_once('../../model/NationalityCountryRepository.php');
 require_once('../../model/MissionRepository.php');
 require_once('../../model/Target.php');
 require_once('../../model/TargetRepository.php');
+require_once('../../model/AgentRepository.php');
 // Pour des raisons de sécurité je souhaite vérifier si l'utilisateur qui souhaite afficher cette page est bien connecté. Pour cela je vais avoir besoin d'utiliser le système de session donc je commence par le démarrer:
 session_start();
 // Je vais maintenant vérifier que l'utilisateur souhaitant afficher cette page est bien autorisé à le faire. Si ce n'est pas le cas, je redirige ce dernier vers la page de connexion, sinon le script continue:
@@ -45,7 +46,12 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
                 $dateOfBirth = new \DateTime($_POST['dateOfBirthSelected']);
                 // A la création de notre base de données nous avons indiqué que les champs "lastname" et "firstname" de la table "target" étaient une chaine de caractères de maximum 100 caractères,. Il faut donc que je vérifie que les informations saisies par l'utilisateur ne fasse pas plus de 100 caractères pour ces deux champs. Si c'est le cas le script continue, sinon une exception est levée:
                 if (strlen($firstnameWrittenFormated) <= 100 && strlen($lastnameWrittenFormated) <= 100) {
-                    // Les saisies de notre utilisateur sont maintenant sécurisées et dans le bon format. Je vais pouvoir maintenant enregistrer celles-ci dans la base de données. Pour ce faire je vais dans un premier temps créer un nouvel objet de ma classe Target:
+                    // Les saisies de notre utilisateur sont maintenant sécurisées et dans le bon format. Dans l'énoncé du devoir il m'est demandé que ma cible ne peut pas avoir la même nationalité que le ou les agents affectés sur la mission. Il faut que je vérifie maintenant que la saisie de mon administrateur respecte bien cette règle métier. Je vais faire cela en instanciant ma classe AgentRepository et en utilisant sa fonction countAgentWithThisNationalityAndThisNationalityAndThisMission():
+                    $agentRepository = new AgentRepository($db);
+                    if ($agentRepository->countAgentWithThisNationalityAndThisMission($_POST['nationalityIdSelected'], $_POST['missionIdSelected']) == false) {
+                        throw new Exception('Impossible de modifier la nationalité de cette cible car un ou des agents présents sur cette mission possèdent la même nationalité.');
+                    }
+                    // Ceci fait je peux instancier un nouvel objet de ma classe Target:
                     $target = new Target($_GET['id'], $firstnameWrittenFormated, $lastnameWrittenFormated, $dateOfBirth, $targetDatasRetrieved['identityCode'], $_POST['nationalityIdSelected'], $_POST['missionIdSelected']);
                     // Et enfin grâce à la fonction updateThisTarget() de ma classe TargetRepository je met à jour la cible:
                     $targetRepository->updateThisTarget($target);

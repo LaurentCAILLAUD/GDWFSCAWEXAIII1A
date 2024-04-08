@@ -47,12 +47,12 @@ require_once('../../controller/admin/agentUpdateFormController.php');
                                 <option value="">Veuillez sélectioner la nationalité de votre agent</option>
                                 <option value="">Aucune nationalité à afficher</option>
                             <?php else : ?>
-                                <?php foreach ($allNationalitiesData as $nationalityId => $nationalityName) : ?>
+                                <?php foreach ($allNationalitiesData as $nationalityId => $nationalityData) : ?>
                                     <!-- Etant donné que nous sommes dans un formulaire de modification, je décide de sélectionner directement la nationalité choisie à la création de l'agent: -->
-                                    <?php if ($nationalityName == $agentDatasRetrieved['nationality']) : ?>
-                                        <option value="<?php echo $nationalityId; ?>" selected><?php echo $nationalityName; ?></option>
+                                    <?php if ($nationalityData['name'] == $agentDatasRetrieved['nationality']) : ?>
+                                        <option value="<?php echo $nationalityId; ?>" selected><?php echo $nationalityData['name']; ?></option>
                                     <?php else : ?>
-                                        <option value="<?php echo $nationalityId; ?>"><?php echo $nationalityName; ?></option>
+                                        <option value="<?php echo $nationalityId; ?>"><?php echo $nationalityData['name']; ?></option>
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                             <?php endif; ?>
