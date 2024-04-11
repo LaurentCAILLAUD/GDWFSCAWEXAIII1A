@@ -154,4 +154,27 @@ class MissionRepository
             throw new Exception('Une erreur est survenue dans la suppression. ' . $errorInRequest[2]);
         }
     }
+
+    // Fonction qui va me permettre de récupérer l'id d'un pays suivant une mission donnée:
+    public function getMissionCountryIdWithThisMissionId(string $missionId): string
+    {
+        // Je prépara ma requête:
+        $stmt = $this->db->prepare('SELECT nationality_country_id from mission WHERE id = :missionId');
+        // Je lie mes données:
+        $stmt->bindValue(':missionId', $missionId);
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gère les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        } else {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (empty($row['nationality_country_id'])) {
+                throw new Exception('Une erreur dans la récupération de votre donnée est survenue.');
+            } else {
+                return $row['nationality_country_id'];
+            }
+        }
+    }
 }

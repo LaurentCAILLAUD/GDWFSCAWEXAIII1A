@@ -41,7 +41,13 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
                 $dateOfBirth = new \DateTime($_POST['dateOfBirthSelected']);
                 // A la création de notre base de données nous avons indiqué que les champs "lastname" et "firstname" de la table "contact" étaient une chaine de caractères de maximum 100 caractères,. Il faut donc que je vérifie que les informations saisies par l'utilisateur ne fasse pas plus de 100 caractères pour ces deux champs. Si c'est le cas le script continue, sinon une exception est levée:
                 if (strlen($firstnameWrittenFormated) <= 100 && strlen($lastnameWrittenFormated) <= 100) {
-                    // Les saisies de notre utilisateur sont maintenant sécurisées et dans le bon format. Je vais pouvoir maintenant enregistrer celles-ci dans la base de données. 
+                    // Les saisies de notre utilisateur sont maintenant sécurisées et dans le bon format. Il me faut maintenant respecter la régle métier de l'énoncé du devoir qui dit que le contact doit avoir la nationalité du pays de la mission. Pour cela je vais utiliser la fonction getMissionCountryIdWithThisMissionId de ma classe MissionRepository.
+                    $countryId = $missionRepository->getMissionCountryIdWithThisMissionId($_POST['missionIdSelected']);
+                    // Cette fonction va nous retourner (dans le cas où il n'y a d'erreur) l'id du pays de la mission. Si celui-ci est égal avec l'id de la nationalité du contact alors le script continue, sinon une erreur est levée:
+                    if ($countryId != $_POST['nationalityIdSelected']) {
+                        throw new Exception('Votre contact doit avoir la nationalité du pays dans lequel se déroulera la mission qui lui est affectée.');
+                    }
+                    // Je vais pouvoir maintenant enregistrer les données de mon contact dans la base de données. 
                     // Avant d'enregistrer le contact dans la base de données, celle-ci a besoin d'un id. Dans notre base de données, ce champ doit être une chaine de caractères de 36 caractères. En effet, la fonction UUID de mysql permet de créer cette chaîne. Sauf erreur de ma part, php (sans framework ou librairie) ne possède pas de fonction permettant de créer un UUID. Je vais donc utiliser la fonction uniqid de PHP afin de parer à ce petit souci:
                     $prefix = uniqid();
                     $id = uniqid($prefix, true);
