@@ -37,7 +37,13 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
                 $typeWrittenFormated = ucfirst(strtolower($typeWritten));
                 // A la création de notre base de données nous avons indiqué que les champs "address" et "type" de la table "stash" étaient une chaine de caractères de maximum 255 caractères,. Il faut donc que je vérifie que les informations saisies par l'utilisateur ne fasse pas plus de 255 caractères pour ces deux champs. Si c'est le cas le script continue, sinon une exception est levée:
                 if (strlen($addressWritten) <= 100 && strlen($typeWrittenFormated) <= 255) {
-                    // Les saisies de notre utilisateur sont maintenant sécurisées et dans le bon format. Je vais pouvoir maintenant enregistrer celles-ci dans la base de données. 
+                    // Les saisies de notre utilisateur sont maintenant sécurisées et dans le bon format. Il me faut maintenant respecter la régle métier de l'énoncé du devoir qui dit que la planque doit être située dans le pays de la mission. Pour cela je vais utiliser la fonction getMissionCountryIdWithThisMissionId de ma classe MissionRepository.
+                    $countryId = $missionRepository->getMissionCountryIdWithThisMissionId($_POST['missionIdSelected']);
+                    // Cette fonction va nous retourner (dans le cas où il n'y a d'erreur) l'id du pays de la mission. Si celui-ci est égal avec l'id de la nationalité du contact alors le script continue, sinon une erreur est levée:
+                    if ($countryId != $_POST['countryIdSelected']) {
+                        throw new Exception('La planque et la mission doivent être dans le même pays.');
+                    }
+                    // Je vais pouvoir maintenant enregistrer les données de ma planque dans la base de données. 
                     // Avant d'enregistrer la planque dans la base de données, celle-ci a besoin d'un code. Dans notre base de données, ce champ doit être un nombre entier de maximum 11 caractères. Il y a pleins de façon de faire pour générer ce code. Je choisi d'utiliser la fonction rand() de php:
                     $code = rand(1, 2147483647);
                     // J'ai maintenant toutes les informations nécessaires pour pouvoir créer une planque dans ma base de données. Je vais pour cela utiliser ma classe "Stash" afin de créer une instance de cette classe:
