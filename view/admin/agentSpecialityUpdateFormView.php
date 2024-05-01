@@ -25,11 +25,6 @@ require_once('../../controller/admin/agentSpecialityUpdateFormController.php');
         <!-- mainContainer block start -->
         <div id="mainContainer">
             <p>A l'aide du formulaire ci-dessous modifiez la spécialité d'un agent dans votre base de données.</p>
-            <?php if (isset($agentSpecialityDatasRetrieved)) : ?>
-                <pre>
-                    <?php print_r($agentSpecialityDatasRetrieved); ?>
-                </pre>
-            <?php endif; ?>
             <div id="mainContent">
                 <div id="formMessage">
                     <?php if (isset($agentSpecialityUpdateFormMessage)) : ?>

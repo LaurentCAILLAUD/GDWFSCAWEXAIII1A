@@ -159,4 +159,50 @@ class AgentRepository
             }
         }
     }
+
+    // Fonction qui va nous permettre de récupérer l\'id de la mision d\'un agent grâce à son id:
+    public function getMissionIdOfThisAgent(string $agentId): string
+    {
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('SELECT mission_id from agent WHERE id = :agentId');
+        // Je lie ma donnée:
+        $stmt->bindValue(':agentId', $agentId);
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gére les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        } else {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (empty($row['mission_id'])) {
+                throw new Exception('Une erreur est survenue dans la récupération de votre donnée.');
+            } else {
+                return $row['mission_id'];
+            }
+        }
+    }
+
+    // Fonction qui va me permettre de récupérer l'identifiant des agents affectés à une mission:
+    public function getAgentIdsOfThisMission(string $missionId): array
+    {
+        // Je crée une variable qui contiendra le ou les identifiants du ou des agents affectés à cette mission:
+        $agentIds = [];
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('SELECT id from agent WHERE mission_id = :missionId');
+        // je lie ma donnée:
+        $stmt->bindValue('missionId', $missionId);
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gére les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        } else {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $agentIds[] = $row['id'];
+            }
+            return $agentIds;
+        }
+    }
 }

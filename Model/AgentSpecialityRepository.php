@@ -100,4 +100,28 @@ class AgentSpecialityRepository
             throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
         }
     }
+
+    // Fonction qui va me permettre de compter les agents disposants d'une spécialité grâce à l'id de l'agent et à l'id de la spécialité:
+    public function countAgentWithThisAgentIdAndThisSpecialityId(string $agentId, string $specialityId): bool
+    {
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('SELECT count(agent_id) AS numberOfAgents from agent_speciality WHERE agent_id = :agentId AND speciality_id = :specialityId');
+        // Je lie mes données:
+        $stmt->bindValue(':agentId', $agentId);
+        $stmt->bindValue(':specialityId', $specialityId);
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gère les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        } else {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($row['numberOfAgents'] == 0) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
 }

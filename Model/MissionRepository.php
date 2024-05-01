@@ -177,4 +177,28 @@ class MissionRepository
             }
         }
     }
+
+    // Fonction qui va me permettre de récupérer le nom de la spécialité ainsi que son id d'une mission grâce à l'id de la mission:
+    public function getSpecialityDatasOfThisMissionWithThisId(string $missionId): array
+    {
+        // Je crée une variable qui est un tableau qui contiendra ou non les donnés de la spécialité d'une mission:
+        $specialityDatas = [];
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('SELECT mission.speciality_id AS specialityId, speciality.name AS specialityName from mission INNER JOIN speciality ON mission.speciality_id = speciality.id WHERE mission.id = :missionId');
+        // Je lis ma donnée:
+        $stmt->bindValue(':missionId', $missionId);
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gère les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        } else {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $specialityDatas['id'] = $row['specialityId'];
+                $specialityDatas['name'] = $row['specialityName'];
+            }
+            return $specialityDatas;
+        }
+    }
 }
