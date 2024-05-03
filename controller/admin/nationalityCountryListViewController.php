@@ -16,7 +16,7 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
         // Afin de récupérer les données, je vais utiliser la classe NationalityCountryRepository et plus particulièrement sa fonction getAllNationalities().
         $nationalityCountryRepository = new NationalityCountryRepository($db);
         // Cette fonction retourne dans tous les cas un tableau. Celui-ci peut être vide ou pas. Je décide de gérer ces deux états dans la vue de ce contrôleur.
-        $allNationalities = $nationalityCountryRepository->getAllNationalities();
+        $allNationalitiesCountries = $nationalityCountryRepository->getAllNationalitiesCountries();
     } catch (Exception $exception) {
         $nationalityCountryListViewMessage = $exception->getMessage();
     }

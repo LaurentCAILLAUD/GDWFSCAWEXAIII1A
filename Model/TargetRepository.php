@@ -120,6 +120,52 @@ class TargetRepository
         }
     }
 
+    // Fonction qui va nous permettre de récupérer l\'id de la mision d\'une cible grâce à son id:
+    public function getMissionIdOfThisTarget(string $targetId): string
+    {
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('SELECT mission_id from target WHERE id = :targetId');
+        // Je lie ma donnée:
+        $stmt->bindValue(':targetId', $targetId);
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gére les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        } else {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (empty($row['mission_id'])) {
+                throw new Exception('Une erreur est survenue dans la récupération de votre donnée.');
+            } else {
+                return $row['mission_id'];
+            }
+        }
+    }
+
+    // Fonction qui va me permettre de compter les cibles affectées à une mission:
+    public function countTargetOfThisMission(string $missionId): bool
+    {
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('SELECT count(id) AS numberOfTargets from target WHERE mission_id = :missionId');
+        // je lie ma donnée:
+        $stmt->bindValue('missionId', $missionId);
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gére les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        } else {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($row['numberOfTargets'] == 1) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
+
     // Fonction qui va me permettre de supprimer une cible grâce à son id:
     public function deleteThisTargetWithThisId(string $id): void
     {

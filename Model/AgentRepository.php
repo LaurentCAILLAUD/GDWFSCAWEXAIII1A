@@ -205,4 +205,27 @@ class AgentRepository
             return $agentIds;
         }
     }
+
+    // Fonction qui va me permettre de compter les agents affectés à une mission:
+    public function countAgentIOfThisMission(string $missionId): bool
+    {
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('SELECT count(id) AS numberOfAgents from agent WHERE mission_id = :missionId');
+        // je lie ma donnée:
+        $stmt->bindValue('missionId', $missionId);
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gére les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        } else {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($row['numberOfAgents'] == 1) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
 }

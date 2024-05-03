@@ -13,16 +13,23 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
         if (isset($_GET['confirm'])) {
             // Si l'administrateur clique sur le bouton "oui":
             if ($_GET['confirm'] == 'yes') {
-                // Afin de supprimer mon agent je vais avoir besoin de me connecter à la base de données:
+                // Avant de supprimer mon agent, il est stipulé dans l'énoncé du devoir qu'une mission doit avoir 1ou plusieurs agents. Mon agent n'ayant pas de référence dans la table mission, il faut que j'empêche "manuellement" la suppression de mon agent si celui ci est le dernier affecté à la mission. Je vais pour cela dans un premier temps avoir besoin de me connecter à la base de données:
                 $dsn = 'mysql:host=localhost;dbname=GDWFSCAWEXAIII1A';
                 //Je me connecte à la base de données:
                 $db = new PDO($dsn, 'root', 'root');
                 // J'instancie un nouvel objet de ma classe AgentRepository:
                 $agentRepository = new AgentRepository($db);
-                // Et j'utilise la fonction deleteThisAgentWithThisId() afin de supprimer mon agent:
-                $agentRepository->deleteThisAgentWithThisId($_GET['id']);
-                // Si une erreur se déroule dans la suppression de l'agent une erreur est levée. Si au contraire cette suppression se passe bien je dirige l'administrateur vers la page qui liste les agents et où il verra que la suppression s'est bien faite:
-                header('Location: agentListView.php');
+                // J'utilise la fonction getMissionIdOfThisAgent de ma classe afin de récupérer l'id de la mission sur lequel mon agent est affecté:
+                $missionId = $agentRepository->getMissionIdOfThisAgent($_GET['id']);
+                // Maintenant je compte les agents affectés sur cette mission à l'aide de la fonction countAgentIOfThisMission de ma classe AgentRepository. Si je n'ai qu'un seul agent affecté sur cette mission alors je lance une exception sinon je supprime l'agent:
+                if ($agentRepository->countAgentIOfThisMission($missionId) == false) {
+                    throw new Exception('Suppression impossible. Cet agent est le dernier agent affecté à la mission concernée.');
+                } else {
+                    // J'utilise la fonction deleteThisAgentWithThisId() afin de supprimer mon agent:
+                    $agentRepository->deleteThisAgentWithThisId($_GET['id']);
+                    // Si une erreur se déroule dans la suppression de l'agent une erreur est levée. Si au contraire cette suppression se passe bien je dirige l'administrateur vers la page qui liste les agents et où il verra que la suppression s'est bien faite:
+                    header('Location: agentListView.php');
+                }
             } else {
                 // Si l'administrateur clique sur "non" alors je le redirige vers la page qui liste les agents:
                 header('Location: agentListView.php');

@@ -30,15 +30,15 @@ require_once('../../controller/admin/nationalityCountryListViewController.php');
                 <?php endif; ?>
             </div>
             <div id="mainContent">
-                <?php if (empty($allNationalities)) : ?>
+                <?php if (empty($allNationalitiesCountries)) : ?>
                     <div id="emptyNationalityListContainer">
                         <p>Vous n'avez aucune nationalités d'enregistrées.</p>
                     </div>
                 <?php else : ?>
                     <div id="nationalityListContainer">
-                        <?php foreach ($allNationalities as $nationalityId => $nationalityName) : ?>
+                        <?php foreach ($allNationalitiesCountries as $nationalityId => $nationalityCountryData) : ?>
                             <div class="nationalityItemContainer">
-                                <p><?php echo $nationalityName; ?></p>
+                                <p><?php echo $nationalityCountryData['name']; ?> / <?php echo $nationalityCountryData['country'] ?></p>
                                 <p><a href=<?php echo "nationalityCountryUpdateFormView.php?id=" . $nationalityId ?>>Modifiez</a></p>
                                 <p><a href=<?php echo "nationalityCountryDeleteView.php?id=" . $nationalityId ?>>Supprimez</a></p>
                             </div>

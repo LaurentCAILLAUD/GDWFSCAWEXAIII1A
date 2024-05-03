@@ -120,6 +120,52 @@ class ContactRepository
         }
     }
 
+    // Fonction qui va nous permettre de récupérer l\'id de la mision d\'un contact grâce à son id:
+    public function getMissionIdOfThisContact(string $contactId): string
+    {
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('SELECT mission_id from contact WHERE id = :contactId');
+        // Je lie ma donnée:
+        $stmt->bindValue(':contactId', $contactId);
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gére les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        } else {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (empty($row['mission_id'])) {
+                throw new Exception('Une erreur est survenue dans la récupération de votre donnée.');
+            } else {
+                return $row['mission_id'];
+            }
+        }
+    }
+
+    // Fonction qui va me permettre de compter les contatcs affectés à une mission:
+    public function countContactOfThisMission(string $missionId): bool
+    {
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('SELECT count(id) AS numberOfContacts from contact WHERE mission_id = :missionId');
+        // je lie ma donnée:
+        $stmt->bindValue('missionId', $missionId);
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gére les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        } else {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($row['numberOfContacts'] == 1) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
+
     // Fonction qui va me permettre de supprimer un contact grâce à son id:
     public function deleteThisContactWithThisId(string $id): void
     {
