@@ -2,11 +2,8 @@
 
 class AgentSpeciality
 {
-    private string $agentId;
-    private string $specialityId;
-
-    // Fonction qui va me permettre de construire une instance de ma classe Mission:
-    public function __construct(string $agentId, string $specialityId)
+    // Fonction constructeur de notre objet avec PHP 8 (propriété déclarée dans les arguments de notre fonction):
+    public function __construct(private string $agentId, private string $specialityId)
     {
         $this->setAgentId($agentId);
         $this->setSpecialityId($specialityId);

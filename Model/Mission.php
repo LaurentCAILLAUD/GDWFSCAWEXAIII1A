@@ -2,19 +2,8 @@
 
 class Mission
 {
-    private string $id;
-    private string $title;
-    private string $description;
-    private string $codeName;
-    private string $country;
-    private DateTime $missionStart;
-    private DateTime $missionEnd;
-    private string $specialityId;
-    private string $missionTypeId;
-    private string $missionStatusId;
-
-    // Fonction qui va me permettre de construire une instance de ma classe Mission:
-    public function __construct(string $id, string $title, string $description, string $codeName, string $country, DateTime $missionStart, DateTime $missionEnd, string $specialityId, string $missionTypeId, string $missionStatusId)
+    // Fonction constructeur de notre objet avec PHP 8 (propriété déclarée dans les arguments de notre fonction):
+    public function __construct(private string $id, private string $title, private string $description, private string $codeName, private string $country, private DateTime $missionStart, private DateTime $missionEnd, private string $specialityId, private string $missionTypeId, private string $missionStatusId)
     {
         $this->setId($id);
         $this->setTitle($title);
