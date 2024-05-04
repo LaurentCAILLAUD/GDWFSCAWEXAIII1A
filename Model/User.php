@@ -2,16 +2,8 @@
 
 class User
 {
-    private string $id;
-    private string $firstname;
-    private string $lastname;
-    private string $email;
-    private string $password;
-    private DateTime $createdAt;
-    private string $roleId;
-
-    // Fonction qui va me permettre de construire une instance de ma classe User:
-    public function __construct(string $id, string $firstname, string $lastname, string $email, string $password, DateTime $createdAt, string $roleId)
+    // Fonction constructeur de notre objet avec PHP 8 (propriété déclarée dans les arguments de notre fonction):
+    public function __construct(private string $id, private string $firstname, private string $lastname, private string $email, private string $password, private DateTime $createdAt, private string $roleId)
     {
         $this->setId($id);
         $this->setFirstname($firstname);

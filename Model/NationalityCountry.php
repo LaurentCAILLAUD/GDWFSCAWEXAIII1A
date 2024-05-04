@@ -2,12 +2,8 @@
 
 class NationalityCountry
 {
-    private string $id;
-    private string $name;
-    private string $country;
-
-    // Fonction qui va me permettre de construire une instance de ma classe Nationality:
-    public function __construct(string $id, string $name, string $country)
+    // Fonction constructeur de notre objet avec PHP 8 (propriété déclarée dans les arguments de notre fonction):
+    public function __construct(private string $id, private string $name, private string $country)
     {
         $this->setId($id);
         $this->setName($name);

@@ -2,14 +2,8 @@
 
 class Stash
 {
-    private int $code;
-    private string $address;
-    private string $type;
-    private string $missionId;
-    private string $nationalityCountryId;
-
-    // Fonction qui va me permettre de construire une instance de ma classe Stash:
-    public function __construct(int $code, string $address, string $type, string $missionId, string $nationalityCountryId)
+    // Fonction constructeur de notre objet avec PHP 8 (propriété déclarée dans les arguments de notre fonction):
+    public function __construct(private int $code, private string $address, private string $type, private string $missionId, private string $nationalityCountryId)
     {
         $this->setCode($code);
         $this->setAddress($address);
