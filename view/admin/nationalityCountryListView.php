@@ -11,6 +11,8 @@ require_once('../../controller/admin/nationalityCountryListViewController.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Espace administration - Liste des nationalités</title>
     <link rel="stylesheet" href="../../css/nationalityCountryListViewStyle.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="../../js//nationalityCountryScript.js" defer></script>
 </head>
 
 <body>

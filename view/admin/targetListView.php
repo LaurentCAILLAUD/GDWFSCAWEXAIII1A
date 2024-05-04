@@ -11,6 +11,8 @@ require_once('../../controller/admin/targetListViewController.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Espace administration - Liste des cibles</title>
     <link rel="stylesheet" href="../../css/targetListViewStyle.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="../../js/targetScript.js" defer></script>
 </head>
 
 <body>
