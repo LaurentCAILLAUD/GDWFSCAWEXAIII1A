@@ -33,7 +33,7 @@ require_once('../../controller/admin/roleListViewController.php');
             <div id="mainContent">
                 <?php if (empty($allRoles)) : ?>
                     <div id="emptyRoleListContainer">
-                        <p>Vous n'avez aucun rôles d'enregistrés.</p>
+                        <p>Aucun rôle à afficher.</p>
                     </div>
                 <?php else : ?>
                     <div id="roleListContainer">

@@ -34,7 +34,7 @@ require_once('../../controller/admin/targetListViewController.php');
             <div id="mainContent">
                 <?php if (empty($allTargetIdentities)) : ?>
                     <div id="emptyTargetListContainer">
-                        <p>Vous n'avez aucune cibles d'enregistrées.</p>
+                        <p>Aucune cible à afficher.</p>
                     </div>
                 <?php else : ?>
                     <div id="targetListContainer">

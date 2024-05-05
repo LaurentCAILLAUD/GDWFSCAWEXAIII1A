@@ -35,7 +35,7 @@ require_once('../../controller/admin/contactListViewController.php');
             <div id="mainContent">
                 <?php if (empty($allContactIdentities)) : ?>
                     <div id="emptyContactListContainer">
-                        <p>Vous n'avez aucun contacts d'enregistrés.</p>
+                        <p>Aucun contact à afficher.</p>
                     </div>
                 <?php else : ?>
                     <div id="contactListContainer">

@@ -34,7 +34,7 @@ require_once('../../controller/admin/userListViewController.php');
             <div id="mainContent">
                 <?php if (empty($allUsersIdentities)) : ?>
                     <div id="emptyUserListContainer">
-                        <p>Vous n'avez aucun utilisateurs d'enregistrés.</p>
+                        <p>Aucun utilisateur à afficher.</p>
                     </div>
                 <?php else : ?>
                     <div id="userListContainer">

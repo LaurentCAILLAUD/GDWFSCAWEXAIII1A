@@ -34,7 +34,7 @@ require_once('../../controller/admin/agentListViewController.php');
             <div id="mainContent">
                 <?php if (empty($allAgentIdentities)) : ?>
                     <div id="emptyAgentListContainer">
-                        <p>Vous n'avez aucun agents d'enregistrés.</p>
+                        <p>Aucun agent à afficher.</p>
                     </div>
                 <?php else : ?>
                     <div id="agentListContainer">

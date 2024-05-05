@@ -3,7 +3,7 @@
 class Person
 {
     // Fonction constructeur de notre objet avec PHP 8 (propriété déclarée dans les arguments de notre fonction):
-    public function __construct(private string $id, private  private string $firstname,  private string $lastname,  private DateTime $dateOfBirth,  private string $identityCode,  private string $nationalityCountryId,  private string $missionId)
+    public function __construct(private string $id, private string $firstname,  private string $lastname,  private DateTime $dateOfBirth,  private string $identityCode,  private string $nationalityCountryId,  private string $missionId)
     {
         $this->setId($id);
         $this->setFirstname($firstname);

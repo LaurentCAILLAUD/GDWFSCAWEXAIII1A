@@ -34,7 +34,7 @@ require_once('../../controller/admin/missionTypeListViewController.php');
             <div id="mainContent">
                 <?php if (empty($allMissionsType)) : ?>
                     <div id="emptyMissionTypeListContainer">
-                        <p>Vous n'avez aucun types de missions d'enregistrés.</p>
+                        <p>Aucun type de mission à afficher.</p>
                     </div>
                 <?php else : ?>
                     <div id="missionTypeListContainer">

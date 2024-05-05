@@ -34,7 +34,7 @@ require_once('../../controller/admin/nationalityCountryListViewController.php');
             <div id="mainContent">
                 <?php if (empty($allNationalitiesCountries)) : ?>
                     <div id="emptyNationalityListContainer">
-                        <p>Vous n'avez aucune nationalités d'enregistrées.</p>
+                        <p>Aucune nationalité à afficher.</p>
                     </div>
                 <?php else : ?>
                     <div id="nationalityListContainer">

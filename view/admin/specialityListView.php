@@ -34,7 +34,7 @@ require_once('../../controller/admin/specialityListViewController.php');
             <div id="mainContent">
                 <?php if (empty($allSpecialities)) : ?>
                     <div id="emptySpecialityListContainer">
-                        <p>Vous n'avez aucune spécialités d'enregistrées.</p>
+                        <p>Aucune spécialité à afficher.</p>
                     </div>
                 <?php else : ?>
                     <div id="specialityListContainer">

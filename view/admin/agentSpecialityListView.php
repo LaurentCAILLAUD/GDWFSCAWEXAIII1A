@@ -34,7 +34,7 @@ require_once('../../controller/admin/agentSpecialityListViewController.php');
             <div id="mainContent">
                 <?php if (empty($allAgentIdentitiesWithSpecialities)) : ?>
                     <div id="emptyAgentSpecialityListContainer">
-                        <p>Vous n'avez aucunes données d'enregistrées.</p>
+                        <p>Aucun agent avec sa spécialité à afficher.</p>
                     </div>
                 <?php else : ?>
                     <div id="agentSpecialityListContainer">

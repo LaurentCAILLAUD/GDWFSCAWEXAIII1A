@@ -34,7 +34,7 @@ require_once('../../controller/admin/stashListViewController.php');
             <div id="mainContent">
                 <?php if (empty($allStashesCodes)) : ?>
                     <div id="emptyStashListContainer">
-                        <p>Vous n'avez aucune planques d'enregistrées.</p>
+                        <p>Aucune planque à afficher.</p>
                     </div>
                 <?php else : ?>
                     <div id="stashListContainer">

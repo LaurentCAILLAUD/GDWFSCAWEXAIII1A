@@ -32,7 +32,7 @@ require_once('../../controller/admin/missionStatusListViewController.php');
             <div id="mainContent">
                 <?php if (empty($allMissionsStatus)) : ?>
                     <div id="emptyMissionStatusListContainer">
-                        <p>Vous n'avez aucun statuts de mission d'enregistrés.</p>
+                        <p>Aucun statut de mission à afficher.</p>
                     </div>
                 <?php else : ?>
                     <div id="missionStatusListContainer">
