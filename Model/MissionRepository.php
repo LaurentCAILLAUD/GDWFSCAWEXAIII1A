@@ -201,4 +201,34 @@ class MissionRepository
             return $specialityDatas;
         }
     }
+
+    // Fonction qui va me permettre de récupérer les données de toutes les missions:
+    public function getAllMissionsDatas(): array
+    {
+        // Je crée une variable qui est un tableau qui contiendra ou non l'ensemble des données de toutes les missions:
+        $allMissionsDatas = [];
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('SELECT mission.id AS missionId, title, description, code_name, mission_start, mission_end, nationality_country.country AS country, speciality.name AS specialityName, mission_type.name AS missionType, mission_status.name AS missionStatus from mission INNER JOIN nationality_country ON mission.nationality_country_id = nationality_country.id INNER JOIN speciality ON mission.speciality_id = speciality.id INNER JOIN mission_type ON mission.mission_type_id = mission_type.id INNER JOIN mission_status ON mission.mission_status_id = mission_status.id');
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gère les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        } else {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $allMissionsDatas[$row['missionId']]['title'] = $row['title'];
+                $allMissionsDatas[$row['missionId']]['description'] = $row['description'];
+                $allMissionsDatas[$row['missionId']]['code_name'] = $row['code_name'];
+                $allMissionsDatas[$row['missionId']]['mission_start'] = $row['mission_start'];
+                $allMissionsDatas[$row['missionId']]['mission_end'] = $row['mission_end'];
+                $allMissionsDatas[$row['missionId']]['country'] = $row['country'];
+                $allMissionsDatas[$row['missionId']]['specialityName'] = $row['specialityName'];
+                $allMissionsDatas[$row['missionId']]['missionType'] = $row['missionType'];
+                $allMissionsDatas[$row['missionId']]['missionStatus'] = $row['missionStatus'];
+            }
+            // Je retourne le tableau qu'il soit vide ou avec des données:
+            return $allMissionsDatas;
+        }
+    }
 }
