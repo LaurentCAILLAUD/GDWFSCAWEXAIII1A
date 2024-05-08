@@ -205,4 +205,29 @@ class TargetRepository
             }
         }
     }
+
+    // Fonction qui va nous permettre de récupérer l'identité (nom et prénom) des toutes les cibles affectées à une mission:
+    public function getAllTargetIdentitiesOfThisMission(string $missionId): array
+    {
+        // Je créé un tableau vide qui contiendra ou pas des cibles:
+        $allTargetsIdentities = [];
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('SELECT firstname, lastname FROM target WHERE mission_id = :missionId');
+        // Je lie ma donnée:
+        $stmt->bindValue(':missionId', $missionId);
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gère les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        } else {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                // Je met à jour les données de mon tableau:
+                $allTargetsIdentities[] = $row['firstname'] . ' ' . $row['lastname'];
+            }
+            // Je retourne le tableau qu'il soit vide ou non:
+            return $allTargetsIdentities;
+        }
+    }
 }

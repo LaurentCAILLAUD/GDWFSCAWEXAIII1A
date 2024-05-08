@@ -228,4 +228,27 @@ class AgentRepository
             }
         }
     }
+
+    // Fonction qui va me permettre de récupérer le ou les identités du ou des agents affectés à une mission:
+    public function getAllAgentsIdentitiesOfThisMission(string $missionId): array
+    {
+        // Je crée une variable qui est un tabelau vide et qui contiendra la ou les identités des agents sur une mission:
+        $allAgentsIdentities = [];
+        // Je prépére ma requête:
+        $stmt = $this->db->prepare('SELECT firstname, lastname from agent WHERE mission_id = :missionId');
+        // Je lie ma donnée:
+        $stmt->bindValue(':missionId', $missionId);
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gère les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        } else {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $allAgentsIdentities[] = $row['firstname'] . ' ' . $row['lastname'];
+            }
+            return $allAgentsIdentities;
+        }
+    }
 }

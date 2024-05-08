@@ -7,7 +7,7 @@ try {
     $dsn = 'mysql:host=localhost;dbname=GDWFSCAWEXAIII1A';
     // Je peux créer mintenant mon objet PDO:
     $db = new PDO($dsn, 'root', 'root');
-    // Je vais maintenant avoir besoin de récupérer l'ensemble des données d'une mission. Pour cela je vais créer un nouvel objet de ma classe MissionRepository:
+    // Je vais maintenant avoir besoin de récupérer l'ensemble des données de toutes les missions. Pour cela je vais créer un nouvel objet de ma classe MissionRepository:
     $missionRepository = new MissionRepository($db);
     // J'utilse ensuite la fonction getAllMissionsDatas de cette classe pour lister l'ensemble des données de toutes les missions. Si ce tableau esr vide, je décide de gérer cet état dans ma view avec un message (voir missionFrontListView.php):
     $allMissionsDatas = $missionRepository->getAllMissionsDatas();

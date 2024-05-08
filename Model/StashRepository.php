@@ -128,4 +128,30 @@ class StashRepository
             throw new Exception('Une erreur est survenue dans la suppression. ' . $errorInRequest[2]);
         }
     }
+
+    // Fonction que va me permettre de récupérer tous les types de planques d'une mission donnée:
+    public function getAllStashesTypesOfThisMission(string $missionId): array
+    {
+        // Je créé une variable $allStashesCodes qui sera un tableau vide pour le moment et qui sera mis à jour si des données sont retournées:
+        $allStashesTypes = [];
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('SELECT type FROM stash WHERE mission_id = :missionId');
+        // Je lie ma donnée:
+        $stmt->bindValue(':missionId', $missionId);
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gére les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        } else {
+            // Si il n'y a pas d'erreur, je récupére les données:
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                // Si des données sont retournées alors je met à jour mon tableau:
+                $allStashesTypes[] = $row['type'];
+            }
+            // Je retourne mon tableau qu'il soit vide ou non:
+            return $allStashesTypes;
+        }
+    }
 }

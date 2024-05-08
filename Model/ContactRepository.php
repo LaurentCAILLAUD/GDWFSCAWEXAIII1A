@@ -181,4 +181,29 @@ class ContactRepository
             throw new Exception('Une erreur est survenue dans la suppression. ' . $errorInRequest[2]);
         }
     }
+
+    // Fonction qui va nous permettre de récupérer l'identité de tous les contacts d'une mission donnée:
+    public function getAllContactsIdentitiesOfThisMission(string $missionId): array
+    {
+        // Je créé un tableau vide qui contiendra ou pas des contacts:
+        $allContactsIdentities = [];
+        // Je prépare ma requête:
+        $stmt = $this->db->prepare('SELECT firstname, lastname FROM contact WHERE mission_id = :missionId');
+        // Je lie ma donnée:
+        $stmt->bindValue(':missionId', $missionId);
+        // J'exécute ma requête:
+        $stmt->execute();
+        // Je gère les éventuelles erreurs:
+        $errorInRequest = $stmt->errorInfo();
+        if ($errorInRequest[0] != 0) {
+            throw new Exception('Une erreur est survenue: ' . $errorInRequest[2]);
+        } else {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                // Je met à jour les données de mon tableau:
+                $allContactsIdentities[] = $row['firstname'] . ' ' . $row['lastname'];
+            }
+            // Je retourne le tableau qu'il soit vide ou non:
+            return $allContactsIdentities;
+        }
+    }
 }
