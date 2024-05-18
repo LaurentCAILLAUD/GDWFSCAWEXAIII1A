@@ -14,9 +14,9 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
             // Si l'administrateur clique sur le bouton "oui":
             if ($_GET['confirm'] == 'yes') {
                 // Afin de supprimer mon type de mission je vais avoir besoin de me connecter à la base de données:
-                $dsn = 'mysql:host=localhost;dbname=GDWFSCAWEXAIII1A';
+                $dsn = 'mysql:host=sql106.infinityfree.com;dbname=if0_36564308_GDWFSCAWEXAIII1A';
                 //Je me connecte à la base de données:
-                $db = new PDO($dsn, 'root', 'root');
+                $db = new PDO($dsn, 'if0_36564308', 'eY6rfZRePj');
                 // J'instancie un nouvel objet de ma classe MissionTypeRepository:
                 $missionTypeRepository = new MissionTypeRepository($db);
                 // Et j'utilise la fonction deleteThisMissionTypeWithThisId() afin de supprimer mon type de mission:

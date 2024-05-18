@@ -14,9 +14,9 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
     try {
         // Dans le formulaire affiché par la vue de ce contrôleur, j'ai deux champs qui sont des  listes déroulantes. Ces listes déroulantes affichent respectivement la liste des pays et la liste des missions. Ces informations sont disponibles dans la base de données.
         // Pour cela je vais avoir besoin de me connecter à ma base de données avec PDO et donc dans un premier je dois créer mon DSN:
-        $dsn = 'mysql:host=localhost;dbname=GDWFSCAWEXAIII1A';
+        $dsn = 'mysql:host=sql106.infinityfree.com;dbname=if0_36564308_GDWFSCAWEXAIII1A';
         //Je me connecte à la base de données:
-        $db = new PDO($dsn, 'root', 'root');
+        $db = new PDO($dsn, 'if0_36564308', 'eY6rfZRePj');
         // Je commence par instancier ma classe NationalityCountryRepository:
         $nationalityCountryRepository = new NationalityCountryRepository($db);
         // Et j'utilise la fonction getAllNationalitiesCountries() pour récupérer la liste des pays:

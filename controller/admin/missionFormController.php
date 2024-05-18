@@ -16,9 +16,9 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
     try {
         // Dans le formulaire affiché par la vue de ce contrôleur, j'ai quatre champs qui sont des listes déroulantes. Ces listes déroulantes affichent en matière de choix respectivement les pays, les spécialités, les types de mission et les statuts de la mission. Ces informations sont disponibles dans la base de données. Je vais donc aller chercher ces informations à l'aide des classes qui gérent chacune de ces informations. 
         // Pour cela je vais avoir besoin de me connecter à ma base de données avec PDO et donc dans un premier je dois créer mon DSN:
-        $dsn = 'mysql:host=localhost;dbname=GDWFSCAWEXAIII1A';
+        $dsn = 'mysql:host=sql106.infinityfree.com;dbname=if0_36564308_GDWFSCAWEXAIII1A';
         //Je me connecte à la base de données:
-        $db = new PDO($dsn, 'root', 'root');
+        $db = new PDO($dsn, 'if0_36564308', 'eY6rfZRePj');
         // Je commance par aller chercher la liste des pays ou peut se dérouler une mission. Pour cela il faut dans un premier temps que j'instancie ma classe NationalityCountryRepository:
         $nationalityCountryRepository = new NationalityCountryRepository($db);
         // Cette foncttion retourne dans tout les cas un tableau qui peut etre vide ou non. Je décide de gérer ces deux états dans la vue de mon controleur (missionFormView.php):

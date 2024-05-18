@@ -25,9 +25,9 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
                     // Je peux instancier ma classe Role afin de créer un nouvel objet:
                     $role = new Role($id, $roleWritten);
                     // Ceci fait, je vais maintenant pouvoir enregistrer ce rôle (avec son id) dans la base de données. Pour ce faire, il faut tout d'abord que je me connecte à la base de données. Pour cela je vais utiliser l'objet PDO. Il me faut donc tout d'abord créer mon Data Source Name:
-                    $dsn = 'mysql:host=localhost;dbname=GDWFSCAWEXAIII1A';
+                    $dsn = 'mysql:host=sql106.infinityfree.com;dbname=if0_36564308_GDWFSCAWEXAIII1A';
                     // Je me connecte à la base de données:
-                    $db = new PDO($dsn, 'root', 'root');
+                    $db = new PDO($dsn, 'if0_36564308', 'eY6rfZRePj');
                     // Afin d'enregistrer le rôle dans la base de données je vais utiliser la classe RoleRepository et plus particulièrement sa fonction addThisRole:
                     $roleRepository = new RoleRepository($db);
                     $roleRepository->addThisRole($role);

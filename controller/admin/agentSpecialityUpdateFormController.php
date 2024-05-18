@@ -15,9 +15,9 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
     try {
         // Dans le formulaire affiché par la vue de ce contrôleur, j'ai deux champs qui sont des listes déroulantes. Ces listes déroulantes affichent en matière de choix respectivement les agents et les spécialités. Nous sommes ici dans le cadre d'une modification de données. Je prend le parti de dire qu'un agent a une ou plusieurs spécialités. Donc on dira toujours que l'on souhaite modifier la spécialité d'un agent et non pas modifier la spécialité affectée à un agent. Ceci etant dit, il est alors inutile de donner la possiblité à l'administrateur de modifier le nom d'un agent. Par conséquent la première liste déroulante contenant le nom des agents dans le formulaire de création ne contiendra que le nom de l'agent dont on souhaite modifier la spécialité dans le formulaire de modification. Ces informations sont disponibles dans la base de données. Je vais donc aller chercher ces informations à l'aide des classes qui gérent chacune de ces informations. 
         // Pour cela je vais avoir besoin de me connecter à ma base de données avec PDO et donc dans un premier je dois créer mon DSN:
-        $dsn = 'mysql:host=localhost;dbname=GDWFSCAWEXAIII1A';
+        $dsn = 'mysql:host=sql106.infinityfree.com;dbname=if0_36564308_GDWFSCAWEXAIII1A';
         //Je me connecte à la base de données:
-        $db = new PDO($dsn, 'root', 'root');
+        $db = new PDO($dsn, 'if0_36564308', 'eY6rfZRePj');
         // Maintenant je peux instancier ma classe SpecialityRepository:
         $specialityRepository = new SpecialityRepository($db);
         // Et enfin je récupère les données à l'aide de la fonction getAllSpecialities. A savoir que cette fonction retourne assurément un tableau. Celui-ci peut contenir des données ou ne pas en contenir. Je décide de gérer ces deux états dans la vue de ce controller (agentSpecialityUpdateFormView.php):

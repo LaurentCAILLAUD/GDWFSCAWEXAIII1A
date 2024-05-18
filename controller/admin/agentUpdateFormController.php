@@ -15,9 +15,9 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
     try {
         // Dans le formulaire affiché par la vue de ce contrôleur, j'ai deux champs qui sont des listes déroulantes. Ces listes déroulantes affichent en matière de choix respectivement les nationalités et les missions. Ces informations sont disponibles dans la base de données. Je vais donc aller chercher ces informations à l'aide des classes qui gérent chacune de ces informations. 
         // Pour cela je vais avoir besoin de me connecter à ma base de données avec PDO et donc dans un premier je dois créer mon DSN:
-        $dsn = 'mysql:host=localhost;dbname=GDWFSCAWEXAIII1A';
+        $dsn = 'mysql:host=sql106.infinityfree.com;dbname=if0_36564308_GDWFSCAWEXAIII1A';
         //Je me connecte à la base de données:
-        $db = new PDO($dsn, 'root', 'root');
+        $db = new PDO($dsn, 'if0_36564308', 'eY6rfZRePj');
         // Maintenant je peux instancier ma classe NationalityCountryRepository:
         $nationalityCountryRepository = new NationalityCountryRepository($db);
         // Et enfin je récupère les données à l'aide de la fonction getAllNationality. A savoir que cette fonction retourne assurément un tableau. Celui-ci peut contenir des données ou ne pas en contenir. Je décide de gérer ces deux états dans la vue de ce controller (agentUpdateFormView.php):

@@ -10,9 +10,9 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
     // Afin de gérer les erreurs de éventuelles de mon script, je décide de mettre ce dernier dans un bloc try...catch:
     try {
         // Afin d'afficher le statut de mission que l'administrateur souhaite modifier dans le champ du formulaire, il faut que j'aille le récupérer grâce à son id (id présent dans l'url de la requête). Pour cela je vais devoir me connecter à la base de données et donc commencer par créer mon DSN:
-        $dsn = 'mysql:host=localhost;dbname=GDWFSCAWEXAIII1A';
+        $dsn = 'mysql:host=sql106.infinityfree.com;dbname=if0_36564308_GDWFSCAWEXAIII1A';
         // Ceci fait je peux me conecter à la bese de données:
-        $db = new PDO($dsn, 'root', 'root');
+        $db = new PDO($dsn, 'if0_36564308', 'eY6rfZRePj');
         // Je suis maintenant connecté à la base de données. Je passe maintenant à la récupération de me donnée. Pour cela je vais instancier ma classe MissionStatusRepository et plus particulièrement sa fonction getThisMissionStatusWithThisId() avec en paramètre de ma fonction l'id que je récupére dans l'url de ma requête. Cette fonction retournera le statut de la mission que nous pourrons utiliser dans la vue du contrôleur:
         $missionStatusRepository = new MissionStatusRepository($db);
         $missionStatusRetrieved = $missionStatusRepository->getThisStatusMissionWithThisId($_GET['id']);

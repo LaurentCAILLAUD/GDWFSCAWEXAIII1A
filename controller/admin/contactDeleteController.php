@@ -14,9 +14,9 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
             // Si l'administrateur clique sur le bouton "oui":
             if ($_GET['confirm'] == 'yes') {
                 // Avant de supprimer mon contact, il est stipulé dans l'énoncé du devoir qu'une mission doit avoir 1ou plusieurs contacts. Mon contact n'ayant pas de référence dans la table mission, il faut que j'empêche "manuellement" la suppression de mon contact si celui ci est le dernier affecté à la mission. Je vais pour cela dans un premier temps avoir besoin de me connecter à la base de données:
-                $dsn = 'mysql:host=localhost;dbname=GDWFSCAWEXAIII1A';
+                $dsn = 'mysql:host=sql106.infinityfree.com;dbname=if0_36564308_GDWFSCAWEXAIII1A';
                 //Je me connecte à la base de données:
-                $db = new PDO($dsn, 'root', 'root');
+                $db = new PDO($dsn, 'if0_36564308', 'eY6rfZRePj');
                 // J'instancie un nouvel objet de ma classe ContactRepository:
                 $contactRepository = new ContactRepository($db);
                 // J'utilise la fonction getMissionIdOfThisContact de ma classe afin de récupérer l'id de la mission sur lequel mon contact est affecté:

@@ -10,9 +10,9 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
     // Afin de gérer les erreurs de éventuelles de mon script, je décide de mettre ce dernier dans un bloc try...catch:
     try {
         // Afin d'afficher la nationalité et le pays correspondant que l'administrateur souhaite modifier dans le champ du formulaire, il faut que j'aille la récupérer grâce à son id (id présent dans l'url de la requête). Pour cela je vais devoir me connecter à la base de données et donc commencer par créer mon DSN:
-        $dsn = 'mysql:host=localhost;dbname=GDWFSCAWEXAIII1A';
+        $dsn = 'mysql:host=sql106.infinityfree.com;dbname=if0_36564308_GDWFSCAWEXAIII1A';
         // Ceci fait je peux me conecter à la bese de données:
-        $db = new PDO($dsn, 'root', 'root');
+        $db = new PDO($dsn, 'if0_36564308', 'eY6rfZRePj');
         // Je suis maintenant connecté à la base de données. Je passe maintenant à la récupération de me donnée. Pour cela je vais instancier ma classe NationalityCountryRepository et plus particulièrement sa fonction getThisNationalityCountryWithThisId() avec en paramètre de ma fonction l'id que je récupére dans l'url de ma requête.
         $nationalityCountryRepository = new NationalityCountryRepository($db);
         // Cette fonction retourne toujours un tableau. Celui-ci peut être vide ou pas. Je décide de gérer ces deux états dans la vue de mon contrôleur:
