@@ -1,6 +1,6 @@
 <?php
 // J'appelle le script du controller qui gère la soumission de mon formulaire:
-// require_once('../../controller/admin/loginController.php')
+require_once('../../controller/admin/loginController.php')
 ?>
 
 <!DOCTYPE html>
