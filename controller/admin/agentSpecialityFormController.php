@@ -4,7 +4,7 @@ require_once('../../Model/AgentRepository.php');
 require_once('../../Model/AgentSpeciality.php');
 require_once('../../Model/AgentSpecialityRepository.php');
 require_once('../../Model/MissionRepository.php');
-require_once('../../Model/SpecialityRepository.php');
+require_once('../../Model/SpecalityRepository.php');
 // Pour des raisons de sécurité je souhaite vérifier si l'utilisateur qui souhaite afficher cette page est bien connecté. Pour cela je vais avoir besoin d'utiliser le système de session donc je commence par le démarrer:
 session_start();
 // Je vais maintenant vérifier que l'utilisateur souhaitant afficher cette page est bien autorisé à le faire. Si ce n'est pas le cas, je redirige ce dernier vers la page de connexion, sinon le script continue:

@@ -1,6 +1,6 @@
 <?php
 // J'appelle les classes dont je vais avoir besoin:
-require_once('../../Model/SpecialityRepository.php');
+require_once('../../Model/SpecalityRepository.php');
 require_once('../../Model/AgentSpeciality.php');
 require_once('../../Model/AgentSpecialityRepository.php');
 require_once('../../Model/AgentRepository.php');
