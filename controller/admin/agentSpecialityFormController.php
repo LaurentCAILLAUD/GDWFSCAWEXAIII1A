@@ -1,5 +1,5 @@
 <?php
-// J'appelle les classes dont je vais avoir besoin:
+// J'appelle les classes dont je vais avoir besoin
 require_once('../../Model/AgentRepository.php');
 require_once('../../Model/AgentSpeciality.php');
 require_once('../../Model/AgentSpecialityRepository.php');
