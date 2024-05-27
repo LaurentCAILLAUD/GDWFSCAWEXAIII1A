@@ -1,5 +1,5 @@
-// J'appelle les classes dont je vais avoir besoin:
 <?php
+// J'appelle les classes dont je vais avoir besoin:
 require_once('../../Model/Speciality.php');
 require_once('../../Model/SpecialityRepository.php');
 // Pour des raisons de sécurité je souhaite vérifier si l'utilisateur qui souhaite afficher cette page est bien connecté. Pour cela je vais avoir besoin d'utiliser le systeme de session donc je commence par le démarrer:

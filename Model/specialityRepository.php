@@ -1,5 +1,5 @@
 <?php
-// J'appelle la classe Speciality dont je vais avoir besoin:
+// J'appelle la classe Speciality dont je vais avoir besoin
 require_once('Speciality.php');
 
 class SpecialityRepository

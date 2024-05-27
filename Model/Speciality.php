@@ -2,7 +2,7 @@
 
 class Speciality
 {
-    // Fonction constructeur de notre objet avec PHP 8 (propriété déclarée dans les arguments de notre fonction):
+    // Fonction constructeur de notre objet avec PHP 8 (propriété déclarée dans les arguments de notre fonction)
     public function __construct(private string $id, private string $name)
     {
         $this->setId($id);
