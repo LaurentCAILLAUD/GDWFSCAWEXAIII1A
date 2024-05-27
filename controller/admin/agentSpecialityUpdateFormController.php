@@ -1,8 +1,8 @@
 <?php
 // J'appelle les classes dont je vais avoir besoin:
-require_once('../../model/SpecialityRepository.php');
-require_once('../../model/AgentSpeciality.php');
-require_once('../../model/AgentSpecialityRepository.php');
+require_once('../../Model/SpecialityRepository.php');
+require_once('../../Model/AgentSpeciality.php');
+require_once('../../Model/AgentSpecialityRepository.php');
 require_once('../../Model/AgentRepository.php');
 require_once('../../Model/MissionRepository.php');
 // Pour des raisons de sécurité je souhaite vérifier si l'utilisateur qui souhaite afficher cette page est bien connecté. Pour cela je vais avoir besoin d'utiliser le système de session donc je commence par le démarrer:

@@ -1,8 +1,8 @@
 <?php
 // J'appelle les classes dont je vais avoir besoin:
-require_once('../../model/RoleRepository.php');
-require_once('../../model/User.php');
-require_once('../../model/UserRepository.php');
+require_once('../../Model/RoleRepository.php');
+require_once('../../Model/User.php');
+require_once('../../Model/UserRepository.php');
 // Pour des raisons de sécurité je souhaite vérifier si l'utilisateur qui souhaite afficher cette page est bien connecté. Pour cela je vais avoir besoin d'utiliser le système de session donc je commence par le démarrer:
 session_start();
 // Je vais maintenant vérifier que l'utilisateur souhaitant afficher cette page est bien autorisé à le faire. Si ce n'est pas le cas, je redirige ce dernier vers la page de connexion, sinon le script continue:
