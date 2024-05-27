@@ -4,7 +4,7 @@ require_once('../../Model/UserRepository.php');
 require_once('../../Model/RoleRepository.php');
 
 // A la fin de mon script, je vais utiliser la fonction session de php. Je déclare donc ici le démarrage de cette fonction:
-// session_start();
+session_start();
 // Afin de gérer les erreurs sur notre formulaire de connexion, j'inscris mon script dans un bloc try...catch:
 try {
     if (isset($_POST['loginFormSubmit'])) {
@@ -39,8 +39,8 @@ try {
                     $roleRetrieved = $roleRepository->getUserRoleWithThisRoleId($roleIdRetrieved);
                     if ($roleRetrieved == 'ROLE_ADMIN') {
                         // A ce stade, je suis sûr que l'utilisateur connecté est connu dans ma base de données, que son mot de passe est le bon et qu'il a le bon rôle. Je décide de stocker dans la superglobale S_SESSION des informations qui me serviront dans mes différents scripts d'administration:
-                        // $_SESSION['userEmail'] = $_POST['emailWritten'];
-                        // $_SESSION['userRole'] = 'ROLE_ADMIN';
+                        $_SESSION['userEmail'] = $_POST['emailWritten'];
+                        $_SESSION['userRole'] = 'ROLE_ADMIN';
                         // Maintenant je peux diriger l'utilisateur vers la page d'accueil de l'espace administration:
                         header('Location: homeView.php');
                     } else {
