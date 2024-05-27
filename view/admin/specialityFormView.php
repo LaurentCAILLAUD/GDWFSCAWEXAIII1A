@@ -1,6 +1,6 @@
 <?php
 // J'appelle le controller qui géère la soumission de mon formulaire:
-require_once('../../controller/admin/specialityFormController.php');
+// require_once('../../controller/admin/specialityFormController.php');
 ?>
 
 <!DOCTYPE html>
