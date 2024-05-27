@@ -10,10 +10,21 @@ try {
     if (isset($_POST['loginFormSubmit'])) {
         // La première chose que je décide de vérifier est de m'assurer que tous les champs de mon formulaire soit remplis. Si ce n'est pas le cas alors je lance une exception:
         if (!empty($_POST['emailWritten'] && !empty($_POST['passwordWritten']))) {
-            // Les champs ne sont pas vides. Il va falloir maintenant que je me connecte à la base de donnée afin de pouvoir savoir si l'utilisateur qui souhaite se connecter est connu dans la base. Pour cela je vais utiliser l'objet PDO. Il me faut donc un Data Source Name:
-            $dsn = 'mysql:host=sql106.infinityfree.com;dbname=if0_36564308_GDWFSCAWEXAIII1A';
-            // Je peux créé mon objet PDO:
-            $db = new PDO($dsn, 'if0_36564308', 'eY6rfZRePj');
+            // Les champs ne sont pas vides. Il va falloir maintenant que je me connecte à la base de donnée afin de pouvoir savoir si l'utilisateur qui souhaite se connecter est connu dans la base. Etant donné que je souhaite que mon application tourne en production ou en local, j'utilise cette condition:
+            if (getenv('JAWSDB_URL') !== false) {
+                $dbparts = parse_url(getenv('JAWSDB_URL'));
+                $hostname = $dbparts['host'];
+                $username = $dbparts['user'];
+                $password = $dbparts['pass'];
+                $database = ltrim($dbparts['path'], '/');
+            } else {
+                $username = 'root';
+                $password = 'root';
+                $database = 'GDWFSCAWEXAIII1A';
+                $hostname = 'localhost';
+            }
+            // Je peux créer maintenant mon objet PDO:
+            $db = new PDO("mysql:host=$hostname;dbname=$database", $username, $password);
             // A l'aide de cet objet je vais pouvoir vérifier si l'email saisi est connu dans la base de donnée. Pour cela j'utilise la classe UserRepository que j'ai crée et sa fonction countUserWithThisEmail. Cette fonction nous retourne un booléen. Si l'utilisateur est connu (vrai) le script continue sinon une exception est levée:
             $userRepository = new UserRepository($db);
             if ($userRepository->countUserWithThisEmail($_POST['emailWritten'])) {

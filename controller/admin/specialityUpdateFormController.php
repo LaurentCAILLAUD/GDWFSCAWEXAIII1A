@@ -9,10 +9,21 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
 } else {
     // Afin de gérer les erreurs de éventuelles de mon script, je décide de mettre ce dernier dans un bloc try...catch:
     try {
-        // Afin d'afficher le nom de la spécialité que l'administrateur souhaite modifier dans le champ du formulaire, il faut que j'aille la récupérer grâce à son id (id présent dans l'url de la requête). Pour cela je vais devoir me connecter à la base de données et donc commencer par créer mon Data Source Name;
-        $dsn = 'mysql:host=sql106.infinityfree.com;dbname=if0_36564308_GDWFSCAWEXAIII1A';
-        // Ceci fait je peux maintenant me connecter à ma base de données avec PDO:
-        $db = new PDO($dsn, 'if0_36564308', 'eY6rfZRePj');
+        // Afin d'afficher le nom de la spécialité que l'administrateur souhaite modifier dans le champ du formulaire, il faut que j'aille la récupérer grâce à son id (id présent dans l'url de la requête). Pour cela je vais devoir me connecter à la base de données. Etant donné que je souhaite que mon application tourne en production ou en local, j'utilise cette condition:
+        if (getenv('JAWSDB_URL') !== false) {
+            $dbparts = parse_url(getenv('JAWSDB_URL'));
+            $hostname = $dbparts['host'];
+            $username = $dbparts['user'];
+            $password = $dbparts['pass'];
+            $database = ltrim($dbparts['path'], '/');
+        } else {
+            $username = 'root';
+            $password = 'root';
+            $database = 'GDWFSCAWEXAIII1A';
+            $hostname = 'localhost';
+        }
+        // Je peux créer maintenant mon objet PDO:
+        $db = new PDO("mysql:host=$hostname;dbname=$database", $username, $password);
         // Je suis maintenant connecté à ma base de données. Je passe mainteant à la récupération de ma donnée. Pour cela je vais instancier ma classe SpecialityRepository et plus particulieremnt sa fonction getSpecialityWithThisId() avec en paramètre de ma fonction l'id que je récupère dans l'url de ma requête. Cette fonction nous retournera le nom de la spécialité récupérée que nous pourrons utilisée dans la vue de ce contrôleur:
         $specialityRepository = new SpecialityRepository($db);
         $specialityRetrieved = $specialityRepository->getSpecialityWithThisId($_GET['id']);

@@ -13,10 +13,21 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
     // Afin de gérer les erreurs éventuelles de mon script, je décide de mettre ce dernier dans un bloc try...catch:
     try {
         // Dans le formulaire affiché par la vue de ce contrôleur, j'ai deux champs qui sont des  listes déroulantes. Ces listes déroulantes affichent respectivement la liste des pays et la liste des missions. Ces informations sont disponibles dans la base de données.
-        // Pour cela je vais avoir besoin de me connecter à ma base de données avec PDO et donc dans un premier je dois créer mon DSN:
-        $dsn = 'mysql:host=sql106.infinityfree.com;dbname=if0_36564308_GDWFSCAWEXAIII1A';
-        //Je me connecte à la base de données:
-        $db = new PDO($dsn, 'if0_36564308', 'eY6rfZRePj');
+        // Pour cela je vais avoir besoin de me connecter à ma base de données. Etant donné que je souhaite que mon application tourne en production ou en local, j'utilise cette condition:
+        if (getenv('JAWSDB_URL') !== false) {
+            $dbparts = parse_url(getenv('JAWSDB_URL'));
+            $hostname = $dbparts['host'];
+            $username = $dbparts['user'];
+            $password = $dbparts['pass'];
+            $database = ltrim($dbparts['path'], '/');
+        } else {
+            $username = 'root';
+            $password = 'root';
+            $database = 'GDWFSCAWEXAIII1A';
+            $hostname = 'localhost';
+        }
+        // Je peux créer maintenant mon objet PDO:
+        $db = new PDO("mysql:host=$hostname;dbname=$database", $username, $password);
         // Je commence par instancier ma classe NationalityCountryRepository:
         $nationalityCountryRepository = new NationalityCountryRepository($db);
         // Et j'utilise la fonction getAllNationalitiesCountries() pour récupérer la liste des pays:

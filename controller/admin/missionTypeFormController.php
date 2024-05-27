@@ -26,10 +26,21 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
                     $id = uniqid($prefix, true);
                     // Je peux instancier ma classe MissionType afin de créer un nouvel objet:
                     $missionType = new MissionType($id, $missionTypeWrittenFormated);
-                    // Ceci fait, je vais maintenant pouvoir enregistrer ce type de mission (avec son id) dans la base de données. Pour ce faire, il faut tout d'abord que je me connecte à la base de données. Pour cela je vais utiliser l'objet PDO. Il me faut donc tout d'abord créer mon Data Source Name:
-                    $dsn = 'mysql:host=sql106.infinityfree.com;dbname=if0_36564308_GDWFSCAWEXAIII1A';
-                    // Je me connecte à la base de données:
-                    $db = new PDO($dsn, 'if0_36564308', 'eY6rfZRePj');
+                    // Ceci fait, je vais maintenant pouvoir enregistrer ce type de mission (avec son id) dans la base de données. Pour ce faire, il faut tout d'abord que je me connecte à la base de données. Etant donné que je souhaite que mon application tourne en production ou en local, j'utilise cette condition:
+                    if (getenv('JAWSDB_URL') !== false) {
+                        $dbparts = parse_url(getenv('JAWSDB_URL'));
+                        $hostname = $dbparts['host'];
+                        $username = $dbparts['user'];
+                        $password = $dbparts['pass'];
+                        $database = ltrim($dbparts['path'], '/');
+                    } else {
+                        $username = 'root';
+                        $password = 'root';
+                        $database = 'GDWFSCAWEXAIII1A';
+                        $hostname = 'localhost';
+                    }
+                    // Je peux créer maintenant mon objet PDO:
+                    $db = new PDO("mysql:host=$hostname;dbname=$database", $username, $password);
                     // Afin d'enregistrer le type de mission  dans la base de données je vais utiliser la classe MissionTypeRepository que j'ai créé et plus particulièrement sa fonction addThisMissionType:
                     $missionTypeRepository = new MissionTypeRepository($db);
                     $missionTypeRepository->addThisMissionType($missionType);

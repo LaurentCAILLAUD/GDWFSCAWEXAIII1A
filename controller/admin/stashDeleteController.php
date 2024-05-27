@@ -13,10 +13,21 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
         if (isset($_GET['confirm'])) {
             // Si l'administrateur clique sur le bouton "oui":
             if ($_GET['confirm'] == 'yes') {
-                // Afin de supprimer ma planque je vais avoir besoin de me connecter à la base de données:
-                $dsn = 'mysql:host=sql106.infinityfree.com;dbname=if0_36564308_GDWFSCAWEXAIII1A';
-                //Je me connecte à la base de données:
-                $db = new PDO($dsn, 'if0_36564308', 'eY6rfZRePj');
+                // Afin de supprimer ma planque je vais avoir besoin de me connecter à la base de données. Etant donné que je souhaite que mon application tourne en production ou en local, j'utilise cette condition:
+                if (getenv('JAWSDB_URL') !== false) {
+                    $dbparts = parse_url(getenv('JAWSDB_URL'));
+                    $hostname = $dbparts['host'];
+                    $username = $dbparts['user'];
+                    $password = $dbparts['pass'];
+                    $database = ltrim($dbparts['path'], '/');
+                } else {
+                    $username = 'root';
+                    $password = 'root';
+                    $database = 'GDWFSCAWEXAIII1A';
+                    $hostname = 'localhost';
+                }
+                // Je peux créer maintenant mon objet PDO:
+                $db = new PDO("mysql:host=$hostname;dbname=$database", $username, $password);
                 // J'instancie un nouvel objet de ma classe StashRepository:
                 $stashRepository = new StashRepository($db);
                 // Et j'utilise la fonction deleteThisStashWithThisId() afin de supprimer ma planque:

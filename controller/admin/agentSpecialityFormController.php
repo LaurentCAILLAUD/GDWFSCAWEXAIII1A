@@ -14,10 +14,21 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
     // Afin de gérer les erreurs éventuelles de mon script, je décide de mettre ce dernier dans un bloc try...catch:
     try {
         // Dans le formulaire affiché par la vue de ce contrôleur, j'ai deux champs qui sont des listes déroulantes. Ces listes déroulantes affichent en matière de choix respectivement les agents et les spécialités. Ces informations sont disponibles dans la base de données. Je vais donc aller chercher ces informations à l'aide des classes qui gérent chacune de ces informations. 
-        // Pour cela je vais avoir besoin de me connecter à ma base de données avec PDO et donc dans un premier je dois créer mon DSN:
-        $dsn = 'mysql:host=sql106.infinityfree.com;dbname=if0_36564308_GDWFSCAWEXAIII1A';
-        //Je me connecte à la base de données:
-        $db = new PDO($dsn, 'if0_36564308', 'eY6rfZRePj');
+        // Pour cela je vais avoir besoin de me connecter à ma base de données. Etant donnée que je souhaite faire tourner mon application en production ou en local, j'utilise cette condition:
+        if (getenv('JAWSDB_URL') !== false) {
+            $dbparts = parse_url(getenv('JAWSDB_URL'));
+            $hostname = $dbparts['host'];
+            $username = $dbparts['user'];
+            $password = $dbparts['pass'];
+            $database = ltrim($dbparts['path'], '/');
+        } else {
+            $username = 'root';
+            $password = 'root';
+            $database = 'GDWFSCAWEXAIII1A';
+            $hostname = 'localhost';
+        }
+        // Je peux créer maintenant mon objet PDO:
+        $db = new PDO("mysql:host=$hostname;dbname=$database", $username, $password);
         // Maintenant je peux instancier ma classe AgentRepository:
         $agentRepository = new AgentRepository($db);
         // Et enfin je récupère les données à l'aide de la fonction getAllAgents. A savoir que cette fonction retourne assurément un tableau. Celui-ci peut contenir des données ou ne pas en contenir. Je décide de gérer ces deux états dans la vue de ce controller (agentSpecialityFormView.php):

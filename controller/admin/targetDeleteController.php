@@ -13,10 +13,21 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
         if (isset($_GET['confirm'])) {
             // Si l'administrateur clique sur le bouton "oui":
             if ($_GET['confirm'] == 'yes') {
-                // Avant de supprimer ma cible, il est stipulé dans l'énoncé du devoir qu'une mission doit avoir 1ou plusieurs cibles. Ma cible n'ayant pas de référence dans la table mission, il faut que j'empêche "manuellement" la suppression de ma cible si celui ci est la derniére affectée à la mission. Je vais pour cela dans un premier temps avoir besoin de me connecter à la base de données:
-                $dsn = 'mysql:host=sql106.infinityfree.com;dbname=if0_36564308_GDWFSCAWEXAIII1A';
-                // Je me connecte à la base de données:
-                $db = new PDO($dsn, 'if0_36564308', 'eY6rfZRePj');
+                // Avant de supprimer ma cible, il est stipulé dans l'énoncé du devoir qu'une mission doit avoir 1ou plusieurs cibles. Ma cible n'ayant pas de référence dans la table mission, il faut que j'empêche "manuellement" la suppression de ma cible si celui ci est la derniére affectée à la mission. Je vais pour cela dans un premier temps avoir besoin de me connecter à la base de données. Etant donné que je souhaite que mon application tourne en production ou en local, j'utilise cette condition:
+                if (getenv('JAWSDB_URL') !== false) {
+                    $dbparts = parse_url(getenv('JAWSDB_URL'));
+                    $hostname = $dbparts['host'];
+                    $username = $dbparts['user'];
+                    $password = $dbparts['pass'];
+                    $database = ltrim($dbparts['path'], '/');
+                } else {
+                    $username = 'root';
+                    $password = 'root';
+                    $database = 'GDWFSCAWEXAIII1A';
+                    $hostname = 'localhost';
+                }
+                // Je peux créer maintenant mon objet PDO:
+                $db = new PDO("mysql:host=$hostname;dbname=$database", $username, $password);
                 // J'instancie un nouvel objet de ma classe TargetRepository:
                 $targetRepository = new TargetRepository($db);
                 // J'utilise la fonction getMissionIdOfThisTarget de ma classe afin de récupérer l'id de la mission sur lequel ma cible est affectée:

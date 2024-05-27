@@ -9,10 +9,21 @@ if (!isset($_SESSION['userEmail']) || $_SESSION['userRole'] != 'ROLE_ADMIN') {
 } else {
     // Afin de gérer les erreurs de éventuelles de mon script, je décide de mettre ce dernier dans un bloc try...catch:
     try {
-        // Le but de ce contrôleur est de récupérer les nationalités enregistrés dans la base de données. En effet, notre nationalité va de paire avec un pays. Pour listez ce "couple" et pouvoir le modifier par la suite, je choisi de n'afficher que la nationalité. Pour cela, il va falloir que je me connecte à la base de données et il me faut donc dans un premier temps créé mon Data Source Name:
-        $dsn = 'mysql:host=sql106.infinityfree.com;dbname=if0_36564308_GDWFSCAWEXAIII1A';
-        // Celui-ci créé, je peux maintenant me connecter à la base de données:
-        $db = new PDO($dsn, 'if0_36564308', 'eY6rfZRePj');
+        // Le but de ce contrôleur est de récupérer les nationalités enregistrés dans la base de données. En effet, notre nationalité va de paire avec un pays. Pour listez ce "couple" et pouvoir le modifier par la suite, je choisi de n'afficher que la nationalité. Pour cela, il va falloir que je me connecte à la base de données. Etant donné que je souhaite que mon application tourne en production ou en local, j'utilise cette condition:
+        if (getenv('JAWSDB_URL') !== false) {
+            $dbparts = parse_url(getenv('JAWSDB_URL'));
+            $hostname = $dbparts['host'];
+            $username = $dbparts['user'];
+            $password = $dbparts['pass'];
+            $database = ltrim($dbparts['path'], '/');
+        } else {
+            $username = 'root';
+            $password = 'root';
+            $database = 'GDWFSCAWEXAIII1A';
+            $hostname = 'localhost';
+        }
+        // Je peux créer maintenant mon objet PDO:
+        $db = new PDO("mysql:host=$hostname;dbname=$database", $username, $password);
         // Afin de récupérer les données, je vais utiliser la classe NationalityCountryRepository et plus particulièrement sa fonction getAllNationalities().
         $nationalityCountryRepository = new NationalityCountryRepository($db);
         // Cette fonction retourne dans tous les cas un tableau. Celui-ci peut être vide ou pas. Je décide de gérer ces deux états dans la vue de ce contrôleur.
