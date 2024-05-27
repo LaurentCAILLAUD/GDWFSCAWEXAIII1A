@@ -1,7 +1,7 @@
 <?php
 // J'appelle les classes dont je vais avoir besoin:
 require_once('../../Model/UserRepository.php');
-require_once('../../Model/RoleRepository.php');
+require_once('../../Model/RoleRepositry.php');
 
 // A la fin de mon script, je vais utiliser la fonction session de php. Je déclare donc ici le démarrage de cette fonction:
 session_start();
